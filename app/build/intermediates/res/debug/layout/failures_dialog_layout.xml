@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"   
+    android:background="@drawable/list_item_background"
+    >
+    <TextView 
+        android:id="@+id/failuresDialogTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/failuresDialogTitle"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        />
+    <EditText 
+        android:id="@+id/failuresDialogFailureName"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@drawable/edit_text_style"
+        android:hint="@string/failuresDialogName"
+        android:layout_below="@id/failuresDialogTitle"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_marginTop="10dp"/>
+        <EditText 
+        android:id="@+id/failuresDialogFailureData"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/edit_text_dialog_style"
+        android:hint="@string/failuresDialogData"
+        android:layout_below="@id/failuresDialogFailureName"
+        android:layout_marginTop="10dp"
+        android:paddingRight="8dp"
+        android:paddingLeft="8dp"/>
+        <Button 
+            android:id="@+id/failuresDialogFailureOkBtn"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/failuresDialogFailureData"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentRight="true"
+            android:text="אישור"
+            android:onClick="DialogOk"
+            />
+        <Button 
+            android:id="@+id/failuresDialogFailureCancelBtn"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/failuresDialogFailureData"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentLeft="true"
+            android:text="ביטול"
+            android:onClick="DialogOk"
+            />
+        
+
+    
+
+</RelativeLayout>
+<!-- From: file:/Users/itaispector/StudioProjects/myVaad/app/src/main/res/layout/failures_dialog_layout.xml -->

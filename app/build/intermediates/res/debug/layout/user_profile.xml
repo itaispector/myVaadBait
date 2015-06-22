@@ -1,0 +1,145 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
+
+<RelativeLayout
+    android:id="@+id/user_propile_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
+
+    <RelativeLayout
+        android:layout_centerHorizontal="true"
+        android:background="#000000"
+        android:layout_width="150dp"
+        android:layout_marginTop="20dp"
+        android:layout_height="150dp"/>
+    <ImageView
+        android:layout_centerHorizontal="true"
+        android:id="@+id/userProimgView"
+        android:layout_width="140dp"
+        android:layout_marginTop="25dp"
+        android:layout_height="140dp"/>
+    <RelativeLayout
+        android:id="@+id/user_name_profile_layout"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/userProimgView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp">
+
+        <RelativeLayout
+        android:background="#e49c9c9c"
+        android:layout_width="match_parent"
+        android:layout_marginTop="2dp"
+        android:layout_height="50dp"/>
+        <RelativeLayout
+            android:background="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+    <TextView
+        android:id="@+id/user_propile_name"
+        android:text="משפחת משרקי"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="18sp"
+        android:paddingRight="10dp"
+        android:gravity="center_vertical|right"/>
+        <EditText
+            android:id="@+id/user_propile_name_edit_text"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:gravity="right|center_vertical"
+            android:hint="@string/fullname"
+            android:textSize="18sp"
+            android:minWidth="200dp"
+            android:selectAllOnFocus="true"
+            android:paddingRight="10dp"
+            android:visibility="gone"/>
+        <ImageView
+            android:id="@+id/edit_user_name_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_action_edit"/>
+        <ImageView
+            android:id="@+id/edit_user_name_v_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:visibility="gone"
+            android:src="@drawable/ic_action_accept"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/user_email_profile_layout"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/user_name_profile_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp">
+        <RelativeLayout
+            android:background="#e49c9c9c"
+            android:layout_width="match_parent"
+            android:layout_marginTop="2dp"
+            android:layout_height="50dp"/>
+        <TextView
+            android:id="@+id/user_propile_email"
+            android:text="danielm1199@gmail.com"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textSize="18sp"
+            android:paddingRight="10dp"
+            android:background="#ffffff"
+            android:gravity="center_vertical|right"/>
+        <ImageView
+            android:id="@+id/edit_user_email_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_action_edit"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/user_password_profile_layout"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/user_email_profile_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp">
+        <RelativeLayout
+            android:background="#e49c9c9c"
+            android:layout_width="match_parent"
+            android:layout_marginTop="2dp"
+            android:layout_height="50dp"/>
+        <TextView
+            android:id="@+id/user_propile_password"
+            android:text="********"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textSize="18sp"
+            android:paddingRight="10dp"
+            android:background="#ffffff"
+            android:gravity="center_vertical|right"/>
+        <ImageView
+            android:id="@+id/edit_user_password_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_action_edit"/>
+    </RelativeLayout>
+
+
+
+
+
+</RelativeLayout>
+</ScrollView><!-- From: file:/Users/itaispector/StudioProjects/myVaad/app/src/main/res/layout/user_profile.xml -->

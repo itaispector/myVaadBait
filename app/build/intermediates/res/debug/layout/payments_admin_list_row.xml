@@ -1,0 +1,23 @@
+<RelativeLayout 
+    android:layout_height="wrap_content"
+	android:layout_width="wrap_content"
+	android:background="@drawable/list_item_background"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView 
+        android:id="@+id/paymentsAdminListViewName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:padding="10dp"
+        android:text="משפחת אבולעפיה"/>
+    <CheckBox 
+        android:id="@+id/paymentsAdminListViewCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:descendantFocusability="blocksDescendants" 
+		/>
+</RelativeLayout>
+<!-- From: file:/Users/itaispector/StudioProjects/myVaad/app/src/main/res/layout/payments_admin_list_row.xml -->

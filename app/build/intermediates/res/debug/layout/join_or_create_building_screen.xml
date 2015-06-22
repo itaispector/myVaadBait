@@ -1,0 +1,26 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.myvaad.myvaad.MainLoginScreen" >
+<TextView
+    android:id="@+id/JoinOrCreateBuildingScreenMsgView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="אינך שייך לשום בניין"/>
+<Button 
+    android:id="@+id/JoinOrCreateBuildingScreenJoinBtn"
+    android:layout_below="@id/JoinOrCreateBuildingScreenMsgView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="JOIN"
+    android:onClick="join"/>
+<Button 
+    android:id="@+id/JoinOrCreateBuildingScreenCreateBtn"
+    android:layout_below="@id/JoinOrCreateBuildingScreenJoinBtn"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Create"
+    android:onClick="create"/>
+</RelativeLayout>
+<!-- From: file:/Users/itaispector/StudioProjects/myVaad/app/src/main/res/layout/join_or_create_building_screen.xml -->

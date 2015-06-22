@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:background="@drawable/list_item_background"
+    android:descendantFocusability="blocksDescendants" >
+
+    <ImageView
+        android:id="@+id/usersRowUserImage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:paddingLeft="10dp"
+        android:src="@drawable/no_image" />
+
+    <TextView
+        android:id="@+id/usersRowFullName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/usersRowUserImage"
+        android:layout_alignParentRight="true"
+        android:paddingRight="10dp"       
+        android:text="שם מלא"
+        android:textColor="#4F4F4F"
+        android:textSize="15dp" />
+
+    <SurfaceView
+        android:id="@+id/usersRowDivider4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/usersRowFullName"
+        android:background="#007ea6"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp" />
+
+    <Button
+        android:id="@+id/usersRowSendBtn"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/usersRowDivider4"
+        android:text="שלח הודעה" />
+
+    <Button
+        android:id="@+id/usersRowDelBtn"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/usersRowDivider4"
+        android:text="מחק" />
+
+</RelativeLayout><!-- From: file:/Users/itaispector/StudioProjects/myVaad/app/src/main/res/layout/users_list_view_row.xml -->
