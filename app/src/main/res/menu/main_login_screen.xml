@@ -1,0 +1,27 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.myvaad.myvaad.MainLoginScreen" >
+
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_action_overflow"
+        android:title="@string/action_settings"
+        app:showAsAction="always">
+        <menu>
+            <item
+            android:id="@+id/openNavigationDrawer"
+            android:title="@string/openNavigationDrawer" />
+            <item
+            android:id="@+id/logoutActionbar"
+            android:title="@string/logoutActionBar" />
+            <item
+                android:id="@+id/aboutDialog"
+                android:title="@string/about" />
+
+        </menu>
+
+        </item>
+
+
+</menu>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@drawable/list_item_background"
+    >
+    <TextView
+        android:id="@+id/noticesDialogTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/noticesDialogTitle"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        />
+
+    <EditText
+        android:id="@+id/noticesDialogNoticeData"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_below="@id/noticesDialogTitle"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edit_text_dialog_style"
+        android:hint="@string/noticesDialogData"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp" />
+
+    <ImageView
+        android:id="@+id/noticesDialogNoticeOkBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/noticesDialogNoticeData"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/add_notice_btn"
+
+        />
+    <ImageView
+        android:id="@+id/noticesDialogNoticeCancelBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/noticesDialogNoticeData"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/cancel_btn"
+        android:layout_alignParentLeft="true"
+
+        />
+
+
+
+
+</RelativeLayout>

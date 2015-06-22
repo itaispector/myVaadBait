@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"   
+    android:background="@drawable/list_item_background"
+    >
+    <TextView 
+        android:id="@+id/failuresAddDialogTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/failuresAddDialogTitle"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        />
+    <EditText 
+        android:id="@+id/failuresAddDialogBusinessName"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@drawable/edit_text_style"
+        android:hint="@string/failuresAddDialogName"
+        android:layout_below="@id/failuresAddDialogTitle"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_marginTop="10dp"/>
+<EditText 
+    android:id="@+id/failuresAddDialogPrice"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_below="@id/failuresAddDialogBusinessName" 
+    android:hint="הכנס סכום" 
+    android:layout_marginTop="10dp"
+    android:paddingRight="8dp"
+    android:paddingLeft="8dp" 
+    android:background="@drawable/edit_text_dialog_style" 
+    android:inputType="number"
+    />
+        <Button 
+            android:id="@+id/failuresAddDialogFailureOkBtn"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/failuresAddDialogPrice"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentRight="true"
+            android:text="אישור"
+            android:onClick="DialogOk"
+            />
+        <Button 
+            android:id="@+id/failuresAddDialogFailureCancelBtn"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/failuresAddDialogPrice"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentLeft="true"
+            android:text="ביטול"
+            android:onClick="DialogOk"
+            />
+        
+
+    
+
+</RelativeLayout>

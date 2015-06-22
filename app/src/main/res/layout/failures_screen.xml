@@ -1,0 +1,30 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
+        <ListView
+            android:id="@+id/FailuresListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" 
+            android:divider="#00000000"           
+            android:dividerHeight="10dp"            
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            
+            android:smoothScrollbar="true"
+            android:scrollingCache="false"
+            android:animationCache="false">
+        </ListView>
+    <ImageView
+        android:id="@+id/add_f_btnn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/add_f_btn"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"/>
+
+</RelativeLayout>

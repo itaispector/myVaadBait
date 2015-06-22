@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"   
+    android:background="@drawable/list_item_background"
+    >
+
+        <RelativeLayout 
+           android:id="@+id/noticesShowDialogNoticeDataLayout"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/noticesShowDialogNoticeData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/edit_text_dialog_style"
+            android:hint="@string/noticesShowDialogData"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:visibility="gone"
+            android:textSize="20dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+             />
+        <TextView
+            android:id="@+id/noticesShowDialogNoticeDataTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/edit_text_dialog_style"
+            android:hint="@string/noticesShowDialogData"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:textSize="20dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            
+            
+
+
+             />
+</RelativeLayout>
+        <Button 
+            android:id="@+id/noticesShowDialogNoticeEditBtn"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/noticesShowDialogNoticeDataLayout"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentRight="true"
+            android:text="ערוך"           
+            />
+        <Button 
+            android:id="@+id/noticesShowDialogNoticeUpdateBtn"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/noticesShowDialogNoticeDataLayout"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentRight="true"
+            android:text="עדכן"
+            android:visibility="gone"           
+            />
+        <Button 
+            android:id="@+id/noticesShowDialogNoticeDeleteBtn"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/noticesShowDialogNoticeDataLayout"
+            android:layout_marginTop="10dp"
+            android:layout_centerInParent="true"
+            android:text="מחק"
+            
+            />
+        <Button 
+            android:id="@+id/noticesShowDialogNoticeCancelBtn"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/noticesShowDialogNoticeDataLayout"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentLeft="true"         
+            android:text="ביטול"
+            />
+        
+
+    
+
+</RelativeLayout>

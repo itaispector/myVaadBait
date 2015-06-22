@@ -1,0 +1,208 @@
+<!--
+  Copyright 2013 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+
+<resources>
+    <string-array name="planets_array">
+        <item>לוח מודעות</item>
+        <item>מסך תקלות</item>
+        <item>דף פירוט הוצאות</item>
+        <item>דף תשלומים</item>
+        <item>התנתק</item>
+    </string-array>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="action_websearch">Web search</string>
+    <string name="app_not_available">Sorry, there\'s no web browser available</string>
+
+
+    <string-array name="array_main_menu">
+        <item>@drawable/backg</item>
+        <item>@drawable/backg</item>
+        <item>@drawable/backg</item>
+        <item>@drawable/backg</item>
+        <item>@drawable/backg</item>
+    </string-array>
+
+    <string name="app_name">הועד שלי</string>
+ <string name="join_building_text">הצטרף לבניין</string>
+    <string name="apartment_number_text">מספר דירה</string>
+    <string name="problem_text">קרתה תקלה אנא נסה/י שנית</string>
+    <string name="family">משפחת</string>
+
+    <string name="hello_user">שלום</string>
+    <string name="username">שם משתמש</string>
+    <string name="password">סיסמא</string>
+    <string name="login">התחבר</string>
+    <string name="fullname">שם משפחה</string>
+    <string name="chooseImg">בחר תמונה</string>
+    <string name="email">אימייל</string>
+    <string name="cantDeleteMessage">אינך יכול למחוק הודעה זו</string>
+    <string name="password2">הכנס סיסמא שוב</string>
+    <string name="buildingcodestring">קוד בניין:</string>
+    <string name="no_internet_connection_msg">אין חיבור לרשת</string>
+    <string name="empty_edittext_msg">אנא מלא/י את כל השדות</string>
+    <string name="cant_use_hebrew_username">שם המשתמש יכול להכיל אותיות באנגלית קו-תחתון ומספרים בלבד</string>
+    <string name="street">רחוב</string>
+    <string name="home_number">מספר בית</string>
+    <string name="paypal_account">אימייל פיי-פל לקבלת תשלומים</string>
+    <string name="home_number2">כניסה (במידה ויש)</string>
+    <string name="home_number2text">כניסה</string>
+    <string name="must_fildes">* (שדות חובה)</string>
+    <string name="must_street">נא להזין רחוב</string>
+    <string name="must_home_number">נא להזין מספר בית</string>
+    <string name="must_city">נא לבחור עיר</string>
+    <string name="treating">בטיפול</string>
+    <string name="notTreated">לא טופל</string>
+    <string name="wait">טוען... אנא המתן</string>
+    <string name="login_problem_text">שגיאת התחברות, נסה שוב מאוחר יותר</string>
+    <string name="passwordVerifyText">סיסמאות לא תואמות</string>
+    <string name="login_username_input_verify">אנא הכנס/י שם משתמש</string>
+    <string name="login_password_input_verify">אנא הכנס/י סיסמא</string>
+    <string name="building_code_exists_error">אופס! קרתה שגיאה אנא נסה/י שנית</string>
+    <string name="not_in_b_msg1">הודעה: אינך שייך לבניין</string>
+    <string name="not_in_b_msg2">אנא בחר באחת מהאפשרויות</string>
+    <string name="forgot_password">שכחת את הסיסמה? לחץ/י כאן</string>
+    <string name="b_code_input_hint">הכנס/י קוד בניין</string>
+    <string name="b_code_less_nums">קוד בניין חייב להכיל 6 ספרות בלבד!</string>
+    <string name="logoutActionBar">התנתק</string>
+    <string name="openNavigationDrawer">תפריט</string>
+    <string name="about">אודות</string>
+    <string name="signup_succeed">ההרשמה בוצעה בהצלחה</string>
+
+    <!--About Dialog-->
+    <string name="about_dialog_title">אודות הועד שלי</string>
+    <string name="about_dialog_btn">אישור</string>
+    <string name="about_dialog_design">עיצוב: דניאל משרקי ואיתי ספקטור.</string>
+    <string name="about_dialog_code">פיתוח:</string>
+    <string name="about_dialog_shlomi">- שלומי פרסקו</string>
+    <string name="about_dialog_itay">- איתי ספקטור</string>
+    <string name="about_dialog_daniel">- דניאל משרקי</string>
+
+    <string-array name="login_page_array">
+        <item>תפריט</item>
+        <item>של</item>
+        <item>מסך</item>
+        <item>לוגין</item>
+    </string-array>
+
+
+    <string-array name="pages_array">
+        <item>לוח מודעות</item>
+        <item>לוח תקלות</item>
+        <item>תשלומים</item>
+        <item>הוצאות הבניין</item>
+        <item>דיירים</item>
+    </string-array>
+    <!-- Failures Screen Strings -->
+    <string name="failuresDialogTitle">הוספת תקלה</string>
+    <string name="failuresDialogName">שם תקלה</string>
+    <string name="failuresDialogData">פירוט תקלה</string>
+    <string name="failures_none">אין</string>
+    <string name="failuresAddDialogTitle">הכנס הצעת מחיר</string>
+    <string name="failuresAddDialogName">שם בעל מקצוע</string>
+    <string name="failuresAddDialogData">מחיר</string>
+    <string name="failuresApprovalDialogTitle">דיירים מאשרים</string>
+    <string name="offerExists">קיימת הצעה כבר</string>
+    <string name="deleteFailure">פעולה זו תגרום למחיקת התקלה. האם אתה בטוח?</string>
+    
+    <!-- Notices Screen Strings -->
+    <string name="noticesDialogTitle">הוספת מודעה</string>
+    <string name="add_note">הוסף מודעה</string>
+    <string name="noticesDialogName">שם תקלה</string>
+    <string name="noticesDialogData">פירוט מודעה</string>
+    <string name="notices_none">אין</string>
+
+    <!-- login Screen forgot password Strings -->
+    <string name="enter_email">אנא הכנס/י כתובת אימייל</string>
+    <string name="res_pass_dialog">אפס/י סיסמא</string>
+    <string name="cancel">ביטול</string>
+    <string name="empty_email">אנא הכנס/י כתובת אימייל</string>
+    
+    <!-- notices show notice dialog -->
+<string name="noticesShowDialogTitle">הוספת מודעה</string>
+    <string name="noticesShowDialogName">שם תקלה</string>
+    <string name="noticesShowDialogData">פירוט מודעה</string>
+    <string name="empty_notice">לא הוכנסו נתונים</string>
+
+    
+    <!-- תוספת לקובץ -->
+    <!-- notices are you sure dialog -->
+    <string name="title">פעולה זו תגרום למחיקת כל המודעות. האם אתה בטוח?</string>
+    <string name="yes">כן</string>
+    <string name="no">לא</string>
+    
+    <!-- failures dialogs -->
+    <string name="dialogTitle">ערוך הצעת מחיר</string>
+    <string name="shekelSign">\₪ </string>
+    
+    
+    <!--Layout Titles-->
+    <string name="SignUpScreenTitle">הרשמה</string>
+    <string name="CreateBuildingTitle">הקם בניין</string>
+    <string name="NoticeBoardScreenTitle">לוח מודעות</string>
+    <string name="FailuresScreenTitle">מסך תקלות</string>
+    <string name="PaymentsTitle">דף תשלומים</string>
+    <string name="UserProfileTitle">פרופיל משתמש</string>
+    <string name="UsersScreenTitle">ניהול דיירים</string>
+    <string name="NotInBuildingScreenTitle">אינך שייך לבניין</string>
+
+    <string name="choose_city">בחר עיר</string>
+    <string-array name="citys_array">
+        <item>בחר עיר</item>
+        <item>רמלה</item>
+        <item>ראשון-לציון</item>
+        <item>תל-אביב</item>
+        <item>ירושלים</item>
+        <item>כפר-סבא</item>
+        <item>רמת-גן</item>
+        <item>צפת</item>
+        <item>הרצליה</item>
+        <item>רמלה</item>
+        <item>ראשון-לציון</item>
+        <item>תל-אביב</item>
+        <item>ירושלים</item>
+        <item>כפר-סבא</item>
+        <item>רמת-גן</item>
+        <item>צפת</item>
+        <item>הרצליה</item>
+        <item>רמלה</item>
+        <item>ראשון-לציון</item>
+        <item>תל-אביב</item>
+        <item>ירושלים</item>
+        <item>כפר-סבא</item>
+        <item>רמת-גן</item>
+        <item>צפת</item>
+        <item>הרצליה</item>
+        <item>רמלה</item>
+        <item>ראשון-לציון</item>
+        <item>תל-אביב</item>
+        <item>ירושלים</item>
+        <item>כפר-סבא</item>
+        <item>רמת-גן</item>
+        <item>צפת</item>
+        <item>הרצליה</item>
+        <item>רמלה</item>
+        <item>ראשון-לציון</item>
+        <item>תל-אביב</item>
+        <item>ירושלים</item>
+        <item>כפר-סבא</item>
+        <item>רמת-גן</item>
+        <item>צפת</item>
+        <item>הרצליה</item>
+    </string-array>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+</resources>
