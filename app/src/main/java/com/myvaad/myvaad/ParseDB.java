@@ -804,7 +804,9 @@ public class ParseDB {
 				e.printStackTrace();
 			}
 		}
-		
+
+
+    /**  UPDATE OF Daniel to get user ObjectId String **/
 		//***********************NEW ITAI 22/4
 		//get users list from building except for admin
 		protected List getUsersList(){
@@ -822,11 +824,13 @@ public class ParseDB {
 				for(ParseObject usersRow:users){
 					List rowUserList= new ArrayList();
 	    			//get specific data from each row					
-	    			String familyName= usersRow.getString("familyName");    			
+	    			String familyName= usersRow.getString("familyName");
+                    String userObjectId= usersRow.getObjectId().toString();
 	    			ParseFile userPicture=usersRow.getParseFile("picture");
 	    			Bitmap userPic=parseFileToBitmap(userPicture);	
 	    			rowUserList.add(familyName); //0
-	    			rowUserList.add(userPic);	 //1			
+	    			rowUserList.add(userPic);	 //1
+                    rowUserList.add(userObjectId); //2
 	    			outputUsersList.add(rowUserList);
 	    		}
 			} catch (ParseException e) {

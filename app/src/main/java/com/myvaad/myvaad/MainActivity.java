@@ -42,6 +42,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.parse.Parse;
+import com.parse.ParseInstallation;
+
 import adapters.NavAdapter;
 import dialogs.AboutDialog;
 
@@ -92,12 +94,14 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         fa=this;
-        //To connect with parse - we need to provide 2 keys: appId & clientId
-        String appId="QdwF666zm76ORQcn4KF6JNwDfsb6cj97QunbpT1s";
-        String clientId="OiJI3KdONEN9jML6Mi6r6iQTpR8mIOBv3YgsUhdv";
+
         //Initialize with keys
-        Parse.initialize(this, appId, clientId);
+        Parse.initialize(this);
         db=ParseDB.getInstance(this);
+
+        //Parse save user in install
+        ParseInstallation.getCurrentInstallation().put("userNamePush",(db.getcurrentUser().getObjectId()).toString());
+        ParseInstallation.getCurrentInstallation().saveInBackground();
 
         mTitle = mDrawerTitle = getTitle();
         mPlanetTitles = getResources().getStringArray(R.array.planets_array);
