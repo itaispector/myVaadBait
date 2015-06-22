@@ -80,7 +80,9 @@ public class UsersAdapter extends BaseAdapter {
             holder = (ViewHolder)convertView.getTag();
 		
 		//setting the data of the row
-		holder.familyName.setText(" משפחת"+((List) users.get(idx)).get(0));
+		List myUsers = (List)users.get(idx);
+        String familyName = (String)myUsers.get(0);
+        holder.familyName.setText("משפחת "+familyName);
 		holder.userImg.setImageBitmap((Bitmap)((List) users.get(idx)).get(1));
         holder.sendMsg.setOnClickListener(new View.OnClickListener() {
             @Override
