@@ -1348,4 +1348,63 @@ public class ParseDB {
 		androidPush.sendInBackground();
 	}
 
+	//get Current User Building Total Expenses ******Shlomi new 21/6/15******
+
+	protected int getCurrentUserTotalExpenses(){
+		int totalExpensesAmount = 0;
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("payments");
+		//Query Constraints-->all users from specific building
+		query.whereEqualTo("buildingCode",getCurrentUserBuildingCode());
+		query.whereEqualTo("paymentType", "vaad");
+		query.whereEqualTo("paidBy", getCurrentUserObjectId());
+		query.whereEqualTo("paymentApproved", true);
+		query.orderByDescending("createdAt");
+		List <ParseObject> payments=null;
+		try {
+			//finding all payments for current user
+			payments=query.find();
+			for(ParseObject paymentRow:payments){
+
+				//get specific data from each row
+				String amount=paymentRow.getString("amount");
+				totalExpensesAmount += Integer.parseInt(amount);
+
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+			Log.i("***Parse Exception***", e.getLocalizedMessage());
+		}
+
+		return totalExpensesAmount;
+	}
+
+	//get Current User Building Total Expenses ******Shlomi new 21/6/15******
+
+	protected int getCurrentUserBuildingTotalExpenses(){
+		int totalExpensesAmount = 0;
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("payments");
+		//Query Constraints-->all users from specific building
+		query.whereEqualTo("buildingCode",getCurrentUserBuildingCode());
+		query.whereEqualTo("paymentType", "regular");
+		//query.whereEqualTo("paymentApproved", true);
+		query.orderByDescending("createdAt");
+		List <ParseObject> payments=null;
+		try {
+			//finding all payments for current user
+			payments=query.find();
+			for(ParseObject paymentRow:payments){
+
+				//get specific data from each row
+				String amount=paymentRow.getString("amount");
+				totalExpensesAmount += Integer.parseInt(amount);
+
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+			Log.i("***Parse Exception***s", e.getLocalizedMessage());
+		}
+
+		return totalExpensesAmount;
+	}
+
 }
