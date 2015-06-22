@@ -27,6 +27,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
@@ -71,7 +72,7 @@ import dialogs.AboutDialog;
  * An action should be an operation performed on the current contents of the window,
  * for example enabling or disabling a data overlay on top of the current content.</p>
  */
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private RelativeLayout mDrawerContent,navUserNamePic;
@@ -209,7 +210,7 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    /* The click listner for ListView in the navigation drawer */
+    /* The click listener for ListView in the navigation drawer */
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -221,9 +222,17 @@ public class MainActivity extends Activity {
         // update the main content by replacing fragments
         Fragment fragment0 = new NoticeBoardScreen();
         Fragment fragment1 = new FailuresScreen();
+        Fragment fragment2 = new ExpensesScreen();
         Fragment fragment3 = new PaymentsScreen();
         Fragment fragment4 = new UsersScreen();
         FragmentManager fragmentManager = getFragmentManager();
+
+        // update selected item and title, then close the drawer
+        mDrawerList.setItemChecked(position, true);
+        setTitle(mPlanetTitles[position]);
+        adapter.selected(position);
+        mDrawerLayout.closeDrawer(mDrawerContent);
+
         switch (position){
             case 0:
                 fragmentManager.beginTransaction().replace(R.id.content_frame, fragment0).commit();
@@ -232,7 +241,7 @@ public class MainActivity extends Activity {
                 fragmentManager.beginTransaction().replace(R.id.content_frame, fragment1).commit();
                 break;
             case 2:
-                Toast.makeText(this,"2",Toast.LENGTH_SHORT).show();
+            	fragmentManager.beginTransaction().replace(R.id.content_frame, fragment2).commit();
                 break;
             case 3:
             	fragmentManager.beginTransaction().replace(R.id.content_frame, fragment3).commit();
@@ -241,11 +250,7 @@ public class MainActivity extends Activity {
             	fragmentManager.beginTransaction().replace(R.id.content_frame, fragment4).commit();
                 break;
         }
-        // update selected item and title, then close the drawer
-        mDrawerList.setItemChecked(position, true);
-        setTitle(mPlanetTitles[position]);
-        adapter.selected(position);
-        mDrawerLayout.closeDrawer(mDrawerContent);
+
     }
     public void userProfile(View v){
         Intent i = new Intent(this,UserProfile.class);
