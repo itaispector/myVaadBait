@@ -1385,6 +1385,7 @@ public class ParseDB {
 	//get Current User Building Total Expenses ******Shlomi new 21/6/15******
 
 	protected int getCurrentUserBuildingTotalExpenses(){
+		//bli bli
 		int totalExpensesAmount = 0;
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("payments");
 		//Query Constraints-->all users from specific building
