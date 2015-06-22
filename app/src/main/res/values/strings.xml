@@ -27,6 +27,10 @@
     <string name="action_websearch">Web search</string>
     <string name="app_not_available">Sorry, there\'s no web browser available</string>
 
+    <!-- Parse Id and Key-->
+    <string name="parse_app_id">QdwF666zm76ORQcn4KF6JNwDfsb6cj97QunbpT1s</string>
+    <string name="parse_client_key">OiJI3KdONEN9jML6Mi6r6iQTpR8mIOBv3YgsUhdv</string>
+
 
     <string-array name="array_main_menu">
         <item>@drawable/backg</item>
