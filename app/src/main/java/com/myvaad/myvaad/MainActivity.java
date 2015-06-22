@@ -48,6 +48,7 @@ import adapters.NavAdapter;
 import dialogs.AboutDialog;
 
 /**
+ * update from shlomi
  * This example illustrates a common usage of the DrawerLayout widget
  * in the Android support library.
  * <p/>

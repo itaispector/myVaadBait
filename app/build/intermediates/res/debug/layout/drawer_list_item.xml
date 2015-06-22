@@ -24,4 +24,4 @@
     android:paddingBottom="8dp"
     android:textColor="#fff"
     android:background="@drawable/navigation_drawer_activated_bg"
-    android:minHeight="?android:attr/listPreferredItemHeightSmall"/><!-- From: file:/Users/itaispector/StudioProjects/myVaad/app/src/main/res/layout/drawer_list_item.xml -->
+    android:minHeight="?android:attr/listPreferredItemHeightSmall"/><!-- From: file:/C:/Users/שלומי/StudioProjects/myVaadBait/app/src/main/res/layout/drawer_list_item.xml -->

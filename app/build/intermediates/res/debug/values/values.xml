@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/Users/itaispector/StudioProjects/myVaad/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/שלומי/StudioProjects/myVaadBait/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string-array name="array_main_menu">
         <item>@drawable/backg</item>
@@ -72,7 +72,7 @@
         <item>דף תשלומים</item>
         <item>התנתק</item>
     </string-array>
-    <!-- From: file:/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/res/values/values.xml -->
+    <!-- From: file:/C:/Users/שלומי/StudioProjects/myVaadBait/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/res/values/values.xml -->
     <eat-comment/>
     <attr format="reference" name="actionBarDivider"/>
     <attr format="reference" name="actionBarItemBackground"/>
@@ -143,9 +143,19 @@
     <bool name="abc_config_allowActionMenuItemTextWithIcon">false</bool>
     <bool name="abc_config_showMenuShortcutsWhenKeyboardPresent">false</bool>
     <bool name="abc_split_action_bar_is_narrow">true</bool>
+    <!-- From: file:/C:/Users/שלומי/StudioProjects/myVaadBait/app/src/main/res/values/color.xml -->
+    <eat-comment/>
+    <color name="ColorPrimary">#1989AB</color>
+    <color name="ColorPrimaryDark">#007092</color>
+    <!-- From: file:/C:/Users/שלומי/StudioProjects/myVaadBait/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/res/values/values.xml -->
+    <eat-comment/>
     <color name="abc_search_url_text_normal">#7fa87f</color>
     <color name="abc_search_url_text_pressed">@android:color/black</color>
     <color name="abc_search_url_text_selected">@android:color/black</color>
+    <!-- From: file:/C:/Users/שלומי/StudioProjects/myVaadBait/app/src/main/res/values/color.xml -->
+    <eat-comment/>
+    <color name="selector">#fff</color>
+    <color name="tabsScrollColor">#006382</color>
     <declare-styleable name="ActionBar"><attr name="navigationMode"><enum name="normal" value="0"/><enum name="listMode" value="1"/><enum name="tabMode" value="2"/></attr><attr name="displayOptions"><flag name="useLogo" value="0x1"/><flag name="showHome" value="0x2"/><flag name="homeAsUp" value="0x4"/><flag name="showTitle" value="0x8"/><flag name="showCustom" value="0x10"/><flag name="disableHome" value="0x20"/></attr><attr name="title"/><attr format="string" name="subtitle"/><attr format="reference" name="titleTextStyle"/><attr format="reference" name="subtitleTextStyle"/><attr format="reference" name="icon"/><attr format="reference" name="logo"/><attr format="reference" name="divider"/><attr format="reference" name="background"/><attr format="reference|color" name="backgroundStacked"/><attr format="reference|color" name="backgroundSplit"/><attr format="reference" name="customNavigationLayout"/><attr name="height"/><attr format="reference" name="homeLayout"/><attr format="reference" name="progressBarStyle"/><attr format="reference" name="indeterminateProgressStyle"/><attr format="dimension" name="progressBarPadding"/><attr format="dimension" name="itemPadding"/></declare-styleable>
     <declare-styleable name="ActionBarLayout"><attr name="android:layout_gravity"/></declare-styleable>
     <declare-styleable name="ActionBarWindow"><attr format="boolean" name="windowActionBar"/><attr format="boolean" name="windowActionBarOverlay"/><attr format="boolean" name="windowSplitActionBar"/><attr format="dimension|fraction" name="windowFixedWidthMajor"/><attr format="dimension|fraction" name="windowFixedHeightMinor"/><attr format="dimension|fraction" name="windowFixedWidthMinor"/><attr format="dimension|fraction" name="windowFixedHeightMajor"/></declare-styleable>
@@ -162,6 +172,8 @@
     <declare-styleable name="Spinner"><attr format="reference" name="prompt"/><attr format="enum" name="spinnerMode"><enum name="dialog" value="0"/><enum name="dropdown" value="1"/></attr><attr name="android:dropDownSelector"/><attr name="android:popupBackground"/><attr name="android:dropDownVerticalOffset"/><attr name="android:dropDownHorizontalOffset"/><attr name="android:dropDownWidth"/><attr format="reference" name="popupPromptView"/><attr name="android:gravity"/><attr format="boolean" name="disableChildrenWhenDisabled"/></declare-styleable>
     <declare-styleable name="Theme"><attr format="reference" name="actionDropDownStyle"/><attr format="dimension" name="dropdownListPreferredItemHeight"/><attr format="reference" name="popupMenuStyle"/><attr format="dimension" name="panelMenuListWidth"/><attr format="reference" name="panelMenuListTheme"/><attr format="reference" name="listChoiceBackgroundIndicator"/></declare-styleable>
     <declare-styleable name="View"><attr format="dimension" name="paddingStart"/><attr format="dimension" name="paddingEnd"/><attr name="android:focusable"/></declare-styleable>
+    <!-- From: file:/C:/Users/שלומי/StudioProjects/myVaadBait/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/res/values/values.xml -->
+    <eat-comment/>
     <dimen name="abc_action_bar_default_height">48dip</dimen>
     <dimen name="abc_action_bar_icon_vertical_padding">8dip</dimen>
     <dimen name="abc_action_bar_progress_bar_size">40dp</dimen>
@@ -190,7 +202,7 @@
     <item name="progress_circular" type="id"/>
     <item name="progress_horizontal" type="id"/>
     <integer name="abc_max_action_buttons">2</integer>
-    <!-- From: file:/Users/itaispector/StudioProjects/myVaad/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/שלומי/StudioProjects/myVaadBait/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="CreateBuildingTitle">הקם בניין</string>
     <string name="FailuresScreenTitle">מסך תקלות</string>
@@ -200,7 +212,7 @@
     <string name="SignUpScreenTitle">הרשמה</string>
     <string name="UserProfileTitle">פרופיל משתמש</string>
     <string name="UsersScreenTitle">ניהול דיירים</string>
-    <!-- From: file:/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/res/values/values.xml -->
+    <!-- From: file:/C:/Users/שלומי/StudioProjects/myVaadBait/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/res/values/values.xml -->
     <eat-comment/>
     <string name="abc_action_bar_home_description">Navigate home</string>
     <string name="abc_action_bar_up_description">Navigate up</string>
@@ -215,7 +227,7 @@
     <string name="abc_searchview_description_voice">Voice search</string>
     <string name="abc_shareactionprovider_share_with">Share with</string>
     <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
-    <!-- From: file:/Users/itaispector/StudioProjects/myVaad/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/שלומי/StudioProjects/myVaadBait/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="about">אודות</string>
     <string name="about_dialog_btn">אישור</string>
@@ -233,6 +245,7 @@
     <string name="app_not_available">Sorry, there\'s no web browser available</string>
     <string name="b_code_input_hint">הכנס/י קוד בניין</string>
     <string name="b_code_less_nums">קוד בניין חייב להכיל 6 ספרות בלבד!</string>
+    <string name="buildingExpenses">הוצאות בניין</string>
     <string name="building_code_exists_error">אופס! קרתה שגיאה אנא נסה/י שנית</string>
     <string name="buildingcodestring">קוד בניין:</string>
     <string name="cancel">ביטול</string>
@@ -275,6 +288,7 @@
     <string name="must_fildes">* (שדות חובה)</string>
     <string name="must_home_number">נא להזין מספר בית</string>
     <string name="must_street">נא להזין רחוב</string>
+    <string name="myExpenses">הוצאות שלי</string>
     <string name="no">לא</string>
     <string name="no_internet_connection_msg">אין חיבור לרשת</string>
     <string name="notTreated">לא טופל</string>
@@ -289,21 +303,25 @@
     <string name="notices_none">אין</string>
     <string name="offerExists">קיימת הצעה כבר</string>
     <string name="openNavigationDrawer">תפריט</string>
+    <string name="parse_app_id">QdwF666zm76ORQcn4KF6JNwDfsb6cj97QunbpT1s</string>
+    <string name="parse_client_key">OiJI3KdONEN9jML6Mi6r6iQTpR8mIOBv3YgsUhdv</string>
     <string name="password">סיסמא</string>
     <string name="password2">הכנס סיסמא שוב</string>
     <string name="passwordVerifyText">סיסמאות לא תואמות</string>
     <string name="paypal_account">אימייל פיי-פל לקבלת תשלומים</string>
     <string name="problem_text">קרתה תקלה אנא נסה/י שנית</string>
     <string name="res_pass_dialog">אפס/י סיסמא</string>
+    <string name="shekel">₪</string>
     <string name="shekelSign">\₪ </string>
     <string name="signup_succeed">ההרשמה בוצעה בהצלחה</string>
     <string name="street">רחוב</string>
     <string name="title">פעולה זו תגרום למחיקת כל המודעות. האם אתה בטוח?</string>
+    <string name="total">סך הכל</string>
     <string name="treating">בטיפול</string>
     <string name="username">שם משתמש</string>
     <string name="wait">טוען... אנא המתן</string>
     <string name="yes">כן</string>
-    <!-- From: file:/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/res/values/values.xml -->
+    <!-- From: file:/C:/Users/שלומי/StudioProjects/myVaadBait/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/res/values/values.xml -->
     <eat-comment/>
     <style name="TextAppearance.AppCompat.Base.CompactMenu.Dialog" parent="android:TextAppearance.Medium">
         <item name="android:textColor">@android:color/primary_text_light</item>

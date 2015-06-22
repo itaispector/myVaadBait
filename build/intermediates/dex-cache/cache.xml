@@ -2,60 +2,60 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\Daniel\Desktop\AndroidStudio\myVaadBait\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\19.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28">
-        <dex dex="C:\Users\Daniel\Desktop\AndroidStudio\myVaadBait\app\build\intermediates\pre-dexed\debug\classes-0a6af2d261b177dfe12991efe966ca7862470002.jar" />
-    </item>
-    <item
-        jar="C:\Users\Daniel\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-android\1.2.0\6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd\bolts-android-1.2.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd">
-        <dex dex="C:\Users\Daniel\Desktop\AndroidStudio\myVaadBait\app\build\intermediates\pre-dexed\debug\bolts-android-1.2.0-8fec6d767a3e95c12cc321ab6088a13b44c6c731.jar" />
-    </item>
-    <item
-        jar="C:\Users\Daniel\Desktop\AndroidStudio\myVaadBait\app\libs\PayPalAndroidSDK.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="c45447bd0c78f3dbd2c7ada82fee7b951a7b93a0">
-        <dex dex="C:\Users\Daniel\Desktop\AndroidStudio\myVaadBait\app\build\intermediates\pre-dexed\debug\PayPalAndroidSDK-d4b3762efe4bb03e097035f07d7f0c791416e75b.jar" />
-    </item>
-    <item
-        jar="C:\Users\Daniel\Desktop\AndroidStudio\myVaadBait\app\libs\Parse-1.9.2.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="fe739334780fe321141e62720822c2d456061899">
-        <dex dex="C:\Users\Daniel\Desktop\AndroidStudio\myVaadBait\app\build\intermediates\pre-dexed\debug\Parse-1.9.2-c09151d0fd8d20f0b8c7eb1da8e0d5f421b015ec.jar" />
-    </item>
-    <item
-        jar="C:\Users\Daniel\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
+        jar="C:\Users\שלומי\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
-        <dex dex="C:\Users\Daniel\Desktop\AndroidStudio\myVaadBait\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-bc6d48aa256a944dae514efb7620be498f80b8e8.jar" />
+        <dex dex="C:\Users\שלומי\StudioProjects\myVaadBait\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-9eca1231ebaa6d4917f4b7be429feceb56e257e0.jar" />
     </item>
     <item
-        jar="C:\Users\Daniel\Desktop\AndroidStudio\myVaadBait\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\jars\classes.jar"
+        jar="C:\Users\שלומי\StudioProjects\myVaadBait\app\libs\Parse-1.9.2.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="C:\Users\Daniel\Desktop\AndroidStudio\myVaadBait\app\build\intermediates\pre-dexed\debug\classes-0e80f0f7c576a6e9b6f9b9da8e8efa5cf0625366.jar" />
+        sha1="fe739334780fe321141e62720822c2d456061899">
+        <dex dex="C:\Users\שלומי\StudioProjects\myVaadBait\app\build\intermediates\pre-dexed\debug\Parse-1.9.2-ac74c1a2f355969c2013ea959193f5d0f1263515.jar" />
     </item>
     <item
-        jar="C:\Users\Daniel\Desktop\AndroidStudio\myVaadBait\app\libs\bolts-android-1.2.0-javadoc.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="0b98cf117d6ed838f776a7f0765c7f04191d7b8e">
-        <dex dex="C:\Users\Daniel\Desktop\AndroidStudio\myVaadBait\app\build\intermediates\pre-dexed\debug\bolts-android-1.2.0-javadoc-e2b92a425fcf16e840e3c282b8c00c59c90e3be5.jar" />
-    </item>
-    <item
-        jar="C:\Users\Daniel\Desktop\AndroidStudio\myVaadBait\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\jars\libs\internal_impl-21.0.3.jar"
+        jar="C:\Users\שלומי\StudioProjects\myVaadBait\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\jars\libs\internal_impl-21.0.3.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="C:\Users\Daniel\Desktop\AndroidStudio\myVaadBait\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-df1f5731990d61e159282674c11cd13e0c57e923.jar" />
+        <dex dex="C:\Users\שלומי\StudioProjects\myVaadBait\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-e8e0be52ba78e419295436bdf5f227b4d0fd996c.jar" />
+    </item>
+    <item
+        jar="C:\Users\שלומי\StudioProjects\myVaadBait\app\libs\PayPalAndroidSDK.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="c45447bd0c78f3dbd2c7ada82fee7b951a7b93a0">
+        <dex dex="C:\Users\שלומי\StudioProjects\myVaadBait\app\build\intermediates\pre-dexed\debug\PayPalAndroidSDK-bb2d22a4fb584a9310f2ec0064d3c62ba44d4dcb.jar" />
+    </item>
+    <item
+        jar="C:\Users\שלומי\StudioProjects\myVaadBait\app\libs\bolts-android-1.2.0-javadoc.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="0b98cf117d6ed838f776a7f0765c7f04191d7b8e">
+        <dex dex="C:\Users\שלומי\StudioProjects\myVaadBait\app\build\intermediates\pre-dexed\debug\bolts-android-1.2.0-javadoc-4c001fef8c71cdcfaefb31127a02159e538ab67d.jar" />
+    </item>
+    <item
+        jar="C:\Users\שלומי\StudioProjects\myVaadBait\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="C:\Users\שלומי\StudioProjects\myVaadBait\app\build\intermediates\pre-dexed\debug\classes-9b3c487855c13a7862a852464bf1800ed2a90ec3.jar" />
+    </item>
+    <item
+        jar="C:\Users\שלומי\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-android\1.2.0\6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd\bolts-android-1.2.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd">
+        <dex dex="C:\Users\שלומי\StudioProjects\myVaadBait\app\build\intermediates\pre-dexed\debug\bolts-android-1.2.0-76803b918b9af19d975de8395f27c1e3f912ac3a.jar" />
+    </item>
+    <item
+        jar="C:\Users\שלומי\StudioProjects\myVaadBait\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\19.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28">
+        <dex dex="C:\Users\שלומי\StudioProjects\myVaadBait\app\build\intermediates\pre-dexed\debug\classes-a5eace8408a5a8e55468fc90e8cddaac2329ac47.jar" />
     </item>
 
 </items>

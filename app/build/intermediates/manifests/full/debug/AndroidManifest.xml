@@ -18,10 +18,24 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
+    <permission
+        android:name="com.myvaad.myvaad.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.myvaad.myvaad.permission.C2D_MESSAGE" />
+
     <application
+        android:name="com.myvaad.myvaad.MyVaadApplication"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
+        <meta-data
+            android:name="com.parse.APPLICATION_ID"
+            android:value="@string/parse_app_id" />
+        <meta-data
+            android:name="com.parse.CLIENT_KEY"
+            android:value="@string/parse_client_key" />
+
         <activity
             android:name="com.myvaad.myvaad.MainPreloader"
             android:screenOrientation="portrait"
@@ -73,42 +87,35 @@
             android:screenOrientation="locked"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" >
         </activity>
-        <activity
-            android:name="com.myvaad.myvaad.VaadMainScreen"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
-        </activity>
-        <activity
-            android:name="com.myvaad.myvaad.NoticeBoardScreen"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
-        </activity>
-        <activity
-            android:name="com.myvaad.myvaad.FailuresScreen"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
-        </activity>
-        <activity
-            android:name="com.myvaad.myvaad.PaymentsScreen"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
-        </activity>
-        <activity
-            android:name="com.myvaad.myvaad.PayPalActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
-        </activity>
-        <activity
-            android:name="com.myvaad.myvaad.UsersScreen"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
-        </activity>
+
+        <!-- Parse PushService -->
+        <service android:name="com.parse.PushService" />
+
+        <receiver android:name="com.parse.ParseBroadcastReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.parse.ParsePushBroadcastReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.parse.push.intent.RECEIVE" />
+                <action android:name="com.parse.push.intent.DELETE" />
+                <action android:name="com.parse.push.intent.OPEN" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.parse.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="com.myvaad.myvaad" />
+            </intent-filter>
+        </receiver>
 
         <service
             android:name="com.paypal.android.sdk.payments.PayPalService"
