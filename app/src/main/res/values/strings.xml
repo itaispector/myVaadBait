@@ -143,7 +143,13 @@
     <string name="title">פעולה זו תגרום למחיקת כל המודעות. האם אתה בטוח?</string>
     <string name="yes">כן</string>
     <string name="no">לא</string>
-    
+
+    <!-- Expenses screen-->
+    <string name="myExpenses">הוצאות שלי</string>
+    <string name="buildingExpenses">הוצאות בניין</string>
+    <string name="shekel">₪</string>
+    <string name="total">סך הכל</string>
+
     <!-- failures dialogs -->
     <string name="dialogTitle">ערוך הצעת מחיר</string>
     <string name="shekelSign">\₪ </string>
