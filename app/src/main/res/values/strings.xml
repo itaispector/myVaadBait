@@ -41,7 +41,7 @@
     </string-array>
 
     <string name="app_name">הועד שלי</string>
- <string name="join_building_text">הצטרף לבניין</string>
+    <string name="join_building_text">הצטרף לבניין</string>
     <string name="apartment_number_text">מספר דירה</string>
     <string name="problem_text">קרתה תקלה אנא נסה/י שנית</string>
     <string name="family">משפחת</string>
@@ -88,7 +88,7 @@
 
     <!--About Dialog-->
     <string name="about_dialog_title">אודות הועד שלי</string>
-    <string name="about_dialog_btn">אישור</string>
+    <string name="ok">אישור</string>
     <string name="about_dialog_design">עיצוב: דניאל משרקי ואיתי ספקטור.</string>
     <string name="about_dialog_code">פיתוח:</string>
     <string name="about_dialog_shlomi">- שלומי פרסקו</string>
@@ -121,7 +121,7 @@
     <string name="failuresApprovalDialogTitle">דיירים מאשרים</string>
     <string name="offerExists">קיימת הצעה כבר</string>
     <string name="deleteFailure">פעולה זו תגרום למחיקת התקלה. האם אתה בטוח?</string>
-    
+
     <!-- Notices Screen Strings -->
     <string name="noticesDialogTitle">הוספת מודעה</string>
     <string name="add_note">הוסף מודעה</string>
@@ -134,14 +134,14 @@
     <string name="res_pass_dialog">אפס/י סיסמא</string>
     <string name="cancel">ביטול</string>
     <string name="empty_email">אנא הכנס/י כתובת אימייל</string>
-    
+
     <!-- notices show notice dialog -->
-<string name="noticesShowDialogTitle">הוספת מודעה</string>
+    <string name="noticesShowDialogTitle">הוספת מודעה</string>
     <string name="noticesShowDialogName">שם תקלה</string>
     <string name="noticesShowDialogData">פירוט מודעה</string>
     <string name="empty_notice">לא הוכנסו נתונים</string>
 
-    
+
     <!-- תוספת לקובץ -->
     <!-- notices are you sure dialog -->
     <string name="title">פעולה זו תגרום למחיקת כל המודעות. האם אתה בטוח?</string>
@@ -157,8 +157,9 @@
     <!-- failures dialogs -->
     <string name="dialogTitle">ערוך הצעת מחיר</string>
     <string name="shekelSign">\₪ </string>
-    
-    
+    <!-- add user dialog-->
+    <string name="userDialogTitle">הוספת דייר</string>
+
     <!--Layout Titles-->
     <string name="SignUpScreenTitle">הרשמה</string>
     <string name="CreateBuildingTitle">הקם בניין</string>
