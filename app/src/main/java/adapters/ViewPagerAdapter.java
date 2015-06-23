@@ -1,10 +1,13 @@
-package com.myvaad.myvaad;
+package adapters;
 
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
- 
+
+import com.myvaad.myvaad.BuildingExpenses;
+import com.myvaad.myvaad.UserExpenses;
+
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
  
