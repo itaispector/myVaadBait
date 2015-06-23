@@ -17,7 +17,7 @@
         android:paddingRight="10dp"
         android:paddingTop="10dp"
         android:scrollingCache="false"
-        android:smoothScrollbar="true"></ListView>
+        android:smoothScrollbar="true"/>
 
     <ImageView
         android:id="@+id/add_user_btnn"
