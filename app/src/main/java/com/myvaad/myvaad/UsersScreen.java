@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-
 public class UsersScreen extends Fragment {
     ListView usersList;
     UsersAdapter adapter;
