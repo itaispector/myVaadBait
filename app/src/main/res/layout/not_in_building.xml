@@ -1,80 +1,88 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main_login_screen"
-    android:layout_width="match_parent"
+<FrameLayout
+    android:id="@+id/content_framee"
     android:layout_height="match_parent"
-    android:background="@drawable/background">
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ImageView
-        android:id="@+id/MainLoginScreenLogo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/main_logo" />
 
-    <TextView
-        android:id="@+id/NotInBuildingMSG3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/MainLoginScreenLogo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="41dp"
-        android:paddingLeft="2dp"
-        android:text="@string/not_in_b_msg1"
-        android:textColor="#000000"
-        android:textSize="22sp"
-        android:textStyle="bold" />
+<RelativeLayout
+android:id="@+id/main_login_screen"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@drawable/background">
 
-    <TextView
-        android:id="@+id/NotInBuildingMSG"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/MainLoginScreenLogo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:text="@string/not_in_b_msg1"
-        android:textColor="#ffff2f2f"
-        android:textSize="22sp"
-        android:textStyle="bold" />
+<ImageView
+    android:id="@+id/MainLoginScreenLogo"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="10dp"
+    android:src="@drawable/main_logo" />
 
-    <TextView
-        android:id="@+id/NotInBuildingMSG2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/NotInBuildingMSG"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="@string/not_in_b_msg2"
-        android:textColor="#000000"
-        android:textSize="17sp" />
+<TextView
+    android:id="@+id/NotInBuildingMSG3"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/MainLoginScreenLogo"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="41dp"
+    android:paddingLeft="2dp"
+    android:text="@string/not_in_b_msg1"
+    android:textColor="#000000"
+    android:textSize="22sp"
+    android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/MainLoginScreenLoginBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/NotInBuildingMSG2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/join_building_btn"
-        android:onClick="joinBuilding" />
+<TextView
+    android:id="@+id/NotInBuildingMSG"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/MainLoginScreenLogo"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="40dp"
+    android:text="@string/not_in_b_msg1"
+    android:textColor="#ffff2f2f"
+    android:textSize="22sp"
+    android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/MainLoginScreenSignUpBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/MainLoginScreenLoginBtn"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/add_building_btn"
-        android:onClick="createBuilding" />
+<TextView
+    android:id="@+id/NotInBuildingMSG2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/NotInBuildingMSG"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="10dp"
+    android:text="@string/not_in_b_msg2"
+    android:textColor="#000000"
+    android:textSize="17sp" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
-        android:paddingLeft="-90dp"
-        android:src="@drawable/nav_logout_btn" />
+<Button
+    android:id="@+id/MainLoginScreenLoginBtn"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/NotInBuildingMSG2"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/join_building_btn"
+    android:onClick="joinBuilding" />
+
+<Button
+    android:id="@+id/MainLoginScreenSignUpBtn"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/MainLoginScreenLoginBtn"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/add_building_btn"
+    android:onClick="createBuilding" />
+
+<ImageView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_marginBottom="10dp"
+    android:paddingLeft="-90dp"
+    android:src="@drawable/nav_logout_btn" />
 
 
 </RelativeLayout>
+</FrameLayout>
