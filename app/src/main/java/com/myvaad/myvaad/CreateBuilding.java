@@ -89,7 +89,7 @@ public class CreateBuilding extends Fragment {
             }
         });
 
-        numberOfHouses = (EditText) dialogLayout.findViewById(R.id.CreateBuildingScreenBuildingHouseNumbers);
+        numberOfHouses = (EditText) rootView.findViewById(R.id.CreateBuildingScreenBuildingHouseNumbers);
         numberOfHouses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -145,7 +145,7 @@ public class CreateBuilding extends Fragment {
             toast = Toast.makeText(getActivity(), getString(R.string.must_home_number), Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.TOP, 0, 150);
             toast.show();
-        } else if (numOfHouse.matches("")) {
+        } else if (numOfHouse.matches("") || numOfHouse.matches("0")) {
             toast = Toast.makeText(getActivity(), getString(R.string.must_num_houses), Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.TOP, 0, 150);
             toast.show();
@@ -176,14 +176,14 @@ public class CreateBuilding extends Fragment {
 
         np = (NumberPicker) dialogLayout.findViewById(R.id.housesDialogNumberPicker);
         //set max value for np
-        String[] numbers = new String[50 / 1];
+        String[] numbers = new String[51 / 1];
         // set numbers of picker
         for (int i = 0; i < numbers.length; i++) {
-            numbers[i] = Integer.toString(i * 1 + 1);
+            numbers[i] = Integer.toString(i * 1 + 0);
         }
         np.setDisplayedValues(numbers);
         np.setMaxValue(numbers.length - 1);
-        np.setMinValue(2);
+        np.setMinValue(0);
         //disable picking loop
         np.setWrapSelectorWheel(false);
         //disable keyboard pop up
@@ -193,7 +193,7 @@ public class CreateBuilding extends Fragment {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                 //update number picker value
-                npValue = newVal * 1 + 1;
+                npValue = newVal * 1 + 0;
             }
         });
 
