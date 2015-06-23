@@ -1,19 +1,19 @@
-<RelativeLayout 
-        android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    android:background="@drawable/list_item_background"
-     xmlns:android="http://schemas.android.com/apk/res/android">
-        <TextView
+    android:background="@drawable/list_item_background">
+
+    <TextView
         android:id="@+id/addPaymentDialogTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:text="הוספת תשלום"
         android:textSize="20sp"
-        android:layout_centerHorizontal="true"
-        android:textStyle="bold"
-        />
-           <EditText
+        android:textStyle="bold" />
+
+    <EditText
         android:id="@+id/addPaymentDialogName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,33 +23,39 @@
         android:hint="תיאור התשלום לדוגמא מנקה"
         android:paddingLeft="8dp"
         android:paddingRight="8dp" />
-              <NumberPicker 
-        android:id="@+id/addPaymentDialogNumberPicker"
-        android:layout_width="wrap_content"
+
+    <EditText
+        android:id="@+id/addPaymentDialogPrice"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/addPaymentDialogName"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
-        android:soundEffectsEnabled="true"       
-        />
-    <Button 
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:inputType="number"
+        android:hint="@string/enterSum"
+        android:background="@drawable/edit_text_style"/>
+
+    <Button
         android:id="@+id/addPaymentDialogConfirmBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="הוסף תשלום"
-        android:layout_below="@id/addPaymentDialogNumberPicker"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        android:layout_below="@id/addPaymentDialogPrice"
+        android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
-        />
-    <Button 
+        android:text="הוסף תשלום" />
+
+    <Button
         android:id="@+id/addPaymentsDialogCancelBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ביטול"
-        android:layout_below="@id/addPaymentDialogNumberPicker"
         android:layout_alignParentLeft="true"
+        android:layout_below="@id/addPaymentDialogPrice"
         android:layout_marginLeft="10dp"
-        />  
-    
-    
+        android:text="ביטול" />
+
+
 </RelativeLayout>
