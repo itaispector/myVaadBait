@@ -1,30 +1,14 @@
 package com.myvaad.myvaad;
 
-import java.util.Date;
-
 import com.parse.ParseObject;
 import com.parse.ParseQueryAdapter;
-
-import com.parse.FindCallback;
-import com.parse.LogInCallback;
 import com.parse.Parse;
-import com.parse.ParseACL;
-import com.parse.ParseFile;
-import com.parse.ParseImageView;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
-import com.parse.SignUpCallback;
-import com.parse.ParseException;
-
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -33,7 +17,7 @@ public class UserExpenses extends Fragment {
 	int usersInBuilding = 5;
 	
 	  @Override
-	   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+	   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 	       View rootView =inflater.inflate(R.layout.user_expenses_layout,container,false);
 	        String appId="QdwF666zm76ORQcn4KF6JNwDfsb6cj97QunbpT1s";
 	        String clientId="OiJI3KdONEN9jML6Mi6r6iQTpR8mIOBv3YgsUhdv";
