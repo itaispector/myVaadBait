@@ -85,7 +85,7 @@
     <string name="openNavigationDrawer">תפריט</string>
     <string name="about">אודות</string>
     <string name="signup_succeed">ההרשמה בוצעה בהצלחה</string>
-
+<string name="enterSum">הכנס סכום</string>
     <!--About Dialog-->
     <string name="about_dialog_title">אודות הועד שלי</string>
     <string name="ok">אישור</string>
