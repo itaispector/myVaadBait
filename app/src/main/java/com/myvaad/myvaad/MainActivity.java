@@ -41,6 +41,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.parse.Parse;
 import com.parse.ParseInstallation;
 
@@ -79,12 +80,12 @@ import dialogs.AboutDialog;
 public class MainActivity extends FragmentActivity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
-    private RelativeLayout mDrawerContent,navUserNamePic;
+    private RelativeLayout mDrawerContent, navUserNamePic;
     private ActionBarDrawerToggle mDrawerToggle;
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private String[] mPlanetTitles;
-    private ImageView userImg,navLogoutBtn;
+    private ImageView userImg, navLogoutBtn;
     private TextView navUserName;
     Typeface font;
     NavAdapter adapter;
@@ -95,14 +96,14 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        fa=this;
+        fa = this;
 
         //Initialize with keys
         Parse.initialize(this);
-        db=ParseDB.getInstance(this);
+        db = ParseDB.getInstance(this);
 
         //Parse save user in install
-        ParseInstallation.getCurrentInstallation().put("userNamePush",(db.getcurrentUser().getObjectId()).toString());
+        ParseInstallation.getCurrentInstallation().put("userNamePush", (db.getcurrentUser().getObjectId()).toString());
         ParseInstallation.getCurrentInstallation().saveInBackground();
 
         mTitle = mDrawerTitle = getTitle();
@@ -110,7 +111,7 @@ public class MainActivity extends FragmentActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         mDrawerContent = (RelativeLayout) findViewById(R.id.relative_layout);
-        navUserNamePic = (RelativeLayout)findViewById(R.id.nav_username_pic);
+        navUserNamePic = (RelativeLayout) findViewById(R.id.nav_username_pic);
 
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
@@ -118,7 +119,7 @@ public class MainActivity extends FragmentActivity {
         /*
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,
                 R.layout.drawer_list_item, mPlanetTitles));*/
-        adapter =  new NavAdapter(this,db.isCurrentUserAdmin());
+        adapter = new NavAdapter(this, db.isCurrentUserAdmin());
         mDrawerList.setAdapter(adapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
@@ -138,7 +139,7 @@ public class MainActivity extends FragmentActivity {
                 R.drawable.ic_drawer,  /* nav drawer image to replace 'Up' caret */
                 R.string.drawer_open,  /* "open drawer" description for accessibility */
                 R.string.drawer_close  /* "close drawer" description for accessibility */
-                ) {
+        ) {
             public void onDrawerClosed(View view) {
                 getActionBar().setTitle(mTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
@@ -155,15 +156,15 @@ public class MainActivity extends FragmentActivity {
             selectItem(0);
         }
 
-        userImg=(ImageView)findViewById(R.id.user_nav_img);
-        navUserName=(TextView)findViewById(R.id.navUserName);
+        userImg = (ImageView) findViewById(R.id.user_nav_img);
+        navUserName = (TextView) findViewById(R.id.navUserName);
         userImg.setImageBitmap(db.getcurrentUserPicture());
-        String navUserNameString=db.getcurrentUserFamilyName();
+        String navUserNameString = db.getcurrentUserFamilyName();
         font = Typeface.createFromAsset(getAssets(), "fonts/GISHA.TTF");
         navUserName.setTypeface(font);
         navUserName.setText(navUserNameString);
 
-        navLogoutBtn=(ImageView)findViewById(R.id.navLogoutBtn);
+        navLogoutBtn = (ImageView) findViewById(R.id.navLogoutBtn);
         navLogoutBtn.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -172,7 +173,7 @@ public class MainActivity extends FragmentActivity {
                         navLogoutBtn.setImageResource(R.drawable.nav_logout_btn_down);
                         break;
                     }
-                    case MotionEvent.ACTION_CANCEL:{
+                    case MotionEvent.ACTION_CANCEL: {
                         navLogoutBtn.setImageResource(R.drawable.nav_logout_btn);
                         break;
                     }
@@ -188,12 +189,14 @@ public class MainActivity extends FragmentActivity {
         });
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
     // Called whenever we call invalidateOptionsMenu()
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -203,14 +206,15 @@ public class MainActivity extends FragmentActivity {
         return super.onPrepareOptionsMenu(menu);
 
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(mDrawerToggle.onOptionsItemSelected(item)){
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.about:
-                AboutDialog dialog=new AboutDialog(this);
+                AboutDialog dialog = new AboutDialog(this);
                 dialog.showAboutDialog();
         }
         return super.onOptionsItemSelected(item);
@@ -239,7 +243,7 @@ public class MainActivity extends FragmentActivity {
         adapter.selected(position);
         mDrawerLayout.closeDrawer(mDrawerContent);
 
-        switch (position){
+        switch (position) {
             case 0:
                 fragmentManager.beginTransaction().replace(R.id.content_frame, fragment0).commit();
                 break;
@@ -247,21 +251,22 @@ public class MainActivity extends FragmentActivity {
                 fragmentManager.beginTransaction().replace(R.id.content_frame, fragment1).commit();
                 break;
             case 2:
-            	fragmentManager.beginTransaction().replace(R.id.content_frame, fragment2).commit();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, fragment2).commit();
                 break;
             case 3:
-            	fragmentManager.beginTransaction().replace(R.id.content_frame, fragment3).commit();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, fragment3).commit();
                 break;
             case 4:
-            	fragmentManager.beginTransaction().replace(R.id.content_frame, fragment4).commit();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, fragment4).commit();
                 break;
         }
 
     }
-    public void userProfile(View v){
-        Intent i = new Intent(this,UserProfile.class);
+
+    public void userProfile(View v) {
+        Intent i = new Intent(this, UserProfile.class);
         startActivity(i);
-        overridePendingTransition(R.anim.anim_slide_in_left,R.anim.anim_slide_out_left);
+        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
         mDrawerLayout.closeDrawer(mDrawerContent);
     }
 
