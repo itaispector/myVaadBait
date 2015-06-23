@@ -370,7 +370,7 @@ public class ParseDB {
         try {
             bitmapdata = file.getData();
         } catch (ParseException e) {
-            Log.i("*****Parse Exception******", e.getLocalizedMessage());
+            Log.i("***Parse Exception****", e.getLocalizedMessage());
             e.printStackTrace();
         }
         //this is Bitmap
@@ -408,7 +408,7 @@ public class ParseDB {
             List<ParseUser> objects = query.find();
             if (objects.get(0).getUsername() != null) userExists = true;
         } catch (Exception e) {
-            Log.i("*****Parse Exception******", e.getLocalizedMessage());
+            Log.i("***Parse Exception****", e.getLocalizedMessage());
         }
         return userExists;
     }
@@ -430,7 +430,7 @@ public class ParseDB {
             ParseObject building = query.find().get(0);
             if (building != null) BuildingCodeExists = true;
         } catch (Exception e) {
-            Log.i("*****Parse Exception******", e.getLocalizedMessage());
+            Log.i("***Parse Exception****", e.getLocalizedMessage());
         }
         return BuildingCodeExists;
     }
@@ -446,7 +446,7 @@ public class ParseDB {
                 buildingAdress = building.getString("address");
             }
         } catch (Exception e) {
-            Log.i("*****Parse Exception******", e.getLocalizedMessage());
+            Log.i("***Parse Exception****", e.getLocalizedMessage());
         }
         return buildingAdress;
     }
@@ -511,7 +511,7 @@ public class ParseDB {
             currentUserBuilding.saveInBackground();
         } catch (ParseException e) {
             e.printStackTrace();
-            Log.i("*****Parse Exception******", e.getLocalizedMessage());
+            Log.i("***Parse Exception****", e.getLocalizedMessage());
         }
     }
 
@@ -552,9 +552,9 @@ public class ParseDB {
                 //else{
                 //Toast.makeText(context,context.getString(R.string.cantDeleteMessage), Toast.LENGTH_SHORT).show();
                 //}
-            } else Log.i("*****Parse Exception******", "incorrect ObjectId entered");
+            } else Log.i("***Parse Exception****", "incorrect ObjectId entered");
         } catch (ParseException e) {
-            Log.i("*****Parse Exception******", e.getLocalizedMessage());
+            Log.i("***Parse Exception****", e.getLocalizedMessage());
             e.printStackTrace();
         }
     }
@@ -743,7 +743,7 @@ public class ParseDB {
             }
         } catch (ParseException e) {
             e.printStackTrace();
-            Log.i("*****Parse Exception******", e.getLocalizedMessage());
+            Log.i("***Parse Exception****", e.getLocalizedMessage());
         }
         return outputFailuresList;
     }
@@ -784,7 +784,7 @@ public class ParseDB {
                 updateFailureApprovedByCurrentUser(failureObjectId);
             failure.saveInBackground();
         } catch (ParseException e) {
-            Log.i("*****Parse Exception******", e.getLocalizedMessage());
+            Log.i("***Parse Exception****", e.getLocalizedMessage());
             e.printStackTrace();
         }
     }
@@ -815,7 +815,7 @@ public class ParseDB {
             failure.saveInBackground();
 
         } catch (ParseException e) {
-            Log.i("*****Parse Exception******", e.getLocalizedMessage());
+            Log.i("***Parse Exception****", e.getLocalizedMessage());
             e.printStackTrace();
         }
     }
@@ -829,9 +829,9 @@ public class ParseDB {
             ParseObject failure = query.get(objectId);
             if (failure != null) {
                 failure.deleteInBackground();
-            } else Log.i("*****Parse Exception******", "incorrect ObjectId entered");
+            } else Log.i("***Parse Exception****", "incorrect ObjectId entered");
         } catch (ParseException e) {
-            Log.i("*****Parse Exception******", e.getLocalizedMessage());
+            Log.i("***Parse Exception****", e.getLocalizedMessage());
             e.printStackTrace();
         }
 
@@ -856,7 +856,7 @@ public class ParseDB {
             failure.saveInBackground();
 
         } catch (ParseException e) {
-            Log.i("*****Parse Exception******", e.getLocalizedMessage());
+            Log.i("***Parse Exception****", e.getLocalizedMessage());
             e.printStackTrace();
         }
     }
@@ -893,7 +893,7 @@ public class ParseDB {
             }
         } catch (ParseException e) {
             e.printStackTrace();
-            Log.i("*****Parse Exception******", e.getLocalizedMessage());
+            Log.i("***Parse Exception****", e.getLocalizedMessage());
         }
         return outputUsersList;
     }
@@ -930,7 +930,7 @@ public class ParseDB {
             }
         } catch (ParseException e) {
             e.printStackTrace();
-            Log.i("*****Parse Exception******", e.getLocalizedMessage());
+            Log.i("***Parse Exception****", e.getLocalizedMessage());
         }
         return outputPaymentsList;
     }
@@ -960,7 +960,7 @@ public class ParseDB {
             }
         } catch (ParseException e) {
             e.printStackTrace();
-            Log.i("*****Parse Exception******", e.getLocalizedMessage());
+            Log.i("***Parse Exception****", e.getLocalizedMessage());
         }
         return outputUsersList;
     }
@@ -1004,7 +1004,7 @@ public class ParseDB {
                 }
             }
         } catch (ParseException e) {
-            Log.i("*****Parse Exception******", e.getLocalizedMessage());
+            Log.i("***Parse Exception****", e.getLocalizedMessage());
             e.printStackTrace();
         }
         return usersList;
@@ -1021,7 +1021,7 @@ public class ParseDB {
             payment.addUnique("paidBy", uObjectId);
             payment.saveInBackground();
         } catch (ParseException e) {
-            Log.i("*****Parse Exception******", e.getLocalizedMessage());
+            Log.i("***Parse Exception****", e.getLocalizedMessage());
             e.printStackTrace();
         }
     }
@@ -1037,7 +1037,7 @@ public class ParseDB {
             payment.removeAll("paidBy", Arrays.asList(uObjectId));
             payment.saveInBackground();
         } catch (ParseException e) {
-            Log.i("*****Parse Exception******", e.getLocalizedMessage());
+            Log.i("***Parse Exception****", e.getLocalizedMessage());
             e.printStackTrace();
         }
     }
@@ -1110,7 +1110,7 @@ public class ParseDB {
             payment.removeAll("paidBy", Arrays.asList(uObjectId));
             payment.saveInBackground();
         } catch (ParseException e) {
-            Log.i("*****Parse Exception******", e.getLocalizedMessage());
+            Log.i("***Parse Exception****", e.getLocalizedMessage());
             e.printStackTrace();
         }
     }
@@ -1132,7 +1132,7 @@ public class ParseDB {
                 payment.saveInBackground();
             }
         } catch (ParseException e) {
-            Log.i("*****Parse Exception******", e.getLocalizedMessage());
+            Log.i("***Parse Exception****", e.getLocalizedMessage());
             e.printStackTrace();
         }
     }
@@ -1170,7 +1170,7 @@ public class ParseDB {
             }
         } catch (ParseException e) {
             e.printStackTrace();
-            Log.i("*****Parse Exception******", e.getLocalizedMessage());
+            Log.i("***Parse Exception****", e.getLocalizedMessage());
         }
         return outputPaymentsList;
     }
@@ -1203,7 +1203,7 @@ public class ParseDB {
             }
         } catch (ParseException e) {
             e.printStackTrace();
-            Log.i("*****Parse Exception******", e.getLocalizedMessage());
+            Log.i("***Parse Exception****", e.getLocalizedMessage());
         }
         return outputPaymentsList;
     }
@@ -1224,7 +1224,7 @@ public class ParseDB {
             users = query.getFirst();
             email = users.getString("email");
         } catch (ParseException e) {
-            Log.i("*****Parse Exception******", e.getLocalizedMessage());
+            Log.i("***Parse Exception****", e.getLocalizedMessage());
             e.printStackTrace();
         }
         return email;
@@ -1349,7 +1349,7 @@ public class ParseDB {
             }
         } catch (ParseException e) {
             e.printStackTrace();
-            Log.i("*****Parse Exception******", e.getLocalizedMessage());
+            Log.i("***Parse Exception****", e.getLocalizedMessage());
         }
         return rowUserList;
     }
