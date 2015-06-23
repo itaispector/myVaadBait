@@ -467,7 +467,7 @@ public class ParseDB {
     }
 
     //This method sign up new building in class(table)buildings-->created by building Admin
-    protected void signUpBuilding(String buildingCode, String address, String paypalEmail) {
+    protected void signUpBuilding(String buildingCode, String address, String paypalEmail, String numberOfHouses) {
         //The user that sign Up the Building is the admin
         ParseUser currentUser = getcurrentUser();
         currentUser.put("isAdmin", true);
@@ -477,11 +477,12 @@ public class ParseDB {
         building.put("buildingCode", buildingCode);
         building.put("address", address);
         building.put("paypal", paypalEmail);
+        building.put("houses", numberOfHouses);
         building.saveInBackground();
     }
 
     //This method sign up new building in class(table)buildings without paypal account
-    protected void signUpBuildingWithoutPaypal(String buildingCode, String address) {
+    protected void signUpBuildingWithoutPaypal(String buildingCode, String address, String numberOfHouses) {
         //The user that sign Up the Building is the admin
         ParseUser currentUser = getcurrentUser();
         currentUser.put("isAdmin", true);
@@ -490,6 +491,7 @@ public class ParseDB {
         ParseObject building = new ParseObject("buildings");
         building.put("buildingCode", buildingCode);
         building.put("address", address);
+        building.put("houses", numberOfHouses);
         building.saveInBackground();
     }
 
