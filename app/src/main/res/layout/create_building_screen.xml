@@ -169,11 +169,11 @@
             android:layout_toLeftOf="@id/CreateBuildingScreenBuildingEntrance"
             android:layout_marginRight="3dp"
             android:background="@drawable/edit_text_style"
-            android:hint="@string/home_number2"
+            android:hint="@string/numberOfHouses"
             android:inputType="textPersonName"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:textSize="15sp" />
+            android:gravity="center"
+            android:textSize="15sp"
+            android:clickable="true"/>
 
         <TextView
             android:id="@+id/redAsterisk4"
