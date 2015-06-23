@@ -1476,4 +1476,15 @@ public class ParseDB {
         return totalExpensesAmount;
     }
 
+    /** itai new*/
+    //add new user to userlist
+    protected void addUser(String familyName, String apartmentNumber){
+        String currentBuilding = getCurrentUserBuildingCode();
+        ParseObject user = new ParseObject("_User");
+        user.put("buildingCode", currentBuilding);
+        user.put("description", familyName);
+        user.put("amount", apartmentNumber);
+        user.saveInBackground();
+    }
+
 }
