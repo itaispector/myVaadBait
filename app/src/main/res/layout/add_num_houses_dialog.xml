@@ -34,7 +34,7 @@
         android:text="@string/ok" />
 
     <Button
-        android:id="@+id/paymentsDialogCancelBtn"
+        android:id="@+id/housesDialogCancelBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
