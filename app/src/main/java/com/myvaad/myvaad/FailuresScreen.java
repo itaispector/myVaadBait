@@ -1,11 +1,8 @@
 package com.myvaad.myvaad;
 
-
-
 import java.util.List;
 
 import com.parse.Parse;
-
 import adapters.FailuresAdapter;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -13,11 +10,8 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +25,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 public class FailuresScreen extends Fragment {
 
@@ -48,7 +41,6 @@ public class FailuresScreen extends Fragment {
     ParseDB db;
     String title, failureContent="", approvals,myList="", failureObjectId;
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	String appId="QdwF666zm76ORQcn4KF6JNwDfsb6cj97QunbpT1s";
