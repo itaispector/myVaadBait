@@ -81,9 +81,9 @@ public class UsersScreen extends Fragment {
         usersDialog.show();
 
         famName = (EditText) dialogLayout.findViewById(R.id.usersAddDialogFamName);
-        String familyName = famName.getText().toString();
+        final String familyName = famName.getText().toString();
         apartNum = (EditText) dialogLayout.findViewById(R.id.usersAddDialogApartNum);
-        String apartmentNumber = apartNum.getText().toString();
+        final String apartmentNumber = apartNum.getText().toString();
         ok=(Button)dialogLayout.findViewById(R.id.usersAddDialogOkBtn);
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
