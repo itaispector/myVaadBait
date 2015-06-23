@@ -110,7 +110,7 @@ public class NotInBuilding extends MainLoginScreen {
     public void createBuilding(View v){
         Fragment mFragment = new CreateBuilding();
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().show(mFragment);
+        fragmentManager.beginTransaction().replace(R.id.content_framee, mFragment).commit();
     }
 }
 
