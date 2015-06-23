@@ -57,6 +57,7 @@ public class UsersScreen extends Fragment {
 
         //calls the list view and its adapter
         usersList = (ListView) rootView.findViewById(R.id.UsersListView);
+        addUserBtn = (ImageView) rootView.findViewById(R.id.add_user_btn);
         adapter = new UsersAdapter(getActivity(), db.getUsersList());
         usersList.setAdapter(adapter);
 
