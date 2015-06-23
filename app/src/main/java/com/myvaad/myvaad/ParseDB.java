@@ -647,7 +647,7 @@ public class ParseDB {
     }
 
 /*
-		protected List getCurrentUserNoticeBoard(){
+        protected List getCurrentUserNoticeBoard(){
 
 		List outputNoticeList= new ArrayList();
 		String CurrentUserBuildingCode=getCurrentUserBuildingCode();
@@ -689,6 +689,7 @@ public class ParseDB {
 		return outputNoticeList;
 	}
 */
+
 
     protected List getCurrentUserFailuresBoard() {
         List outputFailuresList = new ArrayList();
