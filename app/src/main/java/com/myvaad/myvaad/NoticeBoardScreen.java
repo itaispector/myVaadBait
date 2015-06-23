@@ -1,38 +1,25 @@
 package com.myvaad.myvaad;
 
-
-
 import java.util.List;
-
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.BaseBundle;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.*;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
-
 import com.parse.Parse;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-
 import adapters.NoticesAdapter;
-
 
 public class NoticeBoardScreen extends Fragment {
 
@@ -51,10 +38,7 @@ public class NoticeBoardScreen extends Fragment {
     String[] mPagesTitles;
     Button edit,update,delete,cancelBtn;
     String msg="";
-    
 
-
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	String appId="QdwF666zm76ORQcn4KF6JNwDfsb6cj97QunbpT1s";
