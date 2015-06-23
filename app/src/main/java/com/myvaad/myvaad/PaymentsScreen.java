@@ -70,7 +70,7 @@ public class PaymentsScreen extends Fragment{
 	Dialog paymentsDialog;
 	NumberPicker np;
 	ImageView addPaymentBtn;
-	EditText paymentNameField;
+	EditText paymentNameField,paymentPriceField;
 	
 	
 	
@@ -410,40 +410,24 @@ public class PaymentsScreen extends Fragment{
     	paymentsDialog.setContentView(dialogLayout);   	
     	paymentsDialog.show();
     	
-    	np=(NumberPicker)dialogLayout.findViewById(R.id.addPaymentDialogNumberPicker);
-    	//set max value for np
-    	String[] numbers = new String[10000/5];
-    	// set numbers of picker
-    	for (int i=0; i<numbers.length; i++){
-    	    numbers[i] = Integer.toString(i*5+5);
-    	}
-    	np.setDisplayedValues(numbers);
-    	np.setMaxValue(numbers.length-1);
-    	np.setMinValue(0);
-    	//disable picking loop
-    	np.setWrapSelectorWheel(false);
-    	//disable keyboard pop up
-    	np.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-    	//number picker listener
-    	np.setOnValueChangedListener(new OnValueChangeListener() {
-    	    @Override
-    	    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-    	        //update number picker value
-    	    	npValue = newVal * 5 + 5;
-    	    }
-    	});
-    	
+
     	paymentNameField = (EditText)dialogLayout.findViewById(R.id.addPaymentDialogName);
-    	  	
-    	dialogPaymentOkBtn=(Button)dialogLayout.findViewById(R.id.addPaymentDialogConfirmBtn);
+		paymentPriceField = (EditText)dialogLayout.findViewById(R.id.addPaymentDialogPrice);
+
+		dialogPaymentOkBtn=(Button)dialogLayout.findViewById(R.id.addPaymentDialogConfirmBtn);
     	dialogPaymentOkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             	String paymentName = paymentNameField.getText().toString();
-                String paymentPrice = ""+npValue;
-            	db.createPayment(paymentName, paymentPrice);
-                paymentsDialog.dismiss();
-                refreshPayments();                  
+                String paymentPrice = paymentNameField.getText().toString();
+				if ((paymentName.matches("\\s+")) || (paymentPrice.matches("\\s+"))){
+					Toast.makeText(getActivity(),getResources().getString(R.string.empty_edittext_msg),Toast.LENGTH_SHORT).show();
+				}else{
+					db.createPayment(paymentName, paymentPrice);
+					paymentsDialog.dismiss();
+					refreshPayments();
+				}
+
             }
         });
     	
