@@ -173,7 +173,8 @@
             android:clickable="true"
             android:gravity="center"
             android:hint="@string/numberOfHouses"
-            android:inputType="textPersonName"
+            android:focusable="false"
+            android:inputType="number"
             android:textSize="15sp" />
 
         <TextView
