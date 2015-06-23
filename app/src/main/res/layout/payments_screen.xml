@@ -1,5 +1,4 @@
-<ViewFlipper
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/paymentsViewFlipper"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -38,15 +37,17 @@
             android:paddingRight="10dp"
             android:paddingTop="10dp"
             android:scrollingCache="false"
-            android:smoothScrollbar="true"></ListView>
+            android:smoothScrollbar="true" />
 
         <ImageView
             android:id="@+id/add_payment_btnn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"
             android:layout_marginRight="5dp"
             android:src="@drawable/add_payment_btn"
             android:visibility="gone" />
@@ -61,15 +62,14 @@
             android:id="@+id/goBackBtn3"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:background="@drawable/back_btn"
-            android:onClick="back" />
+            android:background="@drawable/back_btn" />
 
         <ListView
             android:id="@+id/paymentsDayarVaadBaitListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/goBackBtn3"
-            android:layout_margin="5dp"></ListView>
+            android:layout_margin="5dp" />
 
         <Button
             android:id="@+id/paymentsDayarVaadBaitPayAllBtn"
@@ -77,6 +77,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/goBackBtn3"
             android:layout_alignBottom="@+id/goBackBtn3"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_toRightOf="@id/goBackBtn3"
             android:text="שלם הכל" />
