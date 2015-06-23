@@ -11,7 +11,10 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,6 +24,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.Parse;
@@ -50,11 +54,22 @@ public class MainLoginScreen extends Activity{
         getActionBar().setBackgroundDrawable(colorDrawable);
         userNameInput=(EditText)findViewById(R.id.MainLoginScreenUserName);
         passwordInput=(EditText)findViewById(R.id.MainLoginScreenPassword);
-        //To connect with parse - we need to provide 2 keys: appId & clientId
-        String appId="QdwF666zm76ORQcn4KF6JNwDfsb6cj97QunbpT1s";
-        String clientId="OiJI3KdONEN9jML6Mi6r6iQTpR8mIOBv3YgsUhdv";
+        passwordInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(passwordInput.getText().length()==0){
+                    passwordInput.setGravity(Gravity.END | Gravity.CENTER_VERTICAL);
+                }else{
+                    passwordInput.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
         //Initialize with keys
-        Parse.initialize(this, appId, clientId);
+        Parse.initialize(this);
         db=ParseDB.getInstance(this);
     }
     //Check if internet is available method
