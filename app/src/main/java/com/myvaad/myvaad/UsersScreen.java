@@ -73,7 +73,7 @@ public class UsersScreen extends Fragment {
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (familyName.matches("") || (apartmentNumber.matches(""))) {
+                if (familyName.matches("\\s+") || (apartmentNumber.matches("\\s+"))) {
                     Toast.makeText(getActivity(), getResources().getString(R.string.empty_edittext_msg), Toast.LENGTH_SHORT).show();
                 } else {
                     db.addUser(familyName, apartmentNumber);
