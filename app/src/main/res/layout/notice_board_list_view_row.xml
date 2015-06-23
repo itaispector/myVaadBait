@@ -3,8 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/list_item_background"
-    android:descendantFocusability="blocksDescendants"
-    >
+    android:descendantFocusability="blocksDescendants">
 
     <ImageView
         android:id="@+id/noticeBoardRowUserImage"
@@ -19,45 +18,47 @@
         android:id="@+id/noticeBoardRowFullName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15dp"
         android:layout_alignBottom="@+id/noticeBoardRowUserImage"
         android:layout_alignParentRight="true"
-        android:text="TextView"
         android:paddingRight="10dp"
-        android:textColor="#4F4F4F"  />
-    <SurfaceView 
+        android:text="TextView"
+        android:textColor="#4F4F4F"
+        android:textSize="15dp" />
+
+    <SurfaceView
         android:id="@+id/noticeBoardRowDivider"
-        android:layout_below="@id/noticeBoardRowFullName"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_below="@id/noticeBoardRowFullName"
         android:background="#007ea6"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"/>
-    <TextView 
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp" />
+
+    <TextView
         android:id="@+id/noticeBoardRowContent"
-        android:layout_below="@id/noticeBoardRowDivider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/noticeBoardRowDivider"
         android:textSize="20dp"
-        android:textStyle="bold"
-        />
-    <SurfaceView 
+        android:textStyle="bold" />
+
+    <SurfaceView
         android:id="@+id/noticeBoardRowDivider2"
-        android:layout_below="@id/noticeBoardRowContent"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_below="@id/noticeBoardRowContent"
         android:background="#007ea6"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"/>
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp" />
 
     <TextView
         android:id="@+id/noticeBoardRowDate"
-        android:layout_below="@id/noticeBoardRowDivider2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_below="@id/noticeBoardRowDivider2"
         android:text="10/9/85"
-        android:textSize="10dp"
-        android:textColor="#4F4F4F" />
+        android:textColor="#4F4F4F"
+        android:textSize="10dp" />
 
 </RelativeLayout>

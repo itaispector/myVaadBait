@@ -1,74 +1,80 @@
-<RelativeLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main_login_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@drawable/background">
+
     <ImageView
         android:id="@+id/MainLoginScreenLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/main_logo"/>
+        android:layout_marginTop="10dp"
+        android:src="@drawable/main_logo" />
+
     <TextView
-    android:id="@+id/NotInBuildingMSG3"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="41dp"
-    android:paddingLeft="2dp"
-    android:layout_below="@id/MainLoginScreenLogo"
-    android:layout_centerHorizontal="true"
-    android:textStyle="bold"
-    android:textColor="#000000"
-    android:textSize="22sp"
-    android:text="@string/not_in_b_msg1"/>
+        android:id="@+id/NotInBuildingMSG3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/MainLoginScreenLogo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="41dp"
+        android:paddingLeft="2dp"
+        android:text="@string/not_in_b_msg1"
+        android:textColor="#000000"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
     <TextView
         android:id="@+id/NotInBuildingMSG"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:layout_below="@id/MainLoginScreenLogo"
         android:layout_centerHorizontal="true"
-        android:textStyle="bold"
+        android:layout_marginTop="40dp"
+        android:text="@string/not_in_b_msg1"
         android:textColor="#ffff2f2f"
         android:textSize="22sp"
-        android:text="@string/not_in_b_msg1"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/NotInBuildingMSG2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_below="@id/NotInBuildingMSG"
         android:layout_centerHorizontal="true"
-        android:textSize="17sp"
-        android:textColor="#000000"
-        android:text="@string/not_in_b_msg2"/>
-	<Button 
-	    android:id="@+id/MainLoginScreenLoginBtn"
-	    android:layout_below="@id/NotInBuildingMSG2"
-	    android:layout_width="wrap_content"
         android:layout_marginTop="10dp"
-	    android:layout_height="wrap_content"
-        android:background="@drawable/join_building_btn"
+        android:text="@string/not_in_b_msg2"
+        android:textColor="#000000"
+        android:textSize="17sp" />
+
+    <Button
+        android:id="@+id/MainLoginScreenLoginBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/NotInBuildingMSG2"
         android:layout_centerHorizontal="true"
-	    android:onClick="joinBuilding"/>
+        android:layout_marginTop="10dp"
+        android:background="@drawable/join_building_btn"
+        android:onClick="joinBuilding" />
+
     <Button
         android:id="@+id/MainLoginScreenSignUpBtn"
-        android:layout_below="@id/MainLoginScreenLoginBtn"
         android:layout_width="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/add_building_btn"
+        android:layout_below="@id/MainLoginScreenLoginBtn"
         android:layout_centerHorizontal="true"
-        android:onClick="createBuilding"/>
+        android:layout_marginTop="10dp"
+        android:background="@drawable/add_building_btn"
+        android:onClick="createBuilding" />
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:src="@drawable/nav_logout_btn"
         android:layout_marginBottom="10dp"
-        android:paddingLeft="-90dp"/>
+        android:paddingLeft="-90dp"
+        android:src="@drawable/nav_logout_btn" />
 
 
 </RelativeLayout>

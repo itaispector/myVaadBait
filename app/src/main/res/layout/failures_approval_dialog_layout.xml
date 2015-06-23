@@ -2,55 +2,52 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"   
-    android:background="@drawable/list_item_background"
-    >
-    <TextView 
+    android:layout_margin="10dp"
+    android:background="@drawable/list_item_background">
+
+    <TextView
         android:id="@+id/failuresApprovalDialogTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:text="@string/failuresApprovalDialogTitle"
         android:textSize="20sp"
-        android:layout_centerHorizontal="true"
-        android:textStyle="bold"
-        />
-<ScrollView
-    android:id="@+id/failuresApprovalDialogPriceSV"
-    android:layout_width="match_parent"
-    android:layout_height="250dp"
-    android:layout_below="@id/failuresApprovalDialogTitle" >
-<TextView
-    android:id="@+id/failuresApprovalDialogList"
-    android:layout_width="match_parent"
-    android:layout_height="250dp" 
-    android:layout_marginTop="10dp"
-    android:paddingRight="8dp"
-    android:paddingLeft="8dp" 
-    android:background="@drawable/edit_text_dialog_style" 
-    android:textSize="15sp"
-    />
-</ScrollView>
-        <Button 
-            android:id="@+id/failuresApprovalDialogFailureCancelBtn"
-            android:layout_width="130dp"
-            android:layout_height="40dp"
-            android:layout_below="@id/failuresApprovalDialogPriceSV"
-            android:layout_marginTop="10dp"
-            android:layout_alignParentRight="true"
-            android:text="סגור"
-            />
-        <Button 
-            android:id="@+id/failuresApprovalDialogFailureMoveToPaymentsBtn"
-            android:layout_width="130dp"
-            android:layout_height="40dp"
-            android:layout_below="@id/failuresApprovalDialogPriceSV"
-            android:layout_marginTop="10dp"
-            android:layout_alignParentLeft="true"
-            android:text="סגור והעבר לתשלומים"
-            />
-        
-        
+        android:textStyle="bold" />
 
-    
+    <ScrollView
+        android:id="@+id/failuresApprovalDialogPriceSV"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_below="@id/failuresApprovalDialogTitle">
+
+        <TextView
+            android:id="@+id/failuresApprovalDialogList"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edit_text_dialog_style"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:textSize="15sp" />
+    </ScrollView>
+
+    <Button
+        android:id="@+id/failuresApprovalDialogFailureCancelBtn"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/failuresApprovalDialogPriceSV"
+        android:layout_marginTop="10dp"
+        android:text="סגור" />
+
+    <Button
+        android:id="@+id/failuresApprovalDialogFailureMoveToPaymentsBtn"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/failuresApprovalDialogPriceSV"
+        android:layout_marginTop="10dp"
+        android:text="סגור והעבר לתשלומים" />
+
 
 </RelativeLayout>

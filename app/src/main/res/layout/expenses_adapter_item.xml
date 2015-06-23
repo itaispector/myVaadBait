@@ -2,32 +2,29 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF0E0" >
-    
-    <TextView 
+    android:background="#FFF0E0">
+
+    <TextView
         android:id="@+id/expenseDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/tabsScrollColor"
-        android:textSize="22sp"
         android:layout_alignParentRight="true"
-        />
-    
-    <TextView 
+        android:textColor="@color/tabsScrollColor"
+        android:textSize="22sp" />
+
+    <TextView
         android:id="@+id/expenseAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_below="@id/expenseDescription"
         android:layout_alignParentRight="true"
-        />
-    <TextView 
+        android:layout_below="@id/expenseDescription"
+        android:textSize="16sp" />
+
+    <TextView
         android:id="@+id/expenseCreatTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_below="@id/expenseAmount"
         android:layout_alignParentRight="true"
-        />
-
+        android:layout_below="@id/expenseAmount"
+        android:textSize="16sp" />
 </RelativeLayout>

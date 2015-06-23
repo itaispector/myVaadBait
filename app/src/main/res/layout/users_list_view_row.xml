@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:animateLayoutChanges="true"
     android:background="@drawable/list_item_background"
-    android:descendantFocusability="blocksDescendants" >
+    android:descendantFocusability="blocksDescendants">
 
     <ImageView
         android:id="@+id/usersRowUserImage"
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/usersRowUserImage"
         android:layout_alignParentRight="true"
-        android:paddingRight="10dp"       
+        android:paddingRight="10dp"
         android:text="שם מלא"
         android:textColor="#4F4F4F"
         android:textSize="15dp" />

@@ -3,69 +3,69 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    android:background="@drawable/list_item_background"
-    >
+    android:background="@drawable/list_item_background">
+
     <TextView
         android:id="@+id/noticesDialogTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:text="@string/noticesDialogTitle"
         android:textSize="20sp"
-        android:layout_centerHorizontal="true"
-        android:textStyle="bold"
-        />
+        android:textStyle="bold" />
+
     <EditText
         android:id="@+id/JoinBuildingEnterBuildingCode"
         android:layout_width="260dp"
         android:layout_height="50dp"
-        android:hint="@string/b_code_input_hint"
         android:layout_below="@id/noticesDialogTitle"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:background="@drawable/edit_text_dialog_style"
-        android:paddingLeft="8dp"
+        android:gravity="center"
+        android:hint="@string/b_code_input_hint"
         android:inputType="number"
         android:maxLength="6"
+        android:paddingLeft="8dp"
         android:paddingRight="8dp" />
+
     <EditText
         android:id="@+id/add_apartment_number"
-        android:hint="@string/apartment_number_text"
         android:layout_width="260dp"
-        android:layout_below="@id/JoinBuildingEnterBuildingCode"
         android:layout_height="50dp"
+        android:layout_below="@id/JoinBuildingEnterBuildingCode"
         android:layout_centerHorizontal="true"
-        android:textSize="17sp"
         android:layout_marginTop="10dp"
-        android:paddingRight="8dp"
+        android:background="@drawable/edit_text_style"
         android:gravity="center"
+        android:hint="@string/apartment_number_text"
+        android:inputType="number"
         android:maxLength="3"
         android:paddingLeft="8dp"
-        android:inputType="number"
-        android:background="@drawable/edit_text_style"/>
+        android:paddingRight="8dp"
+        android:textSize="17sp" />
 
     <Button
         android:id="@+id/joinBuildingDialogOkBtn"
         android:layout_width="130dp"
         android:layout_height="40dp"
+        android:layout_alignParentRight="true"
         android:layout_below="@id/add_apartment_number"
         android:layout_marginTop="15dp"
-        android:layout_alignParentRight="true"
         android:text="@string/join_building_text"
 
         />
+
     <Button
         android:id="@+id/joinBuildingDialogCancelBtn"
         android:layout_width="130dp"
         android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
         android:layout_below="@id/add_apartment_number"
         android:layout_marginTop="15dp"
-        android:layout_alignParentLeft="true"
         android:text="ביטול"
 
         />
-
-
 
 
 </RelativeLayout>

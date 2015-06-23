@@ -1,22 +1,22 @@
-<RelativeLayout 
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-	android:layout_width="wrap_content"
-	android:background="@drawable/list_item_background"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <TextView 
+    android:background="@drawable/list_item_background">
+
+    <TextView
         android:id="@+id/paymentsAdminListViewName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:textSize="20dp"
-        android:textStyle="bold"
         android:padding="10dp"
-        android:text="משפחת אבולעפיה"/>
-    <CheckBox 
+        android:text="משפחת אבולעפיה"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <CheckBox
         android:id="@+id/paymentsAdminListViewCB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:descendantFocusability="blocksDescendants" 
-		/>
+        android:descendantFocusability="blocksDescendants" />
 </RelativeLayout>

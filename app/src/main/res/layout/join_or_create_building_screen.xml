@@ -2,24 +2,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.myvaad.myvaad.MainLoginScreen" >
-<TextView
-    android:id="@+id/JoinOrCreateBuildingScreenMsgView"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="אינך שייך לשום בניין"/>
-<Button 
-    android:id="@+id/JoinOrCreateBuildingScreenJoinBtn"
-    android:layout_below="@id/JoinOrCreateBuildingScreenMsgView"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="JOIN"
-    android:onClick="join"/>
-<Button 
-    android:id="@+id/JoinOrCreateBuildingScreenCreateBtn"
-    android:layout_below="@id/JoinOrCreateBuildingScreenJoinBtn"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Create"
-    android:onClick="create"/>
+    tools:context="com.myvaad.myvaad.MainLoginScreen">
+
+    <TextView
+        android:id="@+id/JoinOrCreateBuildingScreenMsgView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="אינך שייך לשום בניין" />
+
+    <Button
+        android:id="@+id/JoinOrCreateBuildingScreenJoinBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/JoinOrCreateBuildingScreenMsgView"
+        android:onClick="join"
+        android:text="JOIN" />
+
+    <Button
+        android:id="@+id/JoinOrCreateBuildingScreenCreateBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/JoinOrCreateBuildingScreenJoinBtn"
+        android:onClick="create"
+        android:text="Create" />
 </RelativeLayout>

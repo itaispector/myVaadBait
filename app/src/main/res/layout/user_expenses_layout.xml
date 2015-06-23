@@ -2,14 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF0E0"
-    >
- 
+    android:background="#FFF0E0">
+
     <ListView
         android:id="@+id/userExpensesListview"
         android:layout_width="match_parent"
-        android:layout_height="400dp" >
-        
+        android:layout_height="400dp">
+
     </ListView>
 
     <TextView
@@ -22,5 +21,5 @@
         android:text="textView"
         android:textDirection="rtl"
         android:textSize="26sp" />
- 
+
 </RelativeLayout>
