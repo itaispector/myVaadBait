@@ -2,6 +2,8 @@ package com.myvaad.myvaad;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -106,8 +108,9 @@ public class NotInBuilding extends MainLoginScreen {
         }
     }
     public void createBuilding(View v){
-        Intent i = new Intent(this, CreateBuilding.class);
-        startActivity(i);
+        Fragment mFragment = new CreateBuilding();
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().show(mFragment);
     }
 }
 
