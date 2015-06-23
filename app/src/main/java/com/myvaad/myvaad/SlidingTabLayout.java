@@ -20,7 +20,6 @@ package com.myvaad.myvaad;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -226,7 +225,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
                 tabView.setSelected(true);
             }
             //tabs color settings
-            tabTitleView.setTextColor(getResources().getColorStateList(R.color.selector));
+            tabTitleView.setTextColor(getResources().getColorStateList(R.color.selectors));
             tabTitleView.setTextSize(14);
         }
        
