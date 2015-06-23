@@ -91,13 +91,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
         <Button 
-            android:id="@+id/goBackBtn2"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:onClick="back"
-            android:background="@drawable/back_btn"
+        android:id="@+id/goBackBtn2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:onClick="back"
+        android:background="@drawable/back_btn"
         />
-        <Button
+               <Button 
             android:id="@+id/paymentsAdminAddVBPayments"
             android:text="צור תשלומי ועד"
             android:layout_toRightOf="@id/goBackBtn2"
@@ -105,11 +105,12 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"/>
         <Button 
-            android:id="@+id/paymentsAdminSendNotification2"
-            android:text="שלח התראה למי שלא שילם"
-            android:layout_toRightOf="@id/paymentsAdminAddVBPayments"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"/>
+	    android:id="@+id/paymentsAdminSendNotification2"
+	    android:text="שלח התראה למי שלא שילם"
+	    android:layout_toRightOf="@id/paymentsAdminAddVBPayments" 
+	    android:layout_height="wrap_content"
+	    android:layout_width="wrap_content"/>
+
         <ListView 
             android:id="@+id/paymentsAdminVaadBaitListView"
             android:layout_below="@id/goBackBtn2"
@@ -190,7 +191,6 @@
 	           android:textSize="25dp"
 	           android:textStyle="bold"
 	           android:layout_alignParentRight="true"
-	           android:layout_alignParentEnd="true"
 	           android:text="check"/>
 	       <SurfaceView 
 	        android:id="@+id/paymnetDivider"
@@ -208,7 +208,6 @@
 	           android:textSize="25dp"
 	           android:textStyle="bold"
 	           android:layout_alignParentLeft="true"
-	           android:layout_alignParentStart="true"
 	           android:text="1500"/>
 	
 	       <Button

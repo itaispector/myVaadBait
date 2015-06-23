@@ -23,4 +23,4 @@
     android:text="Create"
     android:onClick="create"/>
 </RelativeLayout>
-<!-- From: file:/C:/Users/שלומי/StudioProjects/myVaadBait/app/src/main/res/layout/join_or_create_building_screen.xml -->
+<!-- From: file:/C:/Users/Daniel/Desktop/AndroidStudio/myVaadBait/app/src/main/res/layout/join_or_create_building_screen.xml -->
