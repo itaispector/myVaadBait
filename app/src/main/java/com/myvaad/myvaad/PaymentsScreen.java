@@ -419,7 +419,7 @@ public class PaymentsScreen extends Fragment{
             @Override
             public void onClick(View v) {
             	String paymentName = paymentNameField.getText().toString();
-                String paymentPrice = paymentNameField.getText().toString();
+                String paymentPrice = paymentPriceField.getText().toString();
 				if ((paymentName.matches("\\s+")) || (paymentPrice.matches("\\s+"))){
 					Toast.makeText(getActivity(),getResources().getString(R.string.empty_edittext_msg),Toast.LENGTH_SHORT).show();
 				}else{
