@@ -1,7 +1,5 @@
 package com.myvaad.myvaad;
 
-import com.parse.Parse;
-import adapters.UsersAdapter;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.os.Build;
@@ -15,6 +13,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.parse.Parse;
+
+import adapters.UsersAdapter;
 
 public class UsersScreen extends Fragment {
     ListView usersList;
@@ -67,7 +69,7 @@ public class UsersScreen extends Fragment {
         final String familyName = famName.getText().toString();
         apartNum = (EditText) dialogLayout.findViewById(R.id.usersAddDialogApartNum);
         final String apartmentNumber = apartNum.getText().toString();
-        ok=(Button)dialogLayout.findViewById(R.id.usersAddDialogOkBtn);
+        ok = (Button) dialogLayout.findViewById(R.id.usersAddDialogOkBtn);
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,14 +81,13 @@ public class UsersScreen extends Fragment {
                 }
             }
         });
-        cancel=(Button)dialogLayout.findViewById(R.id.usersAddDialogCancelBtn);
-        cancel.setOnClickListener(new View.OnClickListener(){
+        cancel = (Button) dialogLayout.findViewById(R.id.usersAddDialogCancelBtn);
+        cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 usersDialog.dismiss();
             }
         });
-
 
 
     }
