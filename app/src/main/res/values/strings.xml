@@ -68,6 +68,7 @@
     <string name="must_street">נא להזין רחוב</string>
     <string name="must_home_number">נא להזין מספר בית</string>
     <string name="must_city">נא לבחור עיר</string>
+    <string name="must_num_houses">נא לציין מספר דיירים</string>
     <string name="treating">בטיפול</string>
     <string name="notTreated">לא טופל</string>
     <string name="wait">טוען… אנא המתן</string>
