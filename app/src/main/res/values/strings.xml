@@ -70,7 +70,7 @@
     <string name="must_city">נא לבחור עיר</string>
     <string name="treating">בטיפול</string>
     <string name="notTreated">לא טופל</string>
-    <string name="wait">טוען... אנא המתן</string>
+    <string name="wait">טוען… אנא המתן</string>
     <string name="login_problem_text">שגיאת התחברות, נסה שוב מאוחר יותר</string>
     <string name="passwordVerifyText">סיסמאות לא תואמות</string>
     <string name="login_username_input_verify">אנא הכנס/י שם משתמש</string>
@@ -285,7 +285,7 @@
         <item>בית ברל</item>
         <item>בית גוברין</item>
         <item>בית גמליאל</item>
-        <item>בית ג'ן</item>
+        <item>בית גן</item>
         <item>בית דגן</item>
         <item>בית הגדי</item>
         <item>בית הילל</item>
