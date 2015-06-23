@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@drawable/list_item_background">
+
+    <TextView
+        android:id="@+id/usersAddDialogTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/userDialogTitle"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/usersAddDialogFamName"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@id/usersAddDialogTitle"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edit_text_style"
+        android:hint="@string/fullname"
+        android:paddingBottom="5dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="5dp" />
+
+    <EditText
+        android:id="@+id/usersAddDialogApartNum"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@id/usersAddDialogFamName"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edit_text_style"
+        android:hint="@string/apartment_number_text"
+        android:inputType="number"
+        android:paddingBottom="5dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="5dp" />
+
+    <Button
+        android:id="@+id/usersAddDialogOkBtn"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/usersAddDialogApartNum"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:text="@string/ok"/>
+
+    <Button
+        android:id="@+id/usersAddDialogCancelBtn"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/usersAddDialogApartNum"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:text="@string/cancel"/>
+
+
+</RelativeLayout>
