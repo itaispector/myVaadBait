@@ -332,8 +332,7 @@ public class ParseDB {
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
             // Return currentUser -->Can do stuff with the currentUser
-            String userId = currentUser.getObjectId();
-            return userId;
+            return currentUser.getObjectId();
         } else {
             //No user signed in to app
             // show the signUp or login screen
