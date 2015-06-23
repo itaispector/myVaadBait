@@ -159,21 +159,22 @@
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:textSize="15sp" />
+
         <EditText
             android:id="@+id/CreateBuildingScreenBuildingHouseNumbers"
             android:layout_width="160dp"
             android:layout_height="40dp"
             android:layout_below="@id/CreateBuildingScreenBuildingStreet"
             android:layout_centerHorizontal="true"
+            android:layout_marginRight="3dp"
             android:layout_marginTop="10dp"
             android:layout_toLeftOf="@id/CreateBuildingScreenBuildingEntrance"
-            android:layout_marginRight="3dp"
             android:background="@drawable/edit_text_style"
+            android:clickable="true"
+            android:gravity="center"
             android:hint="@string/numberOfHouses"
             android:inputType="textPersonName"
-            android:gravity="center"
-            android:textSize="15sp"
-            android:clickable="true"/>
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/redAsterisk4"
@@ -238,8 +239,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/redAsterisk6"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/add_building_btn"
-            android:onClick="createBuilding" />
+            android:background="@drawable/add_building_btn" />
     </RelativeLayout>
 
 </RelativeLayout>
