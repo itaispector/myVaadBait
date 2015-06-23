@@ -37,7 +37,7 @@ public class CreateBuilding extends Fragment {
     Dialog housesDialog;
     NumberPicker np;
     int npValue;
-    Button ok,cancel;
+    Button ok, cancel, buildBtn;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //before the content is loading, an outer thread checks if the user is linked to a building
@@ -67,6 +67,15 @@ public class CreateBuilding extends Fragment {
         homeNumber = (EditText) rootView.findViewById(R.id.CreateBuildingScreenBuildingNumber);
         homeNumber2 = (EditText) rootView.findViewById(R.id.CreateBuildingScreenBuildingEntrance);
         paypal = (EditText) rootView.findViewById(R.id.CreateBuildingScreenPayPalAccount);
+
+        buildBtn = (Button) rootView.findViewById(R.id.CreateBuildingScreenCreateBtn);
+        buildBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createBuilding();
+            }
+        });
+
         final ImageView paypalLogo = (ImageView) rootView.findViewById(R.id.small_paypal_logo);
 
         paypal.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -107,7 +116,7 @@ public class CreateBuilding extends Fragment {
         return buildingNumber;
     }
 
-    public void createBuilding(View v) {
+    public void createBuilding() {
         String streetText = street.getText().toString();
         String homeNumberText = homeNumber.getText().toString();
         String homeNumber2Text = homeNumber2.getText().toString();
@@ -115,6 +124,7 @@ public class CreateBuilding extends Fragment {
         String citysText = autoCity.getText().toString();
         String buildingNumberText = buildingNumber.getText().toString();
         String buildingNumberDigits = buildingNumberText.replaceAll("[\\D]", "");
+        String numOfHouse = numberOfHouses.getText().toString();
 
 
         if (db.isBuildingCodeExists(buildingNumberDigits)) {
@@ -135,15 +145,19 @@ public class CreateBuilding extends Fragment {
             toast = Toast.makeText(getActivity(), getString(R.string.must_home_number), Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.TOP, 0, 150);
             toast.show();
+        } else if (numOfHouse.matches("")) {
+            toast = Toast.makeText(getActivity(), getString(R.string.must_num_houses), Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.TOP, 0, 150);
+            toast.show();
         } else {
             if (!homeNumber2Text.matches("")) {
                 homeNumber2Text = getString(R.string.home_number2text) + " " + homeNumber2Text;
             }
             String adrees = streetText + " " + homeNumberText + " " + homeNumber2Text + " " + citysText;
             if (paypalText.matches("")) {
-                db.signUpBuildingWithoutPaypal(buildingNumberDigits, adrees);
+                db.signUpBuildingWithoutPaypal(buildingNumberDigits, adrees, numOfHouse);
             } else {
-                db.signUpBuilding(buildingNumberDigits, adrees, paypalText);
+                db.signUpBuilding(buildingNumberDigits, adrees, paypalText, numOfHouse);
             }
             Intent i = new Intent(getActivity(), MainActivity.class);
             getActivity().startActivity(i);
@@ -169,7 +183,7 @@ public class CreateBuilding extends Fragment {
         }
         np.setDisplayedValues(numbers);
         np.setMaxValue(numbers.length - 1);
-        np.setMinValue(0);
+        np.setMinValue(2);
         //disable picking loop
         np.setWrapSelectorWheel(false);
         //disable keyboard pop up
@@ -183,23 +197,22 @@ public class CreateBuilding extends Fragment {
             }
         });
 
-        ok = (Button)dialogLayout.findViewById(R.id.housesDialogConfirmBtn);
-        ok.setOnClickListener(new View.OnClickListener(){
+        ok = (Button) dialogLayout.findViewById(R.id.housesDialogConfirmBtn);
+        ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                numberOfHouses.setText(npValue+"");
+                numberOfHouses.setText(npValue + "");
                 housesDialog.dismiss();
             }
         });
 
-        cancel = (Button)dialogLayout.findViewById(R.id.housesDialogCancelBtn);
-        cancel.setOnClickListener(new View.OnClickListener(){
+        cancel = (Button) dialogLayout.findViewById(R.id.housesDialogCancelBtn);
+        cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 housesDialog.dismiss();
             }
         });
-
 
 
     }
