@@ -6,26 +6,34 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.parse.Parse;
 
 
-public class NotInBuilding extends MainLoginScreen {
+public class NotInBuilding extends FragmentActivity {
     ParseDB db;
     EditText bCodeNumber;
     View dialogLayout;
     Dialog joinBuildingDialog;
+    Button ok, cancel, createBuildingBtn, joinBuildingBtn;
+    ImageView logout;
     public static Activity closeNotInBuildingActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,8 +45,33 @@ public class NotInBuilding extends MainLoginScreen {
         db=ParseDB.getInstance(this);
         closeNotInBuildingActivity=this;
 
+        createBuildingBtn=(Button)findViewById(R.id.CreateBuildingBtn);
+        createBuildingBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                createBuilding();
+            }
+        });
+
+        joinBuildingBtn=(Button)findViewById(R.id.JoinBuildingBtn);
+        joinBuildingBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                joinBuilding();
+            }
+        });
+
+        logout=(ImageView)findViewById(R.id.NotInBuildingLogout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                db.logOutUser(NotInBuilding.this);
+            }
+        });
+
+
     }
-    public void joinBuilding(View v){
+    public void joinBuilding(){
             dialogLayout = View.inflate(this, R.layout.join_building_dialog, null);
             joinBuildingDialog = new Dialog(this);
             joinBuildingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -67,6 +100,7 @@ public class NotInBuilding extends MainLoginScreen {
 
                 }
             });
+
     }
 
     public void dialogButtons(View v) {
@@ -78,7 +112,7 @@ public class NotInBuilding extends MainLoginScreen {
             joinBuildingDialog.dismiss();
         } else {
             if(buildingCodeText.length()<6){
-                Toast toast=Toast.makeText(getApplicationContext(),getString(R.string.b_code_less_nums),Toast.LENGTH_LONG);
+                Toast toast=Toast.makeText(this,getString(R.string.b_code_less_nums),Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.CENTER, 0, 0);
                 toast.show();
                 //Exit from keyboard when the dialog dismissed
@@ -87,9 +121,6 @@ public class NotInBuilding extends MainLoginScreen {
             }else{
                 if(db.isBuildingCodeExists(buildingCodeText)){
                     db.updateUserBuildingCode(buildingCodeText);
-                    Toast toast=Toast.makeText(getApplicationContext(),buildingCodeText,Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER, 0, 0);
-                    toast.show();
                     //Exit from keyboard when the dialog dismissed
                     InputMethodManager imm=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(bCodeNumber.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
@@ -97,7 +128,7 @@ public class NotInBuilding extends MainLoginScreen {
                     startActivity(i);
                     this.finish();
                 }else{
-                    Toast toast=Toast.makeText(getApplicationContext(),R.string.problem_text,Toast.LENGTH_LONG);
+                    Toast toast=Toast.makeText(this,R.string.problem_text,Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
                     //Exit from keyboard when the dialog dismissed
@@ -107,7 +138,7 @@ public class NotInBuilding extends MainLoginScreen {
             }
         }
     }
-    public void createBuilding(View v){
+    public void createBuilding(){
         Fragment mFragment = new CreateBuilding();
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_framee, mFragment).commit();
