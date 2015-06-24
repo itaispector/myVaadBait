@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -19,21 +20,26 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 //import android.net.ParseException;
 import com.parse.FindCallback;
+import com.parse.FunctionCallback;
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseACL;
+import com.parse.ParseCloud;
 import com.parse.ParseFile;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.ProgressCallback;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 import com.parse.ParseException;
 
 import dialogs.RingProgressDialog;
 
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.DrawableContainer;
 import android.support.annotation.StringRes;
 import android.util.Log;
 import android.view.*;
@@ -600,102 +606,102 @@ public class ParseDB {
 	   The notice List contain a ObjectId,noticeContent,noticeCreateTime,familyName,user picture(Bitmap)
      */
 
-/*
-    protected void reloadCurrentUserNoticeBoard() {
-        NoticeBoardList.clear();
-        //final List outputNoticeList = new ArrayList();
-        String CurrentUserBuildingCode = getCurrentUserBuildingCode();
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("noticeBoard");
-        //Query Constraints-->all the notices for current user building
-        query.whereContains("buildingCode", CurrentUserBuildingCode);
-        query.orderByDescending("updatedAt");
+    /*
+        protected void reloadCurrentUserNoticeBoard() {
+            NoticeBoardList.clear();
+            //final List outputNoticeList = new ArrayList();
+            String CurrentUserBuildingCode = getCurrentUserBuildingCode();
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("noticeBoard");
+            //Query Constraints-->all the notices for current user building
+            query.whereContains("buildingCode", CurrentUserBuildingCode);
+            query.orderByDescending("updatedAt");
 
-        //finding all the notices for current user building
-        query.findInBackground(new FindCallback<ParseObject>() {
+            //finding all the notices for current user building
+            query.findInBackground(new FindCallback<ParseObject>() {
 
-            @Override
-            public void done(List<ParseObject> notices, ParseException e) {
-                if (e == null) {
-                    for (ParseObject noticeRow : notices) {
-                        List rowNoticeList = new ArrayList();
-                        //get specific data from each row
-                        String content = noticeRow.getString("content");
+                @Override
+                public void done(List<ParseObject> notices, ParseException e) {
+                    if (e == null) {
+                        for (ParseObject noticeRow : notices) {
+                            List rowNoticeList = new ArrayList();
+                            //get specific data from each row
+                            String content = noticeRow.getString("content");
 
-                        Date updatedAt = noticeRow.getUpdatedAt();
-                        String noticeTime = updatedAt.toLocaleString();
-                        String ObjectId = noticeRow.getObjectId();
+                            Date updatedAt = noticeRow.getUpdatedAt();
+                            String noticeTime = updatedAt.toLocaleString();
+                            String ObjectId = noticeRow.getObjectId();
 
-                        String familyName = noticeRow.getString("userFamilyName");
-                        ParseFile userPicture = noticeRow.getParseFile("userPic");
-                        Bitmap userPic = parseFileToBitmap(userPicture);
-                        //ParseUser user=noticeRow.getParseUser("user");
-                        //Bitmap userPicture=(Bitmap)getUserPicture(user);
-                        //String familyName=getUserFamilyName(user);
+                            String familyName = noticeRow.getString("userFamilyName");
+                            ParseFile userPicture = noticeRow.getParseFile("userPic");
+                            Bitmap userPic = parseFileToBitmap(userPicture);
+                            //ParseUser user=noticeRow.getParseUser("user");
+                            //Bitmap userPicture=(Bitmap)getUserPicture(user);
+                            //String familyName=getUserFamilyName(user);
 
-                        rowNoticeList.add(ObjectId);
-                        rowNoticeList.add(content);
-                        rowNoticeList.add(noticeTime);
-                        rowNoticeList.add(familyName);
-                        rowNoticeList.add(userPic);
-                        NoticeBoardList.add(rowNoticeList);
+                            rowNoticeList.add(ObjectId);
+                            rowNoticeList.add(content);
+                            rowNoticeList.add(noticeTime);
+                            rowNoticeList.add(familyName);
+                            rowNoticeList.add(userPic);
+                            NoticeBoardList.add(rowNoticeList);
+                        }
+                    } else {
+                        Log.e("**PARSE ERROR**", "Error: " + e.getMessage());
                     }
-                } else {
-                    Log.e("**PARSE ERROR**", "Error: " + e.getMessage());
                 }
+            });
+
+        }
+
+        public List getCurrentUserNoticeBoard(){
+            //reloadCurrentUserNoticeBoard();
+            Log.i("***NoticeBoard***", NoticeBoardList.size() + "");
+            return  NoticeBoardList;
+        }
+
+
+            protected List getCurrentUserNoticeBoard(){
+
+            List outputNoticeList= new ArrayList();
+            String CurrentUserBuildingCode=getCurrentUserBuildingCode();
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("noticeBoard");
+            //Query Constraints-->all the notices for current user building
+            query.whereContains("buildingCode", CurrentUserBuildingCode);
+            query.orderByDescending("updatedAt");
+            List <ParseObject> notices = null;
+            try {
+                //finding all the notices for current user building
+                notices=query.find();
+                for(ParseObject noticeRow:notices){
+                    List rowNoticeList= new ArrayList();
+                    //get specific data from each row
+                    String content =noticeRow.getString("content");
+
+                    Date updatedAt = noticeRow.getUpdatedAt();
+                    String noticeTime=updatedAt.toLocaleString();
+                    String ObjectId= noticeRow.getObjectId();
+
+                    String familyName= noticeRow.getString("userFamilyName");
+                    ParseFile userPicture=noticeRow.getParseFile("userPic");
+                    Bitmap userPic=parseFileToBitmap(userPicture);
+                    //ParseUser user=noticeRow.getParseUser("user");
+                    //Bitmap userPicture=(Bitmap)getUserPicture(user);
+                    //String familyName=getUserFamilyName(user);
+
+                    rowNoticeList.add(ObjectId);
+                    rowNoticeList.add(content);
+                    rowNoticeList.add(noticeTime);
+                    rowNoticeList.add(familyName);
+                    rowNoticeList.add(userPic);
+                    outputNoticeList.add(rowNoticeList);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+                Log.i("***Parse Exception****", e.getLocalizedMessage());
             }
-        });
-
-    }
-
-    public List getCurrentUserNoticeBoard(){
-        //reloadCurrentUserNoticeBoard();
-        Log.i("***NoticeBoard***", NoticeBoardList.size() + "");
-        return  NoticeBoardList;
-    }
-
-
-        protected List getCurrentUserNoticeBoard(){
-
-		List outputNoticeList= new ArrayList();
-		String CurrentUserBuildingCode=getCurrentUserBuildingCode();
-		ParseQuery<ParseObject> query = ParseQuery.getQuery("noticeBoard");
-		//Query Constraints-->all the notices for current user building
-		query.whereContains("buildingCode", CurrentUserBuildingCode);
-		query.orderByDescending("updatedAt");
-		List <ParseObject> notices = null;
-		try {
-			//finding all the notices for current user building
-			notices=query.find();
-			for(ParseObject noticeRow:notices){
-				List rowNoticeList= new ArrayList();
-    			//get specific data from each row
-				String content =noticeRow.getString("content");
-
-    			Date updatedAt = noticeRow.getUpdatedAt();
-    			String noticeTime=updatedAt.toLocaleString();
-    			String ObjectId= noticeRow.getObjectId();
-
-    			String familyName= noticeRow.getString("userFamilyName");
-    			ParseFile userPicture=noticeRow.getParseFile("userPic");
-    			Bitmap userPic=parseFileToBitmap(userPicture);
-    			//ParseUser user=noticeRow.getParseUser("user");
-    			//Bitmap userPicture=(Bitmap)getUserPicture(user);
-    			//String familyName=getUserFamilyName(user);
-
-    			rowNoticeList.add(ObjectId);
-    			rowNoticeList.add(content);
-    			rowNoticeList.add(noticeTime);
-    			rowNoticeList.add(familyName);
-    			rowNoticeList.add(userPic);
-    			outputNoticeList.add(rowNoticeList);
-    		}
-		} catch (ParseException e) {
-			e.printStackTrace();
-			Log.i("***Parse Exception****", e.getLocalizedMessage());
-		}
-		return outputNoticeList;
-	}
-*/
+            return outputNoticeList;
+        }
+    */
     /*
 protected List getCurrentUserFailuresBoard() {
     List outputFailuresList = new ArrayList();
@@ -1547,15 +1553,44 @@ protected List getCurrentUserFailuresBoard() {
         return totalExpensesAmount;
     }
 
-    /** itai new*/
+    /**
+     * itai new
+     */
     //add new user to userlist
-    protected void addUser(String familyName, String apartmentNumber){
-        String currentBuilding = getCurrentUserBuildingCode();
-        ParseObject user = new ParseObject("_User");
-        user.put("buildingCode", currentBuilding);
-        user.put("description", familyName);
-        user.put("amount", apartmentNumber);
-        user.saveInBackground();
-    }
+    protected void addUser(final String familyName, final String apartmentNumber) {
+        final HashMap<String, Object> params = new HashMap<String, Object>();
+        final String currentBuilding = getCurrentUserBuildingCode();
+        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.nouser);
+        byte[] data = convertImageToByteArray(bitmap);
+        final ParseFile file = new ParseFile("user.png", data);
+        file.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    Toast.makeText(context, "" + e, Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(context, "hakol tov", Toast.LENGTH_LONG).show();
+                    params.put("username", familyName + currentBuilding + apartmentNumber);
+                    params.put("password", familyName + currentBuilding + apartmentNumber);
+                    params.put("familyName", familyName);
+                    params.put("apartmentNumber", apartmentNumber);
+                    params.put("buildingCode", currentBuilding);
+                    params.put("picture", file);
+                    ParseCloud.callFunctionInBackground("saveNewUser", params, new FunctionCallback<String>() {
+                        public void done(String result, ParseException e) {
+                            if (e == null) {
+                                Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(context, "" + e, Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
 
+                }
+
+            }
+        });
+
+
+    }
 }
