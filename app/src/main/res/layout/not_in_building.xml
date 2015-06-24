@@ -76,6 +76,7 @@ android:background="@drawable/background">
     android:onClick="createBuilding" />
 
 <ImageView
+    android:id="@+id/NotInBuildingLogout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
