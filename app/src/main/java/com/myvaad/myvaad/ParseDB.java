@@ -154,7 +154,8 @@ import android.widget.Toast;
  */
 public class ParseDB {
     private Context context;
-    private Context Logoutcontext;
+    private List NoticeBoardList = new ArrayList();
+
     //singleton instance container
     private static ParseDB instance;
 
@@ -364,7 +365,7 @@ public class ParseDB {
     }
 
     //This method return Bitmap from ParseFile
-    private Bitmap parseFileToBitmap(ParseFile file) {
+    protected Bitmap parseFileToBitmap(ParseFile file) {
         byte[] bitmapdata = null;
         try {
             bitmapdata = file.getData();
@@ -599,10 +600,10 @@ public class ParseDB {
 	   The notice List contain a ObjectId,noticeContent,noticeCreateTime,familyName,user picture(Bitmap)
      */
 
-
-    protected List getCurrentUserNoticeBoard() {
-
-        final List outputNoticeList = new ArrayList();
+/*
+    protected void reloadCurrentUserNoticeBoard() {
+        NoticeBoardList.clear();
+        //final List outputNoticeList = new ArrayList();
         String CurrentUserBuildingCode = getCurrentUserBuildingCode();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("noticeBoard");
         //Query Constraints-->all the notices for current user building
@@ -636,7 +637,7 @@ public class ParseDB {
                         rowNoticeList.add(noticeTime);
                         rowNoticeList.add(familyName);
                         rowNoticeList.add(userPic);
-                        outputNoticeList.add(rowNoticeList);
+                        NoticeBoardList.add(rowNoticeList);
                     }
                 } else {
                     Log.e("**PARSE ERROR**", "Error: " + e.getMessage());
@@ -644,10 +645,15 @@ public class ParseDB {
             }
         });
 
-        return outputNoticeList;
     }
 
-/*
+    public List getCurrentUserNoticeBoard(){
+        //reloadCurrentUserNoticeBoard();
+        Log.i("***NoticeBoard***", NoticeBoardList.size() + "");
+        return  NoticeBoardList;
+    }
+
+
         protected List getCurrentUserNoticeBoard(){
 
 		List outputNoticeList= new ArrayList();
