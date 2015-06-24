@@ -20,12 +20,13 @@ public class NoticesAdapter extends BaseAdapter {
 	private Context context;
 	
 	List notices;
-	
+
 	public NoticesAdapter(Context context, List notices) {
 		this.context = context;
 		this.notices = notices;
+		notifyDataSetChanged();
 	}
-	
+
 	public int getCount() {
 		return notices.size();
 	}
