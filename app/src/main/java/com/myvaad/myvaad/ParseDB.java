@@ -696,8 +696,72 @@ public class ParseDB {
 		return outputNoticeList;
 	}
 */
+    /*
+protected List getCurrentUserFailuresBoard() {
+    List outputFailuresList = new ArrayList();
+    String CurrentUserBuildingCode = getCurrentUserBuildingCode();
+    ParseQuery<ParseObject> query = ParseQuery.getQuery("failures");
+    //Query Constraints-->all the failures for current user building
+    query.whereContains("buildingCode", CurrentUserBuildingCode);
+    query.whereEqualTo("state", true);
+    query.orderByDescending("updatedAt");
+
+    //finding all the failures for current user building
+    query.findInBackground(new FindCallback<ParseObject>() {
+        @Override
+        public void done(List<ParseObject> failures, ParseException e) {
+            if (e == null){
+                for (ParseObject failuresRow : failures) {
+                    List rowFailureList = new ArrayList();
+                    //get specific data from each row
+                    String title = failuresRow.getString("title");
+                    String content = failuresRow.getString("content");
+
+                    String bidValue = failuresRow.getString("bid");
+                    String bidPerformedBy = failuresRow.getString("performedBy");
+
+                    String status = failuresRow.getString("status");
+                    Date updatedAt = failuresRow.getCreatedAt();
+                    String noticeTime = updatedAt.toLocaleString();
+                    String ObjectId = failuresRow.getObjectId();
+
+                    String familyName = failuresRow.getString("userFamilyName");
+                    ParseFile userPicture = failuresRow.getParseFile("userPic");
+                    Bitmap userPic = parseFileToBitmap(userPicture);
+
+                    List<String> approvedByList = new ArrayList();
+                    //List of all the users that approved the bid for the repair the malfunction
+                    if (failuresRow.getList("approvedBy") != null) {
+                        approvedByList = failuresRow.getList("approvedBy");
+                    } else approvedByList.add("no one approve");
+                    //ParseUser user=failuresRow.getParseUser("user");
+                    //Bitmap userPicture=getUserPicture(user);
+                    //String familyName=getUserFamilyName(user);
+
+                    rowFailureList.add(ObjectId);
+                    rowFailureList.add(title);
+                    rowFailureList.add(content);
+                    rowFailureList.add(bidValue);
+                    rowFailureList.add(bidPerformedBy);
+                    rowFailureList.add(status);
+                    rowFailureList.add(noticeTime);
+                    rowFailureList.add(familyName);
+                    rowFailureList.add(userPic);
+                    rowFailureList.add(approvedByList);
+                    outputFailuresList.add(rowFailureList);
+                }
+            }else{
+                Log.i("***Parse Exception****", e.getLocalizedMessage());
+            }
+
+        }
+    });
 
 
+    return outputFailuresList;
+}
+    */
+/*
     protected List getCurrentUserFailuresBoard() {
         List outputFailuresList = new ArrayList();
         String CurrentUserBuildingCode = getCurrentUserBuildingCode();
@@ -755,7 +819,7 @@ public class ParseDB {
         }
         return outputFailuresList;
     }
-
+*/
     //This method updating new failure in class(table) failures-->will contain all failures
     // of all buildings
     protected void updateNewfailure(String failureTitle, String failureContent) {
