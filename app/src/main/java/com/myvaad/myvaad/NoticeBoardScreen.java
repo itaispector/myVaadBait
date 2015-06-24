@@ -1,5 +1,7 @@
 package com.myvaad.myvaad;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -7,6 +9,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,7 +21,14 @@ import android.view.*;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.*;
+
+import com.parse.FindCallback;
 import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
 import adapters.NoticesAdapter;
 
 public class NoticeBoardScreen extends Fragment {
@@ -38,6 +48,7 @@ public class NoticeBoardScreen extends Fragment {
     String[] mPagesTitles;
     Button edit,update,delete,cancelBtn;
     String msg="";
+	List NoticeBoardList = new ArrayList();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,29 +59,32 @@ public class NoticeBoardScreen extends Fragment {
     	db=ParseDB.getInstance(getActivity());
         View rootView = inflater.inflate(R.layout.notice_board_screen, container, false);
         nameAndPicHolder = (RelativeLayout)rootView.findViewById(R.id.noticeBoardNamePicHolder);
-        
-        
+
+
         final SwipeRefreshLayout swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
-        swipeView.setColorSchemeColors(Color.parseColor("#007ca2"),Color.parseColor("#007ca2"),Color.parseColor("#007ca2"),Color.parseColor("#007ca2"));
+        swipeView.setColorSchemeColors(Color.parseColor("#007ca2"), Color.parseColor("#007ca2"), Color.parseColor("#007ca2"), Color.parseColor("#007ca2"));
         swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                swipeView.setRefreshing(true);
-                Log.d("Swipe", "Refreshing Number");
-                ( new Handler()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        swipeView.setRefreshing(false);
-                        adapter.refresh(db.getCurrentUserNoticeBoard());
-                        Log.d("Swipe", "Refreshing Number*******************");
-                    }
-                }, 500);
-            }
-        });
+			@Override
+			public void onRefresh() {
+				swipeView.setRefreshing(true);
+				Log.d("Swipe", "Refreshing Number");
+				(new Handler()).postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						swipeView.setRefreshing(false);
+
+						adapter.refresh(NoticeBoardList);
+
+						Log.d("Swipe", "Refreshing Number*******************");
+					}
+				}, 500);
+			}
+		});
         
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             getActivity().getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
+
         
         //calls the list view and its adapter
         noticeBoardList=(ListView)rootView.findViewById(R.id.NoticeBoardListView);
@@ -89,9 +103,50 @@ public class NoticeBoardScreen extends Fragment {
                 addNotice();
             }
         });
-        
-        adapter =  new NoticesAdapter(getActivity(),db.getCurrentUserNoticeBoard());
-        noticeBoardList.setAdapter(adapter);
+
+
+        //adapter =  new NoticesAdapter(getActivity(),db.getCurrentUserNoticeBoard());
+        //noticeBoardList.setAdapter(adapter);
+		String CurrentUserBuildingCode = db.getCurrentUserBuildingCode();
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("noticeBoard");
+		//Query Constraints-->all the notices for current user building
+		query.whereContains("buildingCode", CurrentUserBuildingCode);
+		query.orderByDescending("updatedAt");
+
+		//finding all the notices for current user building
+		query.findInBackground(new FindCallback<ParseObject>() {
+
+			@Override
+			public void done(List<ParseObject> notices, ParseException e) {
+				if (e == null) {
+					NoticeBoardList.clear();
+					for (ParseObject noticeRow : notices) {
+						List rowNoticeList = new ArrayList();
+						//get specific data from each row
+						String content = noticeRow.getString("content");
+
+						Date updatedAt = noticeRow.getUpdatedAt();
+						String noticeTime = updatedAt.toLocaleString();
+						String ObjectId = noticeRow.getObjectId();
+
+						String familyName = noticeRow.getString("userFamilyName");
+						ParseFile userPicture = noticeRow.getParseFile("userPic");
+						Bitmap userPic = db.parseFileToBitmap(userPicture);
+
+						rowNoticeList.add(ObjectId);
+						rowNoticeList.add(content);
+						rowNoticeList.add(noticeTime);
+						rowNoticeList.add(familyName);
+						rowNoticeList.add(userPic);
+						NoticeBoardList.add(rowNoticeList);
+						adapter =  new NoticesAdapter(getActivity(),NoticeBoardList);
+						noticeBoardList.setAdapter(adapter);
+					}
+				} else {
+					Log.e("**PARSE ERROR**", "Error: " + e.getMessage());
+				}
+			}
+		});
 
         getActivity().setTitle(R.string.NoticeBoardScreenTitle);
 
@@ -142,6 +197,7 @@ public class NoticeBoardScreen extends Fragment {
 			public void onClick(View arg0) {
 				Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.rotate_animation);
                 refreshBtn.startAnimation(animation);
+
 				animation.setAnimationListener(new Animation.AnimationListener() {					
 					@Override
 					public void onAnimationStart(Animation arg0) {
