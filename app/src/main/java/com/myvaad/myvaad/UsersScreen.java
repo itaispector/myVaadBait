@@ -64,16 +64,16 @@ public class UsersScreen extends Fragment {
         usersDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         usersDialog.setContentView(dialogLayout);
         usersDialog.show();
-
-        famName = (EditText) dialogLayout.findViewById(R.id.usersAddDialogFamName);
-        final String familyName = famName.getText().toString();
-        apartNum = (EditText) dialogLayout.findViewById(R.id.usersAddDialogApartNum);
-        final String apartmentNumber = apartNum.getText().toString();
         ok = (Button) dialogLayout.findViewById(R.id.usersAddDialogOkBtn);
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (familyName.matches("\\s+") || (apartmentNumber.matches("\\s+"))) {
+                famName = (EditText) dialogLayout.findViewById(R.id.usersAddDialogFamName);
+                String familyName = famName.getText().toString();
+                apartNum = (EditText) dialogLayout.findViewById(R.id.usersAddDialogApartNum);
+                String apartmentNumber = apartNum.getText().toString();
+
+                if (familyName.matches("")||(apartmentNumber.matches(""))) {
                     Toast.makeText(getActivity(), getResources().getString(R.string.empty_edittext_msg), Toast.LENGTH_SHORT).show();
                 } else {
                     db.addUser(familyName, apartmentNumber);
