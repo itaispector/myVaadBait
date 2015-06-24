@@ -217,8 +217,6 @@ public class CreateBuilding extends Fragment {
                 housesDialog.dismiss();
             }
         });
-
-
     }
 
 }
