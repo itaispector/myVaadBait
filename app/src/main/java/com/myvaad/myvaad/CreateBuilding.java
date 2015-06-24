@@ -201,8 +201,12 @@ public class CreateBuilding extends Fragment {
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                numberOfHouses.setText(npValue + "");
-                housesDialog.dismiss();
+                if (npValue == 0) {
+                    //do nothing
+                } else {
+                    numberOfHouses.setText(npValue + "");
+                    housesDialog.dismiss();
+                }
             }
         });
 
