@@ -1,8 +1,16 @@
 package com.myvaad.myvaad;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import com.parse.FindCallback;
 import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
 import adapters.FailuresAdapter;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -10,8 +18,10 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +50,7 @@ public class FailuresScreen extends Fragment {
 	int position;
     ParseDB db;
     String title, failureContent="", approvals,myList="", failureObjectId;
+	List outputFailuresList = new ArrayList();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -57,8 +68,69 @@ public class FailuresScreen extends Fragment {
         
         //calls the list view and its adapter
         failuresList=(ListView)rootView.findViewById(R.id.FailuresListView);
-        adapter =  new FailuresAdapter(getActivity(), db.getCurrentUserFailuresBoard(), db.isCurrentUserAdmin(), db.getcurrentUserFamilyName());
-        failuresList.setAdapter(adapter);
+        //adapter =  new FailuresAdapter(getActivity(), db.getCurrentUserFailuresBoard(), db.isCurrentUserAdmin(), db.getcurrentUserFamilyName());
+        //failuresList.setAdapter(adapter);
+
+
+		String CurrentUserBuildingCode = db.getCurrentUserBuildingCode();
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("failures");
+		//Query Constraints-->all the failures for current user building
+		query.whereContains("buildingCode", CurrentUserBuildingCode);
+		query.whereEqualTo("state", true);
+		query.orderByDescending("updatedAt");
+
+		//finding all the failures for current user building
+		query.findInBackground(new FindCallback<ParseObject>() {
+			@Override
+			public void done(List<ParseObject> failures, ParseException e) {
+				if (e == null){
+					for (ParseObject failuresRow : failures) {
+						List rowFailureList = new ArrayList();
+						//get specific data from each row
+						String title = failuresRow.getString("title");
+						String content = failuresRow.getString("content");
+
+						String bidValue = failuresRow.getString("bid");
+						String bidPerformedBy = failuresRow.getString("performedBy");
+
+						String status = failuresRow.getString("status");
+						Date updatedAt = failuresRow.getCreatedAt();
+						String noticeTime = updatedAt.toLocaleString();
+						String ObjectId = failuresRow.getObjectId();
+
+						String familyName = failuresRow.getString("userFamilyName");
+						ParseFile userPicture = failuresRow.getParseFile("userPic");
+						Bitmap userPic = db.parseFileToBitmap(userPicture);
+
+						List<String> approvedByList = new ArrayList();
+						//List of all the users that approved the bid for the repair the malfunction
+						if (failuresRow.getList("approvedBy") != null) {
+							approvedByList = failuresRow.getList("approvedBy");
+						} else approvedByList.add("no one approve");
+						//ParseUser user=failuresRow.getParseUser("user");
+						//Bitmap userPicture=getUserPicture(user);
+						//String familyName=getUserFamilyName(user);
+
+						rowFailureList.add(ObjectId);
+						rowFailureList.add(title);
+						rowFailureList.add(content);
+						rowFailureList.add(bidValue);
+						rowFailureList.add(bidPerformedBy);
+						rowFailureList.add(status);
+						rowFailureList.add(noticeTime);
+						rowFailureList.add(familyName);
+						rowFailureList.add(userPic);
+						rowFailureList.add(approvedByList);
+						outputFailuresList.add(rowFailureList);
+						adapter =  new FailuresAdapter(getActivity(), outputFailuresList, db.isCurrentUserAdmin(), db.getcurrentUserFamilyName());
+						failuresList.setAdapter(adapter);
+					}
+				}else{
+					Log.i("***Parse Exception****", e.getLocalizedMessage());
+				}
+
+			}
+		});
         
         //adds a listener to item in the listview
         failuresList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
