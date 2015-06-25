@@ -20,13 +20,8 @@ public class BuildingExpenses extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	View rootView = inflater.inflate(R.layout.building_expenses_layout,container,false);
-        
-    	
-    	
-        String appId="QdwF666zm76ORQcn4KF6JNwDfsb6cj97QunbpT1s";
-        String clientId="OiJI3KdONEN9jML6Mi6r6iQTpR8mIOBv3YgsUhdv";
         //Initialize with keys
-        Parse.initialize(getActivity(), appId, clientId);
+        Parse.initialize(getActivity());
     	db=ParseDB.getInstance(getActivity());
     	
     	//simple query
