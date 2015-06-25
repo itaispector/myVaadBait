@@ -54,18 +54,6 @@
             android:screenOrientation="locked"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity
-            android:name=".SignUpScreen"
-            android:label="@string/SignUpScreenTitle"
-            android:launchMode="singleInstance"
-            android:screenOrientation="locked"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
-        <activity
-            android:name=".CreateBuilding"
-            android:label="@string/CreateBuildingTitle"
-            android:launchMode="singleInstance"
-            android:screenOrientation="locked"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
-        <activity
             android:name=".NotInBuilding"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
