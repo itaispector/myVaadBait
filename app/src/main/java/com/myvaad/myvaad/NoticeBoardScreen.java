@@ -24,6 +24,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.*;
 
 import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
+import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.melnykov.fab.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.Parse;
@@ -45,6 +46,7 @@ public class NoticeBoardScreen extends Fragment {
     RelativeLayout nameAndPicHolder;
     ParseDB db;
     Intent i;
+    ProgressBarCircularIndeterminate bar;
     View dialogLayout;
     Dialog noticesDialog;
     DrawerLayout mDrawerLayout;
@@ -62,6 +64,12 @@ public class NoticeBoardScreen extends Fragment {
         db = ParseDB.getInstance(getActivity());
         View rootView = inflater.inflate(R.layout.notice_board_screen, container, false);
         nameAndPicHolder = (RelativeLayout) rootView.findViewById(R.id.noticeBoardNamePicHolder);
+
+        bar = (ProgressBarCircularIndeterminate) rootView.findViewById(R.id.progressBarCircularIndeterminate);
+        bar.setVisibility(View.VISIBLE);
+        CircularProgressView progressView = (CircularProgressView) rootView.findViewById(R.id.progress_view);
+        progressView.startAnimation();
+
 
         final SwipeRefreshLayout swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
         swipeView.setColorSchemeColors(Color.parseColor("#007ca2"), Color.parseColor("#007ca2"), Color.parseColor("#007ca2"), Color.parseColor("#007ca2"));
