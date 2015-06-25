@@ -102,9 +102,8 @@ public class MainActivity extends FragmentActivity {
         Parse.initialize(this);
         db = ParseDB.getInstance(this);
 
-        //Parse save user in install
-        ParseInstallation.getCurrentInstallation().put("userNamePush", (db.getcurrentUser().getObjectId()).toString());
-        ParseInstallation.getCurrentInstallation().saveInBackground();
+        //Parse save user in installation
+        db.saveUserInstallation();
 
         mTitle = mDrawerTitle = getTitle();
         mPlanetTitles = getResources().getStringArray(R.array.planets_array);
