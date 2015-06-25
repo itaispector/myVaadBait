@@ -226,14 +226,26 @@ public class ParseDB {
                             } else {
                                 // Sign up didn't succeed. Look at the ParseException
                                 // to figure out what went wrong
-                                Toast.makeText(context, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                                Log.i("***Parse Exception****", e.getLocalizedMessage());
+                                int errorCode = e.getCode();
+                                switch (errorCode){
+                                    case 202:
+                                        Toast.makeText(context, context.getString(R.string.usernameTaken), Toast.LENGTH_SHORT).show();
+                                    break;
+                                    case 203:
+                                        Toast.makeText(context, context.getString(R.string.emailTaken), Toast.LENGTH_SHORT).show();
+                                        break;
+                                    default:
+                                        Log.e("**Exception CODE**", errorCode + "");
+                                        Log.e("*****Exception*****", e.getLocalizedMessage());
+                                    break;
+                                }
                                 dialog.dismiss();
                             }
                         }
                     });
                 } else {
-
+                    //saving file failed
+                    Log.e("*****Exception*****", e.getLocalizedMessage());
                 }
             }
         });
@@ -275,8 +287,20 @@ public class ParseDB {
                 } else {
                     // SignUp failed. Look at the ParseException to see what happened.
                     dialog.dismiss();
-                    Toast.makeText(context, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                    Log.i("***Parse Exception****", e.getLocalizedMessage());
+                    Log.e("***Parse Exception****", e.getCode() + "");
+                    int errorCode = e.getCode();
+                    switch (errorCode){
+                        case 101:
+                            Toast.makeText(context, context.getString(R.string.invalidLogInParameters), Toast.LENGTH_SHORT).show();
+                            //getActivity().getString(R.string.myExpenses)
+                            break;
+                        default:
+                            // Toast.makeText(context,e.getLocalizedMessage()+"code: "+errorCode , Toast.LENGTH_SHORT).show();
+                            Log.e("**Exception CODE**", errorCode + "");
+                            Log.e("*****Exception*****", e.getLocalizedMessage());
+                            break;
+                    }
+
                 }
             }
         });
