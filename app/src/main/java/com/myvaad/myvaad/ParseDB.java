@@ -1609,7 +1609,7 @@ protected List getCurrentUserFailuresBoard() {
 
     }
 
-    protected void saveUserInstallation(){
+    protected void saveUserInstallationInBackground(){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
         query.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<ParseObject>() {
             public void done(ParseObject object, ParseException e) {
