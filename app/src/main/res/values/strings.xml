@@ -45,7 +45,8 @@
     <string name="apartment_number_text">מספר דירה</string>
     <string name="problem_text">קרתה תקלה אנא נסה/י שנית</string>
     <string name="family">משפחת</string>
-
+    <string name="image_desc">Image</string>
+    <string name="signup_btn">הירשם</string>
     <string name="hello_user">שלום</string>
     <string name="username">שם משתמש</string>
     <string name="password">סיסמא</string>
