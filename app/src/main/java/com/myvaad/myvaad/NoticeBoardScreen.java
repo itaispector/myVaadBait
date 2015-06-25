@@ -40,7 +40,7 @@ public class NoticeBoardScreen extends Fragment {
     FloatingActionButton addNoticeBtn;
     ListView noticeBoardList;
     NoticesAdapter adapter;
-    TextView content, noticeBoardFamilyName;
+    TextView content, noticeBoardFamilyName,noNoticesText;
     EditText contentEdit;
     RelativeLayout nameAndPicHolder;
     ParseDB db;
@@ -96,6 +96,8 @@ public class NoticeBoardScreen extends Fragment {
         noticeBoardFamilyName = (TextView) rootView.findViewById(R.id.noticeBoardFamilyName);
         noticeBoardUserImage = (ImageView) rootView.findViewById(R.id.noticeBoardUserImage);
 
+        noNoticesText = (TextView) rootView.findViewById(R.id.no_notices_text);
+
         trashBtn = (ImageView) rootView.findViewById(R.id.noticeBoardDeleteAllNoticesBtn);
         refreshBtn = (ImageView) rootView.findViewById(R.id.noticeBoardRefreshBtn);
 
@@ -137,6 +139,12 @@ public class NoticeBoardScreen extends Fragment {
                         adapter = new NoticesAdapter(getActivity(), NoticeBoardList);
                         noticeBoardList.setAdapter(adapter);
                         bar.setVisibility(View.GONE);
+                    }
+                    if(NoticeBoardList.isEmpty()){
+                        bar.setVisibility(View.GONE);
+                        noNoticesText.setVisibility(View.VISIBLE);
+                    }else{
+                        noNoticesText.setVisibility(View.GONE);
                     }
                 } else {
                     Log.e("**PARSE ERROR**", "Error: " + e.getMessage());
