@@ -1,49 +1,38 @@
 package com.myvaad.myvaad;
 
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.ObjectInputStream.GetField;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-//import android.net.ParseException;
-import com.parse.FindCallback;
+import android.util.Log;
+import android.widget.Toast;
+
 import com.parse.FunctionCallback;
 import com.parse.LogInCallback;
-import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseCloud;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.ProgressCallback;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
-import com.parse.ParseException;
+
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 import dialogs.RingProgressDialog;
 
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.DrawableContainer;
-import android.support.annotation.StringRes;
-import android.util.Log;
-import android.view.*;
-import android.widget.Toast;
+//import android.net.ParseException;
 
 /**
  * @author shlomi fresko 25.3.15
