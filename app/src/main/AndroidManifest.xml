@@ -21,7 +21,7 @@
 
     <application
         android:name=".MyVaadApplication"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@mipmap/ic_launcher"
         android:allowBackup="true"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Holo.Light.DarkActionBar">
@@ -94,7 +94,6 @@
                 <category android:name="com.myvaad.myvaad" />
             </intent-filter>
         </receiver>
-
 
         <service
             android:name="com.paypal.android.sdk.payments.PayPalService"
