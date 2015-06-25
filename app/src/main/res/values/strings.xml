@@ -162,6 +162,10 @@
     <!-- add user dialog-->
     <string name="userDialogTitle">הוספת דייר</string>
 
+    <!--sign up screen + log in screen -->
+    <string name="usernameTaken">שם המשתמש קיים במערכת</string>
+    <string name="emailTaken">דואר אלקטרוני קיים במערכת</string>
+    <string name="invalidLogInParameters">שם המשתמש או הסיסמא שגואיים</string>
     <!--Layout Titles-->
     <string name="SignUpScreenTitle">הרשמה</string>
     <string name="CreateBuildingTitle">הקם בניין</string>
