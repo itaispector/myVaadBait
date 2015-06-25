@@ -24,7 +24,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.*;
 
 import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
-import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.melnykov.fab.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.Parse;
@@ -54,7 +53,6 @@ public class NoticeBoardScreen extends Fragment {
     String[] mPagesTitles;
     Button edit, update, delete, cancelBtn;
     String msg = "";
-    ProgressBarCircularIndeterminate listLoader;
     List NoticeBoardList = new ArrayList();
 
     @Override
@@ -67,9 +65,6 @@ public class NoticeBoardScreen extends Fragment {
 
         bar = (ProgressBarCircularIndeterminate) rootView.findViewById(R.id.progressBarCircularIndeterminate);
         bar.setVisibility(View.VISIBLE);
-        CircularProgressView progressView = (CircularProgressView) rootView.findViewById(R.id.progress_view);
-        progressView.startAnimation();
-
 
         final SwipeRefreshLayout swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
         swipeView.setColorSchemeColors(Color.parseColor("#007ca2"), Color.parseColor("#007ca2"), Color.parseColor("#007ca2"), Color.parseColor("#007ca2"));
@@ -141,6 +136,7 @@ public class NoticeBoardScreen extends Fragment {
                         NoticeBoardList.add(rowNoticeList);
                         adapter = new NoticesAdapter(getActivity(), NoticeBoardList);
                         noticeBoardList.setAdapter(adapter);
+                        bar.setVisibility(View.GONE);
                     }
                 } else {
                     Log.e("**PARSE ERROR**", "Error: " + e.getMessage());
