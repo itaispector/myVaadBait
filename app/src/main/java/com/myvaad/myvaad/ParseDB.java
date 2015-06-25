@@ -10,7 +10,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.parse.FunctionCallback;
+import com.parse.GetCallback;
 import com.parse.LogInCallback;
+import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseCloud;
 import com.parse.ParseException;
@@ -1582,7 +1584,7 @@ protected List getCurrentUserFailuresBoard() {
                 if (e != null) {
                     Toast.makeText(context, "" + e, Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(context, "hakol tov", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(context, "hakol tov", Toast.LENGTH_LONG).show();
                     params.put("username", familyName + currentBuilding + apartmentNumber);
                     params.put("password", familyName + currentBuilding + apartmentNumber);
                     params.put("familyName", familyName);
@@ -1605,5 +1607,29 @@ protected List getCurrentUserFailuresBoard() {
         });
 
 
+    }
+
+    protected void saveUserInstallationInBackground(){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
+        query.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<ParseObject>() {
+            public void done(ParseObject object, ParseException e) {
+                if (e == null) {
+                    ParseInstallation.getCurrentInstallation().put("userNamePush", object.get("username"));
+                    ParseInstallation.getCurrentInstallation().put("buildingCode", object.get("buildingCode"));
+                    ParseInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e==null){
+                                //Toast.makeText(context, "successfully saved and installed", Toast.LENGTH_LONG).show();
+                            }else{
+                                //Toast.makeText(context, "" + e, Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+                } else {
+                    //Toast.makeText(context, "" + e, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 }
