@@ -1584,7 +1584,7 @@ protected List getCurrentUserFailuresBoard() {
                 if (e != null) {
                     Toast.makeText(context, "" + e, Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(context, "hakol tov", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(context, "hakol tov", Toast.LENGTH_LONG).show();
                     params.put("username", familyName + currentBuilding + apartmentNumber);
                     params.put("password", familyName + currentBuilding + apartmentNumber);
                     params.put("familyName", familyName);
@@ -1620,14 +1620,14 @@ protected List getCurrentUserFailuresBoard() {
                         @Override
                         public void done(ParseException e) {
                             if (e==null){
-                                Toast.makeText(context, "successfully saved and installed", Toast.LENGTH_LONG).show();
+                                //Toast.makeText(context, "successfully saved and installed", Toast.LENGTH_LONG).show();
                             }else{
-                                Toast.makeText(context, "" + e, Toast.LENGTH_LONG).show();
+                                //Toast.makeText(context, "" + e, Toast.LENGTH_LONG).show();
                             }
                         }
                     });
                 } else {
-                    Toast.makeText(context, "" + e, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(context, "" + e, Toast.LENGTH_LONG).show();
                 }
             }
         });
