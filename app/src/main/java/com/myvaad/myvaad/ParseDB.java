@@ -1617,7 +1617,10 @@ protected List getCurrentUserFailuresBoard() {
 
 
     }
-
+    /** itai new 25/6/15*/
+    //when starting application this method saves user data in installation table,
+    //this is needed to perform the push notification on users device
+    //works in background
     protected void saveUserInstallationInBackground(){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
         query.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<ParseObject>() {
