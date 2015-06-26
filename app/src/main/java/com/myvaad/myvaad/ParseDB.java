@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.Toast;
 
 import com.parse.FunctionCallback;
@@ -152,7 +153,7 @@ import dialogs.RingProgressDialog;
 public class ParseDB {
     private Context context;
     private List NoticeBoardList = new ArrayList();
-
+    private  Toast toast;
     //singleton instance container
     private static ParseDB instance;
 
@@ -209,7 +210,9 @@ public class ParseDB {
                         public void done(ParseException e) {
                             if (e == null) {
                                 // user signUp Succeeded --> Let them use the app now.
-                                Toast.makeText(context, R.string.signup_succeed, Toast.LENGTH_SHORT).show();
+                                toast = Toast.makeText(context, R.string.signup_succeed, Toast.LENGTH_SHORT);
+                                toast.setGravity(Gravity.CENTER, 0, 150);
+                                toast.show();
                                 Intent i = new Intent(context, MainLoginScreen.class);
                                 context.startActivity(i);
                                 ((Activity) con).finish();
@@ -220,10 +223,14 @@ public class ParseDB {
                                 int errorCode = e.getCode();
                                 switch (errorCode){
                                     case 202:
-                                        Toast.makeText(context, context.getString(R.string.usernameTaken), Toast.LENGTH_SHORT).show();
+                                        toast = Toast.makeText(context, context.getString(R.string.usernameTaken), Toast.LENGTH_SHORT);
+                                        toast.setGravity(Gravity.CENTER, 0, 150);
+                                        toast.show();
                                     break;
                                     case 203:
-                                        Toast.makeText(context, context.getString(R.string.emailTaken), Toast.LENGTH_SHORT).show();
+                                        toast = Toast.makeText(context, context.getString(R.string.emailTaken), Toast.LENGTH_SHORT);
+                                        toast.setGravity(Gravity.CENTER, 0, 150);
+                                        toast.show();
                                         break;
                                     default:
                                         Log.e("**Exception CODE**", errorCode + "");
@@ -282,11 +289,13 @@ public class ParseDB {
                     int errorCode = e.getCode();
                     switch (errorCode){
                         case 101:
-                            Toast.makeText(context, context.getString(R.string.invalidLogInParameters), Toast.LENGTH_SHORT).show();
-                            //getActivity().getString(R.string.myExpenses)
+                            toast = Toast.makeText(context, context.getString(R.string.invalidLogInParameters), Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.CENTER, 0, 150);
+                            toast.show();;
+
                             break;
                         default:
-                            // Toast.makeText(context,e.getLocalizedMessage()+"code: "+errorCode , Toast.LENGTH_SHORT).show();
+
                             Log.e("**Exception CODE**", errorCode + "");
                             Log.e("*****Exception*****", e.getLocalizedMessage());
                             break;
@@ -1487,7 +1496,7 @@ protected List getCurrentUserFailuresBoard() {
             rowUserList.removeAll(al);
         } catch (ParseException e) {
             e.printStackTrace();
-            Toast.makeText(context, "Shitttttttttttt", Toast.LENGTH_LONG).show();
+
         }
 
         for (Object xx : rowUserList) {

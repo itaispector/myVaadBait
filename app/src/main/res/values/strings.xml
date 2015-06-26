@@ -41,6 +41,7 @@
     </string-array>
 
     <string name="app_name">הועד שלי</string>
+    <string name="no_notices">אין מודעות בלוח</string>
     <string name="join_building_text">הצטרף לבניין</string>
     <string name="apartment_number_text">מספר דירה</string>
     <string name="problem_text">קרתה תקלה אנא נסה/י שנית</string>
