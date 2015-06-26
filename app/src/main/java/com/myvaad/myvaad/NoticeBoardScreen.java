@@ -77,9 +77,7 @@ public class NoticeBoardScreen extends Fragment {
                     @Override
                     public void run() {
                         swipeView.setRefreshing(false);
-
-                        adapter.refresh(NoticeBoardList);
-
+                        refreshNotices();
                         Log.d("Swipe", "Refreshing Number*******************");
                     }
                 }, 500);
