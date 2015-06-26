@@ -67,9 +67,7 @@ public class NoticesAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.fullname = (TextView)convertView.findViewById(R.id.noticeBoardRowFullName);
             holder.image = (ImageView)convertView.findViewById(R.id.noticeBoardRowUserImage);
-            holder.divider = (SurfaceView)convertView.findViewById(R.id.noticeBoardRowDivider);
             holder.content = (TextView)convertView.findViewById(R.id.noticeBoardRowContent);
-            holder.divider2 = (SurfaceView)convertView.findViewById(R.id.noticeBoardRowDivider2);
             holder.date = (TextView)convertView.findViewById(R.id.noticeBoardRowDate);
             
             
@@ -78,7 +76,7 @@ public class NoticesAdapter extends BaseAdapter {
             holder = (ViewHolder)convertView.getTag();
 		
 		//List container = (List)notices.get(idx);
-		holder.fullname.setText(((List)notices.get(idx)).get(3)+" משפחת");
+		holder.fullname.setText("משפחת "+((List)notices.get(idx)).get(3));
 		holder.content.setText(""+((List)notices.get(idx)).get(1));
 		holder.date.setText(""+((List)notices.get(idx)).get(2));
 		holder.image.setImageBitmap((Bitmap) ((List)notices.get(idx)).get(4));
