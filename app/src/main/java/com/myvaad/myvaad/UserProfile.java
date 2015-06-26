@@ -1,49 +1,45 @@
 package com.myvaad.myvaad;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.parse.Parse;
-
 import dialogs.AboutDialog;
 
-public class UserProfile extends Activity{
+public class UserProfile extends AppCompatActivity {
     ParseDB db;
     ImageView userImg,userNameEditIcon,userNameEditVIcon;
     TextView userName;
     EditText userNameEdit;
     InputMethodManager imm;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_profile);
-        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#007ca2"));
-        getActionBar().setBackgroundDrawable(colorDrawable);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
-        //To connect with parse - we need to provide 2 keys: appId & clientId
-        String appId="QdwF666zm76ORQcn4KF6JNwDfsb6cj97QunbpT1s";
-        String clientId="OiJI3KdONEN9jML6Mi6r6iQTpR8mIOBv3YgsUhdv";
+
+        toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        setSupportActionBar(toolbar);
+
+        // enable ToolBar app icon to behave as action to toggle nav drawer
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
         //Initialize with keys
-        Parse.initialize(this, appId, clientId);
+        Parse.initialize(this);
         db=ParseDB.getInstance(this);
+
         userName=(TextView)findViewById(R.id.user_propile_name);
         userImg=(ImageView)findViewById(R.id.userProimgView);
         userNameEditIcon=(ImageView)findViewById(R.id.edit_user_name_icon);
