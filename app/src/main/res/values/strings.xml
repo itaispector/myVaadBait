@@ -94,10 +94,15 @@
     <string name="about_dialog_title">אודות הועד שלי</string>
     <string name="ok">אישור</string>
     <string name="about_dialog_design">עיצוב: דניאל משרקי ואיתי ספקטור.</string>
+    <string name="about_dialog_content">אפליקציה לניהול ועד בית בצורה חכמה ויעילה. תשלומי ועד בית, לוח מודעות, קבלת התראות, דיווח תקלות ועוד.</string>
     <string name="about_dialog_code">פיתוח:</string>
     <string name="about_dialog_shlomi">- שלומי פרסקו</string>
     <string name="about_dialog_itay">- איתי ספקטור</string>
     <string name="about_dialog_daniel">- דניאל משרקי</string>
+    <string name="about_dialog_icons">Icons By: www.icons8.com</string>
+    <string name="about_dialog_divider">----------</string>
+    <string name="about_dialog_version">גרסא 1.0.0</string>
+    <string name="about_dialog_r">כל הזכויות שמורות לועד שלי © 2015</string>
 
     <string-array name="login_page_array">
         <item>תפריט</item>
