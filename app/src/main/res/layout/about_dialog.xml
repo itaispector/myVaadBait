@@ -8,60 +8,76 @@
     <TextView
         android:id="@+id/about_desc"
         android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:textSize="15sp"
-        android:text="אפליקציה פשוטה ומהירה בלה בלה בלהב להלהבלבלב"/>
+        android:text="@string/about_dialog_version"/>
     <TextView
-        android:id="@+id/about_code"
-        android:layout_width="wrap_content"
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="end"
         android:layout_below="@id/about_desc"
-        android:textSize="15sp"
-        android:layout_marginTop="10dp"
-        android:layout_alignParentRight="true"
+        android:text="@string/about_dialog_divider"/>
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:paddingBottom="10dp"
+        android:layout_below="@id/divider"
+        android:text="@string/about_dialog_content"/>
+    <TextView
+        android:id="@+id/copy"
+        android:layout_below="@id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start"
         android:text="@string/about_dialog_code"/>
     <TextView
-        android:id="@+id/about_shlomi"
-        android:layout_width="wrap_content"
+        android:id="@+id/shlomi"
+        android:layout_below="@id/copy"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/about_code"
-        android:textSize="15sp"
-        android:layout_marginRight="6dp"
-        android:layout_alignParentRight="true"
+        android:gravity="start"
         android:text="@string/about_dialog_shlomi"/>
     <TextView
-        android:id="@+id/about_itay"
-        android:layout_width="wrap_content"
+        android:id="@+id/itai"
+        android:layout_below="@id/shlomi"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="6dp"
-        android:layout_below="@id/about_shlomi"
-        android:textSize="15sp"
-        android:layout_alignParentRight="true"
+        android:gravity="start"
         android:text="@string/about_dialog_itay"/>
     <TextView
-        android:id="@+id/about_daniel"
-        android:layout_width="wrap_content"
+        android:id="@+id/daniel"
+        android:layout_below="@id/itai"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/about_itay"
-        android:layout_marginRight="6dp"
-        android:textSize="15sp"
-        android:layout_alignParentRight="true"
+        android:gravity="start"
         android:text="@string/about_dialog_daniel"/>
     <TextView
-        android:id="@+id/about_design"
-        android:layout_width="wrap_content"
+        android:id="@+id/all_rights"
+        android:layout_below="@id/daniel"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/about_daniel"
-        android:textSize="15sp"
-        android:layout_marginBottom="5dp"
-        android:layout_alignParentRight="true"
-        android:text="@string/about_dialog_design"/>
+        android:layout_marginTop="10dp"
+        android:gravity="start"
+        android:text="@string/about_dialog_r"/>
     <TextView
-        android:layout_below="@id/about_design"
+        android:id="@+id/icons_r"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Navigation Drawer Icons By: www.icons8.com"/>
+        android:layout_below="@+id/all_rights"
+        android:layout_marginTop="10dp"
+        android:text="@string/about_dialog_icons"/>
+    <TextView
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:layout_below="@id/icons_r"
+        android:text="@string/about_dialog_divider"/>
 
 </RelativeLayout>
