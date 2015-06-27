@@ -4,31 +4,23 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:background="#e5e5e5">
-    <View
-        android:id="@+id/up_view"
+    <RelativeLayout
+        android:id="@+id/noticeBoardNamePicHolder"
         android:background="@color/ColorPrimary"
         android:layout_width="match_parent"
-        android:layout_height="60dp"/>
-    <RelativeLayout
-        android:layout_below="@id/up_view"
-        android:id="@+id/noticeBoardNamePicHolder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginLeft="10dp"
-        android:background="@drawable/list_item_background"
-        android:visibility="visible">
-
+        android:layout_height="60dp">
 
         <ImageView
             android:id="@+id/noticeBoardUserImage"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:paddingLeft="10dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_centerVertical="true"
             android:src="@drawable/no_image" />
 
         <TextView
@@ -37,15 +29,18 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/noticeBoardUserImage"
+            android:layout_toStartOf="@id/noticeBoardUserImage"
             android:paddingRight="0dp"
+            android:paddingEnd="0dp"
             android:text="משפחת חצרוני"
-            android:textColor="#4F4F4F"
-            android:textSize="15dp" />
+            android:textColor="#fff"
+            android:textSize="15sp" />
 
         <ImageView
             android:id="@+id/noticeBoardDeleteAllNoticesBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="#fff"
             android:background="@drawable/trash_btn" />
 
         <ImageView
@@ -55,6 +50,7 @@
             android:layout_alignBottom="@+id/noticeBoardDeleteAllNoticesBtn"
             android:layout_marginLeft="5dp"
             android:layout_marginStart="5dp"
+            android:backgroundTint="#fff"
             android:layout_toEndOf="@+id/noticeBoardDeleteAllNoticesBtn"
             android:layout_toRightOf="@+id/noticeBoardDeleteAllNoticesBtn"
             android:background="@drawable/refresh" />
@@ -83,7 +79,8 @@
         android:layout_height="match_parent"
         android:layout_below="@id/noticeBoardNamePicHolder"
         android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp">
 
         <ListView
             android:id="@+id/NoticeBoardListView"
@@ -104,8 +101,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:layout_margin="16dp"
         android:src="@drawable/add_notice"
         fab:fab_colorNormal="@color/ColorPrimary"
