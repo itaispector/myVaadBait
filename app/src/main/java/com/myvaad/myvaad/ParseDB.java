@@ -1630,23 +1630,25 @@ protected List getCurrentUserFailuresBoard() {
         query.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<ParseObject>() {
             public void done(ParseObject object, ParseException e) {
                 if (e == null) {
-                    ParseInstallation.getCurrentInstallation().put("userNamePush", object.get("username"));
-                    ParseInstallation.getCurrentInstallation().put("userObjectId", object.getObjectId());
-                    ParseInstallation.getCurrentInstallation().put("buildingCode", object.get("buildingCode"));
-                    ParseInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
+                    ParseInstallation pi = ParseInstallation.getCurrentInstallation();
+                    pi.put("userNamePush", object.get("username"));
+                    pi.put("userObjectId", object.getObjectId());
+                    pi.put("buildingCode", object.get("buildingCode"));
+                    pi.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
                             if (e==null){
                                 //Toast.makeText(context, "successfully saved and installed", Toast.LENGTH_LONG).show();
                             }else{
-                                //Toast.makeText(context, "" + e, Toast.LENGTH_LONG).show();
+                                //Toast.makeText(context, "" + e , Toast.LENGTH_LONG).show();
                             }
                         }
                     });
                 } else {
-                    //Toast.makeText(context, "" + e, Toast.LENGTH_LONG).show();
+                    Log.i("***Parse Exception****", e.getMessage());
                 }
             }
         });
     }
+
 }
