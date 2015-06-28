@@ -105,6 +105,8 @@
     <string name="about_dialog_r">כל הזכויות שמורות לועד שלי © 2015</string>
     <string name="delete_user">אתה עומד למחוק את</string>
     <string name="are_you_sure">האם אתה בטוח?</string>
+    <string name="no_users">אין דיירים בבניין</string>
+    <string name="appartment">דירה</string>
 
     <string-array name="login_page_array">
         <item>תפריט</item>

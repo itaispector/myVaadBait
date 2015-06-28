@@ -65,7 +65,7 @@ public class UsersAdapter extends BaseAdapter {
 
 	//helper class for holding the views in the listview, better for performance
 	public class ViewHolder{
-		TextView familyName;
+		TextView familyName, apartmentNumber;
 		ImageView userImg;
 		SurfaceView div;
 		Button sendMsg,delUser;
@@ -84,6 +84,7 @@ public class UsersAdapter extends BaseAdapter {
 			convertView = myInflater.inflate(R.layout.users_list_view_row, null);           
             holder = new ViewHolder();     
             holder.familyName=(TextView)convertView.findViewById(R.id.usersRowFullName);
+            holder.apartmentNumber=(TextView)convertView.findViewById(R.id.usersApartmentNumber);
             holder.userImg=(ImageView)convertView.findViewById(R.id.usersRowUserImage);
             holder.div=(SurfaceView)convertView.findViewById(R.id.usersRowDivider4);
             holder.sendMsg=(Button)convertView.findViewById(R.id.usersRowSendBtn);
@@ -98,38 +99,47 @@ public class UsersAdapter extends BaseAdapter {
 		List myUsers = (List)users.get(idx);
         final String familyName = (String)myUsers.get(0);
         final String userObjectId = (String)myUsers.get(2);
-        holder.familyName.setText("משפחת "+familyName);
+        boolean hasApplication = (boolean)myUsers.get(3);
+        String apartmentNumber = (String)myUsers.get(4);
+        holder.familyName.setText("משפחת " + familyName);
+        holder.apartmentNumber.setText(context.getString(R.string.appartment)+" "+apartmentNumber);
 		holder.userImg.setImageBitmap((Bitmap) myUsers.get(1));
-        holder.sendMsg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-                dialog.setMessage(R.string.deleteFailure);
-                final EditText input = new EditText(context);
-                dialog.setView(input);
-                dialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (input.getText().toString().matches("")) {
-                            Toast.makeText(context, "אנא הכנס/י הודעה", Toast.LENGTH_LONG).show();
-                        } else {
-                            ParseQuery query = ParseInstallation.getQuery();
-                            query.whereEqualTo("userNamePush", getObjectId(idx));
-                            ParsePush androidPush = new ParsePush();
-                            androidPush.setMessage(input.getText().toString());
-                            androidPush.setQuery(query);
-                            androidPush.sendInBackground();
+        if(hasApplication){
+            holder.sendMsg.setVisibility(View.VISIBLE);
+            holder.sendMsg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+                    dialog.setMessage(R.string.deleteFailure);
+                    final EditText input = new EditText(context);
+                    dialog.setView(input);
+                    dialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (input.getText().toString().matches("")) {
+                                Toast.makeText(context, "אנא הכנס/י הודעה", Toast.LENGTH_LONG).show();
+                            } else {
+                                ParseQuery query = ParseInstallation.getQuery();
+                                query.whereEqualTo("userNamePush", getObjectId(idx));
+                                ParsePush androidPush = new ParsePush();
+                                androidPush.setMessage(input.getText().toString());
+                                androidPush.setQuery(query);
+                                androidPush.sendInBackground();
+                            }
                         }
-                    }
-                });
-                dialog.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                dialog.show();
-            }
-        });
+                    });
+                    dialog.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.show();
+                }
+            });
+        }else{
+            holder.sendMsg.setVisibility(View.GONE);
+        }
+
 
         holder.delUser.setOnClickListener(new View.OnClickListener() {
             @Override

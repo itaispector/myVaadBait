@@ -19,18 +19,30 @@
         android:id="@+id/usersRowFullName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:text="שם מלא"
+        android:textColor="#4F4F4F"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/usersApartmentNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/usersRowUserImage"
         android:layout_alignParentRight="true"
         android:paddingRight="10dp"
-        android:text="שם מלא"
+        android:text="דירה מספר "
         android:textColor="#4F4F4F"
         android:textSize="15dp" />
+
 
     <SurfaceView
         android:id="@+id/usersRowDivider4"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/usersRowFullName"
+        android:layout_below="@id/usersApartmentNumber"
         android:background="#007ea6"
         android:paddingBottom="5dp"
         android:paddingTop="5dp" />

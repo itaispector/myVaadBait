@@ -16,10 +16,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
+import com.melnykov.fab.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
@@ -36,13 +38,14 @@ public class UsersScreen extends Fragment {
     ListView usersListView;
     UsersAdapter adapter;
     ParseDB db;
-    ImageView addUserBtn;
+    FloatingActionButton addUserBtn;
     View dialogLayout;
     Dialog usersDialog;
     EditText famName, apartNum;
     Button ok, cancel;
     List usersList = new ArrayList();
     ProgressBarCircularIndeterminate bar;
+    TextView noUsersText;
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,52 +61,16 @@ public class UsersScreen extends Fragment {
             getActivity().getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
 
+        noUsersText = (TextView)rootView.findViewById(R.id.no_users_text);
         //calls the list view and its adapter
         usersListView = (ListView) rootView.findViewById(R.id.UsersListView);
-        addUserBtn = (ImageView) rootView.findViewById(R.id.add_user_btn);
 
+        //set data to list view
         findUsersForCurrentBuilding();
-        /*
-        String buildingCode = db.getCurrentUserBuildingCode();
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
-        //Query Constraints-->all users from specific building
-        query.whereContains("buildingCode", buildingCode);
-        query.whereNotEqualTo("username", db.getcurrentUserName());
-        query.addAscendingOrder("familyName");
 
-
-        //finding all users for current user building
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> users, ParseException e) {
-                if(e == null){
-                    for (ParseObject usersRow : users) {
-                        List rowUserList = new ArrayList();
-                        //get specific data from each row
-                        String familyName = usersRow.getString("familyName");
-                        String userObjectId = usersRow.getObjectId().toString();
-                        ParseFile userPicture = usersRow.getParseFile("picture");
-                        Bitmap userPic = db.parseFileToBitmap(userPicture);
-                        rowUserList.add(familyName); //0
-                        rowUserList.add(userPic);     //1
-                        rowUserList.add(userObjectId); //2
-                        usersList.add(rowUserList);
-                        adapter = new UsersAdapter(getActivity(), usersList);
-                        usersListView.setAdapter(adapter);
-
-                    }
-                }else{
-                    Log.e("**PARSE ERROR**", "Error: " + e.getMessage());
-                }
-
-            }
-        });
-        */
-
-        //adapter = new UsersAdapter(getActivity(), db.getUsersList());
-
-        //usersListView.setAdapter(adapter);
-
+        //attaching button to list view, so it will disappear while scrolling down
+        addUserBtn = (FloatingActionButton) rootView.findViewById(R.id.add_user_btn);
+        addUserBtn.attachToListView(usersListView);
         //set listener to add user btn
         addUserBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,15 +103,23 @@ public class UsersScreen extends Fragment {
                         String userObjectId = usersRow.getObjectId().toString();
                         ParseFile userPicture = usersRow.getParseFile("picture");
                         Bitmap userPic = db.parseFileToBitmap(userPicture);
+                        boolean hasApplication = usersRow.getBoolean("hasApplication");
+                        String apartmentNumber = usersRow.getString("apartmentNumber");
                         rowUserList.add(familyName); //0
                         rowUserList.add(userPic);     //1
                         rowUserList.add(userObjectId); //2
+                        rowUserList.add(hasApplication); //3
+                        rowUserList.add(apartmentNumber); //4
                         usersList.add(rowUserList);
                         adapter = new UsersAdapter(getActivity(), usersList, UsersScreen.this);
                         usersListView.setAdapter(adapter);
                         bar.setVisibility(View.GONE);
-
-
+                    }
+                    if (usersList.isEmpty()){
+                        bar.setVisibility(View.GONE);
+                        noUsersText.setVisibility(View.VISIBLE);
+                    }else{
+                        noUsersText.setVisibility(View.GONE);
                     }
                 } else {
                     Log.e("**PARSE ERROR**", "Error: " + e.getMessage());
