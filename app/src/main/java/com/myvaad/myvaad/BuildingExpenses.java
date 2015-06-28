@@ -31,8 +31,7 @@ public class BuildingExpenses extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.building_expenses_layout, container, false);
-        //Initialize parse
-        //Parse.initialize(getActivity());
+
         db = ParseDB.getInstance(getActivity());
 
         buildingTotalExpenses = (TextView) rootView.findViewById(R.id.buildingTotalExpensesAmount);
