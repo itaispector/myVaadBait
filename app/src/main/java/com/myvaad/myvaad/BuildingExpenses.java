@@ -1,89 +1,82 @@
 package com.myvaad.myvaad;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
-import com.parse.ParseQueryAdapter;
-import com.parse.Parse;
 import com.parse.ParseQuery;
+import com.parse.Parse;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.List;
+
+import adapters.BuildingExpensesAdapter;
+
 public class BuildingExpenses extends Fragment {
-	
-	ParseDB db;
-	public int buildingTotalExpensesAmount;
-	
+
+    private ParseDB db;
+    private BuildingExpensesAdapter customParseAdapter;
+    private ListView listView;
+    int totalExpensesAmount = 0;
+    private TextView buildingTotalExpenses;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    	View rootView = inflater.inflate(R.layout.building_expenses_layout,container,false);
-        //Initialize with keys
-        Parse.initialize(getActivity());
-    	db=ParseDB.getInstance(getActivity());
-    	
-    	//simple query
-        //ParseQueryAdapter<ParseObject> adapter = new ParseQueryAdapter<ParseObject>(getActivity(), "noticeBoard");
-    	
-    	//adapter with defined query
-    	ParseQueryAdapter<ParseObject> adapter = new ParseQueryAdapter<ParseObject>(getActivity(), new ParseQueryAdapter.QueryFactory<ParseObject>() {
+        View rootView = inflater.inflate(R.layout.building_expenses_layout, container, false);
+        //Initialize parse
+        //Parse.initialize(getActivity());
+        db = ParseDB.getInstance(getActivity());
 
-			@Override
-			public ParseQuery<ParseObject> create() {
-				//Define query
-				ParseQuery query = new ParseQuery("payments");
-				query.whereEqualTo("buildingCode", "239250");
-				query.whereEqualTo("paymentType", "regular");
-				query.orderByDescending("createdAt");
-				return query;
-			}
-		}){
-    		@Override
-    		public View getItemView(ParseObject object, View v, ViewGroup parent) {
-    		  if (v == null) {
-    		    v = View.inflate(getContext(), R.layout.expenses_adapter_item, null);
-    		  }
+        buildingTotalExpenses = (TextView) rootView.findViewById(R.id.buildingTotalExpensesAmount);
 
-    		  // Take advantage of ParseQueryAdapter's getItemView logic for
-    		  // populating the main TextView/ImageView.
-    		  // The IDs in your custom layout must match what ParseQueryAdapter expects
-    		  // if it will be populating a TextView or ImageView for you.
-    		  //super.getItemView(object, v, parent);
+        // Initialize the subclass of ParseQueryAdapter
+        customParseAdapter = new BuildingExpensesAdapter(getActivity());
 
-    		  // Do additional configuration before returning the View.
-    		  TextView descriptionView = (TextView) v.findViewById(R.id.expenseDescription);
-    		  descriptionView.setText(object.getString("description"));
-    		  TextView amountView = (TextView)v.findViewById(R.id.expenseAmount);
-    		  String thisExpense = object.getString("amount");
-    		  amountView.setText(getActivity().getString(R.string.shekel) + thisExpense);
+        customParseAdapter.setObjectsPerPage(4);
 
-    		  
+        // Initialize ListView and set initial view to mainAdapter
+        listView = (ListView) rootView.findViewById(R.id.buildingExpensesListview);
 
-    		
-    		  
-    		  TextView createTimeView = (TextView)v.findViewById(R.id.expenseCreatTime);
-    		  String time = object.getCreatedAt().toLocaleString();
-    		  createTimeView.setText(time);
-    		  
-    		  
-    		  return v;
-    		  
-    		  
-    		}
-    	};
+        listView.setAdapter(customParseAdapter);
+        customParseAdapter.loadObjects();
 
-    	//adapter.setTextKey("content");
-    	
-        //adapter.setImageKey("userPic");
 
-        ListView listView = (ListView) rootView.findViewById(R.id.buildingExpensesListview);
-        listView.setAdapter(adapter);
-        
-        TextView buildingTotalExpenses = (TextView)rootView.findViewById(R.id.buildingTotalExpensesAmount);
-    	buildingTotalExpenses.setText( getActivity().getString(R.string.total)+" "+ getActivity().getString(R.string.shekel) + db.getCurrentUserBuildingTotalExpenses());
-    	
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("payments");
+        //Query Constraints-->all users from specific building
+        query.whereEqualTo("buildingCode", db.getCurrentUserBuildingCode());
+        query.whereEqualTo("paymentType", "regular");
+        //query.whereEqualTo("paymentApproved", true);
+        query.orderByDescending("createdAt");
+
+        //finding all payments for current user
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> payments, ParseException e) {
+                if (e == null) {
+                    for (ParseObject paymentRow : payments) {
+
+                        //get specific data from each row
+                        String amount = paymentRow.getString("amount");
+                        totalExpensesAmount += Integer.parseInt(amount);
+
+                    }
+
+                    buildingTotalExpenses.setText(getActivity().getString(R.string.total) + " " + getActivity().getString(R.string.shekel) + totalExpensesAmount);
+
+                } else {//ParseException
+                    Log.e("***Parse Exception***", e.getLocalizedMessage());
+                }
+            }
+        });
+
         return rootView;
     }
 
