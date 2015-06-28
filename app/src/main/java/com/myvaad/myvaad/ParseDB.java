@@ -1638,9 +1638,9 @@ protected List getCurrentUserFailuresBoard() {
                         @Override
                         public void done(ParseException e) {
                             if (e==null){
-                                Toast.makeText(context, "successfully saved and installed", Toast.LENGTH_LONG).show();
+                                //Toast.makeText(context, "successfully saved and installed", Toast.LENGTH_LONG).show();
                             }else{
-                                Toast.makeText(context, "" + e , Toast.LENGTH_LONG).show();
+                                //Toast.makeText(context, "" + e , Toast.LENGTH_LONG).show();
                             }
                         }
                     });
@@ -1650,4 +1650,5 @@ protected List getCurrentUserFailuresBoard() {
             }
         });
     }
+
 }
