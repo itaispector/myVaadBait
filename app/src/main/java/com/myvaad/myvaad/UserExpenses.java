@@ -32,8 +32,6 @@ public class UserExpenses extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.user_expenses_layout, container, false);
 
-        //Initialize parse
-        //Parse.initialize(getActivity());
         db = ParseDB.getInstance(getActivity());
 
         buildingTotalExpenses = (TextView) rootView.findViewById(R.id.userTotalExpensesAmount);
