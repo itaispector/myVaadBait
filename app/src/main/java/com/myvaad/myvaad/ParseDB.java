@@ -154,7 +154,7 @@ import dialogs.RingProgressDialog;
 public class ParseDB {
     private Context context;
     private List NoticeBoardList = new ArrayList();
-    private  Toast toast;
+    private Toast toast;
     //singleton instance container
     private static ParseDB instance;
 
@@ -222,12 +222,12 @@ public class ParseDB {
                                 // Sign up didn't succeed. Look at the ParseException
                                 // to figure out what went wrong
                                 int errorCode = e.getCode();
-                                switch (errorCode){
+                                switch (errorCode) {
                                     case 202:
                                         toast = Toast.makeText(context, context.getString(R.string.usernameTaken), Toast.LENGTH_SHORT);
                                         toast.setGravity(Gravity.CENTER, 0, 150);
                                         toast.show();
-                                    break;
+                                        break;
                                     case 203:
                                         toast = Toast.makeText(context, context.getString(R.string.emailTaken), Toast.LENGTH_SHORT);
                                         toast.setGravity(Gravity.CENTER, 0, 150);
@@ -236,7 +236,7 @@ public class ParseDB {
                                     default:
                                         Log.e("**Exception CODE**", errorCode + "");
                                         Log.e("*****Exception*****", e.getLocalizedMessage());
-                                    break;
+                                        break;
                                 }
                                 dialog.dismiss();
                             }
@@ -1523,7 +1523,7 @@ protected List getCurrentUserFailuresBoard() {
     }
 
     //get Current User Building Total Expenses ******Shlomi new 21/6/15******
-
+/*
     protected int getCurrentUserTotalExpenses() {
         int totalExpensesAmount = 0;
         ParseQuery<ParseObject> query = ParseQuery.getQuery("payments");
@@ -1551,9 +1551,11 @@ protected List getCurrentUserFailuresBoard() {
 
         return totalExpensesAmount;
     }
+*/
+
 
     //get Current User Building Total Expenses ******Shlomi new 21/6/15******
-
+/*
     protected int getCurrentUserBuildingTotalExpenses() {
         int totalExpensesAmount = 0;
         ParseQuery<ParseObject> query = ParseQuery.getQuery("payments");
@@ -1580,6 +1582,7 @@ protected List getCurrentUserFailuresBoard() {
 
         return totalExpensesAmount;
     }
+*/
 
     /**
      * itai new
@@ -1621,34 +1624,35 @@ protected List getCurrentUserFailuresBoard() {
 
 
     }
-    /** itai new 25/6/15*/
+
+    /**
+     * itai new 25/6/15
+     */
     //when starting application this method saves user data in installation table,
     //this is needed to perform the push notification on users device
     //works in background
-    protected void saveUserInstallationInBackground(){
+    protected void saveUserInstallationInBackground() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
         query.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<ParseObject>() {
             public void done(ParseObject object, ParseException e) {
                 if (e == null) {
-                    ParseInstallation pi = ParseInstallation.getCurrentInstallation();
-                    pi.put("userNamePush", object.get("username"));
-                    pi.put("userObjectId", object.getObjectId());
-                    pi.put("buildingCode", object.get("buildingCode"));
-                    pi.saveInBackground(new SaveCallback() {
+                    ParseInstallation.getCurrentInstallation().put("userNamePush", object.get("username"));
+                    ParseInstallation.getCurrentInstallation().put("userObjectId", object.getObjectId());
+                    ParseInstallation.getCurrentInstallation().put("buildingCode", object.get("buildingCode"));
+                    ParseInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
-                            if (e==null){
+                            if (e == null) {
                                 //Toast.makeText(context, "successfully saved and installed", Toast.LENGTH_LONG).show();
-                            }else{
-                                //Toast.makeText(context, "" + e , Toast.LENGTH_LONG).show();
+                            } else {
+                                //Toast.makeText(context, "" + e, Toast.LENGTH_LONG).show();
                             }
                         }
                     });
                 } else {
-                    Log.i("***Parse Exception****", e.getMessage());
+                    //Toast.makeText(context, "" + e, Toast.LENGTH_LONG).show();
                 }
             }
         });
     }
-
 }
