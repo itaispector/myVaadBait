@@ -39,7 +39,7 @@ public class NoticeBoardScreen extends Fragment {
 
     ImageView noticeBoardUserImage, trashBtn, refreshBtn, ok, cancel;
     FloatingActionButton addNoticeBtn;
-    ListView noticeBoardList;
+    ListView noticeBoardListView;
     NoticesAdapter adapter;
     TextView content, noticeBoardFamilyName,noNoticesText;
     EditText contentEdit;
@@ -54,7 +54,7 @@ public class NoticeBoardScreen extends Fragment {
     String[] mPagesTitles;
     Button edit, update, delete, cancelBtn;
     String msg = "";
-    List NoticeBoardList = new ArrayList();
+    List noticeBoardList = new ArrayList();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -93,7 +93,7 @@ public class NoticeBoardScreen extends Fragment {
 
 
         //calls the list view and its adapter
-        noticeBoardList = (ListView) rootView.findViewById(R.id.NoticeBoardListView);
+        noticeBoardListView = (ListView) rootView.findViewById(R.id.NoticeBoardListView);
         noticeBoardFamilyName = (TextView) rootView.findViewById(R.id.noticeBoardFamilyName);
         noticeBoardUserImage = (ImageView) rootView.findViewById(R.id.noticeBoardUserImage);
 
@@ -104,7 +104,7 @@ public class NoticeBoardScreen extends Fragment {
 
 
         //adapter =  new NoticesAdapter(getActivity(),db.getCurrentUserNoticeBoard());
-        //noticeBoardList.setAdapter(adapter);
+        //noticeBoardListView.setAdapter(adapter);
         String CurrentUserBuildingCode = db.getCurrentUserBuildingCode();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("noticeBoard");
         //Query Constraints-->all the notices for current user building
@@ -117,7 +117,7 @@ public class NoticeBoardScreen extends Fragment {
             @Override
             public void done(List<ParseObject> notices, ParseException e) {
                 if (e == null) {
-                    NoticeBoardList.clear();
+                    noticeBoardList.clear();
                     for (ParseObject noticeRow : notices) {
                         List rowNoticeList = new ArrayList();
                         //get specific data from each row
@@ -136,12 +136,12 @@ public class NoticeBoardScreen extends Fragment {
                         rowNoticeList.add(noticeTime);
                         rowNoticeList.add(familyName);
                         rowNoticeList.add(userPic);
-                        NoticeBoardList.add(rowNoticeList);
-                        adapter = new NoticesAdapter(getActivity(), NoticeBoardList);
-                        noticeBoardList.setAdapter(adapter);
+                        noticeBoardList.add(rowNoticeList);
+                        adapter = new NoticesAdapter(getActivity(), noticeBoardList);
+                        noticeBoardListView.setAdapter(adapter);
                         bar.setVisibility(View.GONE);
                     }
-                    if(NoticeBoardList.isEmpty()){
+                    if(noticeBoardList.isEmpty()){
                         bar.setVisibility(View.GONE);
                         noNoticesText.setVisibility(View.VISIBLE);
                     }else{
@@ -163,7 +163,7 @@ public class NoticeBoardScreen extends Fragment {
         setHasOptionsMenu(true);
 
         //listview item click listener
-        noticeBoardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        noticeBoardListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int idx,
@@ -174,13 +174,13 @@ public class NoticeBoardScreen extends Fragment {
         });
 
         //scroll listener for listview
-        noticeBoardList.setOnScrollListener(new AbsListView.OnScrollListener() {
+        noticeBoardListView.setOnScrollListener(new AbsListView.OnScrollListener() {
 
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 /*
                 nameAndPicHolder.setVisibility(View.GONE);
-					if (scrollState==SCROLL_STATE_IDLE && noticeBoardList.getChildAt(0).getTop()>=15){						
+					if (scrollState==SCROLL_STATE_IDLE && noticeBoardListView.getChildAt(0).getTop()>=15){
 						nameAndPicHolder.setVisibility(View.VISIBLE);						
 					}
 					*/
@@ -226,7 +226,7 @@ public class NoticeBoardScreen extends Fragment {
 
         //floating add Button
         addNoticeBtn = (FloatingActionButton) rootView.findViewById(R.id.add_notice_btn);
-        addNoticeBtn.attachToListView(noticeBoardList);
+        addNoticeBtn.attachToListView(noticeBoardListView);
         addNoticeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
