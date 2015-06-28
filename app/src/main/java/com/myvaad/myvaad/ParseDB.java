@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
 import com.parse.FunctionCallback;
 import com.parse.GetCallback;
 import com.parse.LogInCallback;
@@ -144,7 +145,7 @@ import dialogs.RingProgressDialog;
  *         -------------------------------------------------------------------------
  *         protected void updateFailureApprovedByCurrentUser(String failureObjectId)
  *         This method updating the current user approve ,for admin bid to open failure.
- *         updating approvedBy field with the updated usersList in failures class(table).
+ *         updating approvedBy field with the updated usersListView in failures class(table).
  *         -----------------------------------------------------------------------------
  *         protected void updateFailureApprovedBy(ParseUser user,String failureObjectId)
  *         This method adding the user that approve the admin bid to open failure to List of users that
@@ -287,11 +288,12 @@ public class ParseDB {
                     dialog.dismiss();
                     Log.e("***Parse Exception****", e.getCode() + "");
                     int errorCode = e.getCode();
-                    switch (errorCode){
+                    switch (errorCode) {
                         case 101:
                             toast = Toast.makeText(context, context.getString(R.string.invalidLogInParameters), Toast.LENGTH_SHORT);
                             toast.setGravity(Gravity.CENTER, 0, 150);
-                            toast.show();;
+                            toast.show();
+                            ;
 
                             break;
                         default:
@@ -632,7 +634,7 @@ public class ParseDB {
 
     /*
         protected void reloadCurrentUserNoticeBoard() {
-            NoticeBoardList.clear();
+            noticeBoardList.clear();
             //final List outputNoticeList = new ArrayList();
             String CurrentUserBuildingCode = getCurrentUserBuildingCode();
             ParseQuery<ParseObject> query = ParseQuery.getQuery("noticeBoard");
@@ -667,7 +669,7 @@ public class ParseDB {
                             rowNoticeList.add(noticeTime);
                             rowNoticeList.add(familyName);
                             rowNoticeList.add(userPic);
-                            NoticeBoardList.add(rowNoticeList);
+                            noticeBoardList.add(rowNoticeList);
                         }
                     } else {
                         Log.e("**PARSE ERROR**", "Error: " + e.getMessage());
@@ -679,8 +681,8 @@ public class ParseDB {
 
         public List getCurrentUserNoticeBoard(){
             //reloadCurrentUserNoticeBoard();
-            Log.i("***NoticeBoard***", NoticeBoardList.size() + "");
-            return  NoticeBoardList;
+            Log.i("***NoticeBoard***", noticeBoardList.size() + "");
+            return  noticeBoardList;
         }
 
 
@@ -892,7 +894,7 @@ protected List getCurrentUserFailuresBoard() {
     }
 
     //This method updating the current user approve ,for admin bid to open failure.
-    //updating approvedBy field with the updated usersList in failures class(table).
+    //updating approvedBy field with the updated usersListView in failures class(table).
     protected void updateFailureApprovedByCurrentUser(String failureObjectId) {
         updateFailureApprovedBy(getcurrentUserFamilyName(), failureObjectId);
     }
@@ -969,7 +971,8 @@ protected List getCurrentUserFailuresBoard() {
      */
     //***********************NEW ITAI 22/4
     //get users list from building except for admin
-    protected List getUsersList() {
+    /*
+        protected List getUsersList() {
         List outputUsersList = new ArrayList();
         String buildingCode = getCurrentUserBuildingCode();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
@@ -999,6 +1002,7 @@ protected List getCurrentUserFailuresBoard() {
         }
         return outputUsersList;
     }
+     */
 
     //**************************Itai new 9/6/15
     //get payments list
@@ -1145,7 +1149,7 @@ protected List getCurrentUserFailuresBoard() {
     }
 
     //***********Itai new 10/6/15
-    //get usersList for vaad bait payments
+    //get usersListView for vaad bait payments
     protected List getUserListVaadBaitPayments() {
         String cBuilding = getCurrentUserBuildingCode();
         //users list object to return - paid months for each user
