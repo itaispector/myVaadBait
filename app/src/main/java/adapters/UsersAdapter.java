@@ -67,7 +67,6 @@ public class UsersAdapter extends BaseAdapter {
 	public class ViewHolder{
 		TextView familyName, apartmentNumber;
 		ImageView userImg;
-		SurfaceView div;
 		Button sendMsg,delUser;
 		
 	}
@@ -86,7 +85,6 @@ public class UsersAdapter extends BaseAdapter {
             holder.familyName=(TextView)convertView.findViewById(R.id.usersRowFullName);
             holder.apartmentNumber=(TextView)convertView.findViewById(R.id.usersApartmentNumber);
             holder.userImg=(ImageView)convertView.findViewById(R.id.usersRowUserImage);
-            holder.div=(SurfaceView)convertView.findViewById(R.id.usersRowDivider4);
             holder.sendMsg=(Button)convertView.findViewById(R.id.usersRowSendBtn);
             holder.delUser=(Button)convertView.findViewById(R.id.usersRowDelBtn);
             
