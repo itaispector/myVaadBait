@@ -2,8 +2,11 @@ package com.myvaad.myvaad;
 
 import android.app.Dialog;
 import android.app.Fragment;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +17,21 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+
+import com.parse.FindCallback;
 import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import adapters.UsersAdapter;
 
 public class UsersScreen extends Fragment {
-    ListView usersList;
+    ListView usersListView;
     UsersAdapter adapter;
     ParseDB db;
     ImageView addUserBtn;
@@ -27,6 +39,7 @@ public class UsersScreen extends Fragment {
     Dialog usersDialog;
     EditText famName, apartNum;
     Button ok, cancel;
+    List usersList = new ArrayList();
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,10 +53,48 @@ public class UsersScreen extends Fragment {
         }
 
         //calls the list view and its adapter
-        usersList = (ListView) rootView.findViewById(R.id.UsersListView);
+        usersListView = (ListView) rootView.findViewById(R.id.UsersListView);
         addUserBtn = (ImageView) rootView.findViewById(R.id.add_user_btn);
-        adapter = new UsersAdapter(getActivity(), db.getUsersList());
-        usersList.setAdapter(adapter);
+
+
+        String buildingCode = db.getCurrentUserBuildingCode();
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
+        //Query Constraints-->all users from specific building
+        query.whereContains("buildingCode", buildingCode);
+        query.whereNotEqualTo("username", db.getcurrentUserName());
+        query.addAscendingOrder("familyName");
+
+
+        //finding all users for current user building
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> users, ParseException e) {
+                if(e == null){
+                    for (ParseObject usersRow : users) {
+                        List rowUserList = new ArrayList();
+                        //get specific data from each row
+                        String familyName = usersRow.getString("familyName");
+                        String userObjectId = usersRow.getObjectId().toString();
+                        ParseFile userPicture = usersRow.getParseFile("picture");
+                        Bitmap userPic = db.parseFileToBitmap(userPicture);
+                        rowUserList.add(familyName); //0
+                        rowUserList.add(userPic);     //1
+                        rowUserList.add(userObjectId); //2
+                        usersList.add(rowUserList);
+                        adapter = new UsersAdapter(getActivity(), usersList);
+                        usersListView.setAdapter(adapter);
+
+                    }
+                }else{
+                    Log.e("**PARSE ERROR**", "Error: " + e.getMessage());
+                }
+
+            }
+        });
+
+        //adapter = new UsersAdapter(getActivity(), db.getUsersList());
+
+        //usersListView.setAdapter(adapter);
 
         //set listener to add user btn
         addUserBtn.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +107,7 @@ public class UsersScreen extends Fragment {
         setHasOptionsMenu(true);
         return rootView;
     }
+
 
     public void addUserDialog() {
         dialogLayout = View.inflate(getActivity(), R.layout.add_user_dialog, null);
