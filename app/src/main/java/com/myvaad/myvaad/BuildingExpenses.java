@@ -35,6 +35,7 @@ public class BuildingExpenses extends Fragment {
         db = ParseDB.getInstance(getActivity());
 
         buildingTotalExpenses = (TextView) rootView.findViewById(R.id.buildingTotalExpensesAmount);
+
         buildingTotalExpenses.setText("");
 
         // Initialize the subclass of ParseQueryAdapter
