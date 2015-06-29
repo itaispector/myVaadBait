@@ -418,6 +418,15 @@ public class ParseDB {
         } else return null;
     }
 
+    //This method return current user Email
+    protected String getcurrentUserEmail() {
+        ParseUser currentUser = getcurrentUser();
+        if (currentUser != null) {
+            return currentUser.getString("email");
+        } else return null;
+    }
+
+
     //This method return user FamilyName
     protected String getUserFamilyName(ParseUser user) {
         return user.getString("familyName");
