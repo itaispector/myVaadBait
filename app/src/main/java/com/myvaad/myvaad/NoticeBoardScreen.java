@@ -248,6 +248,14 @@ public class NoticeBoardScreen extends Fragment {
 
     }
 
+    /*
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshNotices();
+    }
+    */
+
     public void addNotice() {
         dialogLayout = View.inflate(getActivity(), R.layout.notice_board_add_message_dialog, null);
         noticesDialog = new Dialog(getActivity());

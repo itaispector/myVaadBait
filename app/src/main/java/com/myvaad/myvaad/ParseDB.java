@@ -251,7 +251,7 @@ public class ParseDB {
     }
     //This method convert Image(bitmap) To ByteArray
 
-    private byte[] convertImageToByteArray(Bitmap bitmap) {
+    protected byte[] convertImageToByteArray(Bitmap bitmap) {
         byte[] byteImage = null;
         //Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.androidbegin);
         //Bitmap bitmap = BitmapFactory.decodeFile(picturePath);

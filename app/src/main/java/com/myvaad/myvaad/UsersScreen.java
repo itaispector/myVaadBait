@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -23,13 +24,17 @@ import android.widget.Toast;
 import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.melnykov.fab.FloatingActionButton;
 import com.parse.FindCallback;
+import com.parse.FunctionCallback;
 import com.parse.Parse;
+import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import adapters.UsersAdapter;
@@ -146,9 +151,11 @@ public class UsersScreen extends Fragment {
                 String apartmentNumber = apartNum.getText().toString();
 
                 if (familyName.matches("") || (apartmentNumber.matches(""))) {
+                    bar.setVisibility(View.GONE);
                     Toast.makeText(getActivity(), getResources().getString(R.string.empty_edittext_msg), Toast.LENGTH_SHORT).show();
                 } else {
-                    db.addUser(familyName, apartmentNumber);
+                    bar.setVisibility(View.VISIBLE);
+                    addUser(familyName, apartmentNumber);
                     usersDialog.dismiss();
                 }
             }
@@ -158,6 +165,43 @@ public class UsersScreen extends Fragment {
             @Override
             public void onClick(View view) {
                 usersDialog.dismiss();
+            }
+        });
+    }
+
+    private void addUser(final String familyName, final String apartmentNumber){
+        final String currentBuilding = db.getCurrentUserBuildingCode();
+        final HashMap<String, Object> params = new HashMap<String, Object>();
+        Bitmap bitmap = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.nouser);
+        byte[] data = db.convertImageToByteArray(bitmap);
+        final ParseFile file = new ParseFile("user.png", data);
+        file.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    //Toast.makeText(getActivity(), "" + e, Toast.LENGTH_LONG).show();
+                } else {
+                    //Toast.makeText(context, "hakol tov", Toast.LENGTH_LONG).show();
+                    params.put("username", familyName + currentBuilding + apartmentNumber);
+                    params.put("password", familyName + currentBuilding + apartmentNumber);
+                    params.put("familyName", familyName);
+                    params.put("apartmentNumber", apartmentNumber);
+                    params.put("buildingCode", currentBuilding);
+                    params.put("picture", file);
+                    ParseCloud.callFunctionInBackground("saveNewUser", params, new FunctionCallback<String>() {
+                        public void done(String result, ParseException e) {
+                            if (e == null) {
+                                refreshUsers();
+                                bar.setVisibility(View.GONE);
+                                //Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                            } else {
+                                //Toast.makeText(getActivity(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+
+                }
+
             }
         });
     }
