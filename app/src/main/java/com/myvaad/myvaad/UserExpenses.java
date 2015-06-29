@@ -38,6 +38,7 @@ public class UserExpenses extends Fragment {
         customParseAdapter = new UserExpensesAdapter(getActivity(), db.getCurrentUserObjectId());
         listView = (ListView) rootView.findViewById(R.id.userExpensesListview);
         listView.setAdapter(customParseAdapter);
+
         customParseAdapter.loadObjects();
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("payments");
