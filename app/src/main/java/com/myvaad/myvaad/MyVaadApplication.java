@@ -1,6 +1,7 @@
 package com.myvaad.myvaad;
 
 import android.app.Application;
+import android.view.View;
 
 import com.parse.Parse;
 import com.parse.PushService;

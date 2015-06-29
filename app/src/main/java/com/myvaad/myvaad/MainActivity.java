@@ -3,6 +3,7 @@ package com.myvaad.myvaad;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -24,9 +25,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar mToolBar;
     private NavigationView mDrawer;
     private DrawerLayout mDrawerLayout;
-    TextView familyName,userEmail;
+    TextView familyName, userEmail;
     ImageView userImage;
     ParseDB db;
+    Fragment fragment0;
+    FragmentManager fragmentManager;
     private ActionBarDrawerToggle mDrawerToggle;
 
     @Override
@@ -35,9 +38,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         db = ParseDB.getInstance(this);
 
-        if (getWindow().getDecorView().getLayoutDirection() == View.LAYOUT_DIRECTION_LTR){
+        if (getWindow().getDecorView().getLayoutDirection() == View.LAYOUT_DIRECTION_LTR) {
             getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
+
+
+        fragmentManager = getFragmentManager();
+        fragment0 = new NoticeBoardScreen();
+        fragmentManager.beginTransaction().replace(R.id.main_content, fragment0).commit();
+
 
         mToolBar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(mToolBar);
@@ -47,11 +56,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolBar, R.string.drawer_open, R.string.drawer_close);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
-        familyName=(TextView)findViewById(R.id.nav_header_family_name);
-        userEmail=(TextView)findViewById(R.id.nav_header_email);
-        userImage=(ImageView)findViewById(R.id.user_image);
+        familyName = (TextView) findViewById(R.id.nav_header_family_name);
+        userEmail = (TextView) findViewById(R.id.nav_header_email);
+        userImage = (ImageView) findViewById(R.id.user_image);
 
-        familyName.setText("משפחת "+db.getcurrentUserFamilyName());
+        familyName.setText("משפחת " + db.getcurrentUserFamilyName());
         userEmail.setText(db.getcurrentUserEmail());
         userImage.setImageBitmap(db.getcurrentUserPicture());
 
@@ -82,12 +91,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
-        Fragment fragment0 = new NoticeBoardScreen();
         Fragment fragment1 = new FailuresScreen();
         Fragment fragment2 = new ExpensesScreen();
         Fragment fragment3 = new PaymentsScreen();
         Fragment fragment4 = new UsersScreen();
-        FragmentManager fragmentManager = getFragmentManager();
 
         switch (menuItem.getItemId()) {
             case R.id.notice_board:
@@ -118,9 +125,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.navigation_logout:
                 db.logOutUser(this);
                 mDrawerLayout.closeDrawer(GravityCompat.START);
+            case R.id.navigation_userPrifile:
+                Intent i = new Intent(this, UserProfile.class);
+                startActivity(i);
+                mDrawerLayout.closeDrawer(GravityCompat.START);
                 break;
         }
 
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mDrawerLayout.isDrawerOpen(mDrawer)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 }

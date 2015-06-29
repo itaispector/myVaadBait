@@ -27,8 +27,6 @@ dependencies {
     compile fileTree(include: 'Parse-*.jar', dir: 'libs')
     compile files('libs/PayPalAndroidSDK.jar')
     compile files('libs/bolts-android-1.1.4.jar')
- //   compile 'com.github.navasmdc:MaterialDesign:1.5@aar'
     compile 'com.melnykov:floatingactionbutton:1.3.0'
-
 
 }

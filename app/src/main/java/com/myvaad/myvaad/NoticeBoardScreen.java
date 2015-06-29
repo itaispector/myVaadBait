@@ -15,17 +15,12 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.widget.DrawerLayout;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.*;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.*;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.*;
-
 import com.melnykov.fab.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.Parse;
@@ -33,26 +28,20 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-
 import adapters.NoticesAdapter;
 
 public class NoticeBoardScreen extends Fragment {
 
-    ImageView noticeBoardUserImage, trashBtn, refreshBtn, ok, cancel;
+    ImageView ok, cancel;
     FloatingActionButton addNoticeBtn;
     ListView noticeBoardListView;
     NoticesAdapter adapter;
-    TextView content, noticeBoardFamilyName,noNoticesText;
+    TextView content,noNoticesText;
     EditText contentEdit;
-    RelativeLayout nameAndPicHolder;
     ParseDB db;
     Intent i;
- /**   ProgressBarCircularIndeterminate bar;**/
     View dialogLayout;
     Dialog noticesDialog;
-    DrawerLayout mDrawerLayout;
-    protected ListView mDrawerList;
-    String[] mPagesTitles;
     Button edit, update, delete, cancelBtn;
     String msg = "";
     List noticeBoardList = new ArrayList();
@@ -63,7 +52,6 @@ public class NoticeBoardScreen extends Fragment {
         Parse.initialize(getActivity());
         db = ParseDB.getInstance(getActivity());
         View rootView = inflater.inflate(R.layout.notice_board_screen, container, false);
-        nameAndPicHolder = (RelativeLayout) rootView.findViewById(R.id.noticeBoardNamePicHolder);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setElevation(0);
         final SwipeRefreshLayout swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
         swipeView.setColorSchemeColors(Color.parseColor("#007ca2"), Color.parseColor("#007ca2"), Color.parseColor("#007ca2"), Color.parseColor("#007ca2"));
@@ -83,20 +71,16 @@ public class NoticeBoardScreen extends Fragment {
             }
         });
 
+        setHasOptionsMenu(true);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             getActivity().getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
 
-
         //calls the list view and its adapter
         noticeBoardListView = (ListView) rootView.findViewById(R.id.NoticeBoardListView);
-        noticeBoardFamilyName = (TextView) rootView.findViewById(R.id.noticeBoardFamilyName);
-        noticeBoardUserImage = (ImageView) rootView.findViewById(R.id.noticeBoardUserImage);
 
         noNoticesText = (TextView) rootView.findViewById(R.id.no_notices_text);
-
-        trashBtn = (ImageView) rootView.findViewById(R.id.noticeBoardDeleteAllNoticesBtn);
-        refreshBtn = (ImageView) rootView.findViewById(R.id.noticeBoardRefreshBtn);
 
 
         //adapter =  new NoticesAdapter(getActivity(),db.getCurrentUserNoticeBoard());
@@ -135,12 +119,12 @@ public class NoticeBoardScreen extends Fragment {
                         noticeBoardList.add(rowNoticeList);
                         adapter = new NoticesAdapter(getActivity(), noticeBoardList);
                         noticeBoardListView.setAdapter(adapter);
-                   /**    bar.setVisibility(View.GONE);**/
+                        /**    bar.setVisibility(View.GONE);**/
                     }
-                    if(noticeBoardList.isEmpty()){
-                    /**    bar.setVisibility(View.GONE);**/
+                    if (noticeBoardList.isEmpty()) {
+                        /**    bar.setVisibility(View.GONE);**/
                         noNoticesText.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         noNoticesText.setVisibility(View.GONE);
                     }
                 } else {
@@ -151,11 +135,8 @@ public class NoticeBoardScreen extends Fragment {
 
         getActivity().setTitle(R.string.NoticeBoardScreenTitle);
 
-
-        noticeBoardFamilyName.setText(db.getcurrentUserFamilyName());
-        noticeBoardUserImage.setImageBitmap(db.getcurrentUserPicture());
         if (!db.isCurrentUserAdmin())
-            trashBtn.setVisibility(View.GONE);
+           // trashBtn.setVisibility(View.GONE);
         setHasOptionsMenu(true);
 
         //listview item click listener
@@ -192,34 +173,6 @@ public class NoticeBoardScreen extends Fragment {
         });
         //--------      
 
-        //refresh button listener
-        refreshBtn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.rotate_animation);
-                refreshBtn.startAnimation(animation);
-
-                animation.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation arg0) {
-                        // TODO Auto-generated method stub
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation arg0) {
-                        // TODO Auto-generated method stub
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation arg0) {
-                        refreshNotices();
-                    }
-                });
-            }
-        });
-
-
         //floating add Button
         addNoticeBtn = (FloatingActionButton) rootView.findViewById(R.id.add_notice_btn);
         addNoticeBtn.attachToListView(noticeBoardListView);
@@ -230,16 +183,6 @@ public class NoticeBoardScreen extends Fragment {
             }
         });
 
-
-        //delete all messages listener
-        trashBtn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                deleteAllDialog();
-
-            }
-        });
         return rootView;
 
     }
@@ -418,6 +361,21 @@ public class NoticeBoardScreen extends Fragment {
         Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.notice_board_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.trash_btn:
+                deleteAllDialog();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
 
 

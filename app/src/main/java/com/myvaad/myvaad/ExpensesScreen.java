@@ -39,14 +39,13 @@ public class ExpensesScreen extends Fragment {
                              Bundle savedInstanceState) {
         CharSequence Titles[] = {getActivity().getString(R.string.myExpenses), getActivity().getString(R.string.buildingExpenses)};
 
-        String appId = "QdwF666zm76ORQcn4KF6JNwDfsb6cj97QunbpT1s";
-        String clientId = "OiJI3KdONEN9jML6Mi6r6iQTpR8mIOBv3YgsUhdv";
         //Initialize with keys
-        Parse.initialize(getActivity(), appId, clientId);
         db = ParseDB.getInstance(getActivity());
         //final View rootView = inflater.inflate(resource, root, attachToRoot)
         final View rootView = inflater.inflate(R.layout.expenses_main_layout, container, false);
 
+
+        getActivity().setTitle(R.string.expenses_screen_ttl);
 
         fragManager = myContext.getSupportFragmentManager();
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.

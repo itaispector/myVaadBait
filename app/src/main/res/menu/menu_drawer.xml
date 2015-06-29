@@ -4,33 +4,39 @@
         <item
             android:id="@+id/notice_board"
             android:checked="true"
-            android:icon="@drawable/trash_btn"
+            android:icon="@drawable/pin_icon"
             android:title="לוח מודעות" />
         <item
             android:id="@+id/failures_screen"
-            android:icon="@drawable/trash_btn"
-            android:title="מסך תקלות"/>
+            android:icon="@drawable/failures_icon"
+            android:title="מסך תקלות" />
         <item
             android:id="@+id/expenses_screen"
-            android:icon="@drawable/trash_btn"
+            android:icon="@drawable/expenses_icon"
             android:title="פירוט הוצאות" />
         <item
             android:id="@+id/payments_screen"
-            android:icon="@drawable/trash_btn"
+            android:icon="@drawable/payments_icon"
             android:title="דף תשלומים" />
         <item
             android:id="@+id/users_screen"
-            android:icon="@drawable/trash_btn"
+            android:icon="@drawable/users_icon"
             android:title="ניהול דיירים" />
     </group>
-    <item android:title="משתמש">
+
+    <item android:title="איזור אישי">
         <menu>
             <item
                 android:id="@+id/navigation_logout"
+                android:icon="@drawable/logout_icon"
                 android:title="התנתק" />
             <item
                 android:id="@+id/navigation_userPrifile"
+                android:icon="@drawable/settings_icon"
                 android:title="הגדרות משתמש" />
         </menu>
+
     </item>
+
+
 </menu>
