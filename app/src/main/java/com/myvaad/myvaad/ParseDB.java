@@ -191,6 +191,7 @@ public class ParseDB {
         // other fields can be set just like with ParseObject by put
         user.put("isAdmin", false);
         user.put("familyName", familyName);
+        user.put("hasApplication", true);
 
         //convertImageToByteArray() convert image to byte array
         //Parse get file only as byte array with max size of 10Mbyte
