@@ -3,8 +3,6 @@ package com.myvaad.myvaad;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
-import com.parse.ParseQueryAdapter;
-import com.parse.Parse;
 import com.parse.ParseQuery;
 
 import android.os.Bundle;
@@ -18,12 +16,11 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import adapters.BuildingExpensesAdapter;
 import adapters.UserExpensesAdapter;
 
 public class UserExpenses extends Fragment {
     private ParseDB db;
-    private TextView buildingTotalExpenses;
+    private TextView userTotalExpenses;
     int totalExpensesAmount = 0;
     private ListView listView;
     private UserExpensesAdapter customParseAdapter;
@@ -34,8 +31,8 @@ public class UserExpenses extends Fragment {
 
         db = ParseDB.getInstance(getActivity());
 
-        buildingTotalExpenses = (TextView) rootView.findViewById(R.id.userTotalExpensesAmount);
-        buildingTotalExpenses.setText("");
+        userTotalExpenses = (TextView) rootView.findViewById(R.id.userTotalExpensesAmount);
+        userTotalExpenses.setText("");
 
         // Initialize the subclass of ParseQueryAdapter
         customParseAdapter = new UserExpensesAdapter(getActivity(), db.getCurrentUserObjectId());
@@ -64,7 +61,7 @@ public class UserExpenses extends Fragment {
 
                     }
 
-                    buildingTotalExpenses.setText(getActivity().getString(R.string.total) + " " + getActivity().getString(R.string.shekel) + totalExpensesAmount);
+                    userTotalExpenses.setText(getActivity().getString(R.string.total) + " " + getActivity().getString(R.string.shekel) + totalExpensesAmount);
 
                 } else {//ParseException
                     Log.e("***Parse Exception***", e.getLocalizedMessage());
