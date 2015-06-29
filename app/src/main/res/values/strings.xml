@@ -87,6 +87,7 @@
     <string name="logoutActionBar">התנתק</string>
     <string name="openNavigationDrawer">תפריט</string>
     <string name="about">אודות</string>
+    <string name="trash_btn">מחק מודעות</string>
     <string name="signup_succeed">ההרשמה בוצעה בהצלחה</string>
     <string name="enterSum">הכנס סכום</string>
     <string name="numberOfHouses">מספר דיירים</string>
@@ -182,6 +183,7 @@
     <string name="SignUpScreenTitle">הרשמה</string>
     <string name="CreateBuildingTitle">הקם בניין</string>
     <string name="NoticeBoardScreenTitle">לוח מודעות</string>
+    <string name="expenses_screen_ttl">פירוט הוצאות</string>
     <string name="FailuresScreenTitle">מסך תקלות</string>
     <string name="PaymentsTitle">דף תשלומים</string>
     <string name="UserProfileTitle">פרופיל משתמש</string>
