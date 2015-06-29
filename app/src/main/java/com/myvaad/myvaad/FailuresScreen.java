@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.melnykov.fab.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
@@ -46,7 +47,7 @@ public class FailuresScreen extends Fragment {
     View dialogLayout;
     Dialog failuresDialog,failuresAddDialog,failuresPriceDialog;
     Button addfailure,dialogFailureOkBtn,dialogFailureCancelBtn,add,edit,approval,delete,moveToPaymentsBtn,approveOkBtn,approveCancelBtn;
-    ImageView addFailureBtn;
+	FloatingActionButton addFailureBtn;
 	int position;
     ParseDB db;
     String title, failureContent="", approvals,myList="", failureObjectId;
@@ -205,7 +206,8 @@ public class FailuresScreen extends Fragment {
         });
             
         //add failure button pointer and listener
-        addFailureBtn=(ImageView)rootView.findViewById(R.id.add_f_btnn);
+        addFailureBtn=(FloatingActionButton)rootView.findViewById(R.id.add_f_btnn);
+		addFailureBtn.attachToListView(failuresList);
         addFailureBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
