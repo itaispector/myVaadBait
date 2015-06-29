@@ -3,64 +3,78 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:animateLayoutChanges="true"
-    android:background="@drawable/list_item_background"
     android:descendantFocusability="blocksDescendants">
 
     <ImageView
         android:id="@+id/usersRowUserImage"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentLeft="true"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
+        android:paddingBottom="10dp"
+        android:paddingEnd="10dp"
         android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingStart="10dp"
+        android:paddingTop="10dp"
         android:src="@drawable/no_image" />
 
-    <TextView
-        android:id="@+id/usersRowFullName"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:paddingRight="10dp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/usersRowUserImage"
+        android:layout_toStartOf="@id/usersRowUserImage"
+        android:gravity="end"
+        android:orientation="vertical"
+        android:paddingBottom="10dp"
         android:paddingTop="10dp"
-        android:text="שם מלא"
-        android:textColor="#4F4F4F"
-        android:textSize="20sp"
-        android:textStyle="bold"/>
-    <TextView
-        android:id="@+id/usersApartmentNumber"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/usersRowFullName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textColor="#4F4F4F"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/usersApartmentNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="16dp"
+            android:text="דירה מספר"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/usersRowUserImage"
-        android:layout_alignParentRight="true"
-        android:paddingRight="10dp"
-        android:text="דירה מספר "
-        android:textColor="#4F4F4F"
-        android:textSize="15dp" />
+        android:layout_centerVertical="true"
+        android:gravity="end"
+        android:orientation="vertical"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:weightSum="2">
 
+        <Button
+            android:id="@+id/usersRowSendBtn"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="שלח הודעה" />
 
-    <SurfaceView
-        android:id="@+id/usersRowDivider4"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/usersApartmentNumber"
-        android:background="#007ea6"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp" />
-
-    <Button
-        android:id="@+id/usersRowSendBtn"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/usersRowDivider4"
-        android:text="שלח הודעה" />
-
-    <Button
-        android:id="@+id/usersRowDelBtn"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/usersRowDivider4"
-        android:text="מחק" />
-
+        <Button
+            android:id="@+id/usersRowDelBtn"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="מחק" />
+    </LinearLayout>
 </RelativeLayout>
