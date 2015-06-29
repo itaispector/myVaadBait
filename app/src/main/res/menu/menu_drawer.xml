@@ -24,7 +24,7 @@
             android:title="ניהול דיירים" />
     </group>
 
-    <item android:title="איזור אישי">
+    <item android:title="אזור אישי">
         <menu>
             <item
                 android:id="@+id/navigation_logout"
