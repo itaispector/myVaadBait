@@ -21,12 +21,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Toolbar mToolBar;
     private NavigationView mDrawer;
     private DrawerLayout mDrawerLayout;
     TextView familyName, userEmail;
-    ImageView userImage;
+    ImageView userImage,navHeaderBackground;
     ParseDB db;
     Fragment fragment0;
     FragmentManager fragmentManager;
@@ -53,17 +58,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawer = (NavigationView) findViewById(R.id.main_drawer);
         mDrawer.setNavigationItemSelectedListener(this);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolBar, R.string.drawer_open, R.string.drawer_close);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolBar, R.string.drawer_open, R.string.drawer_close){
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                printStandardDate();
+                super.onDrawerOpened(drawerView);
+            }
+        };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
         familyName = (TextView) findViewById(R.id.nav_header_family_name);
         userEmail = (TextView) findViewById(R.id.nav_header_email);
         userImage = (ImageView) findViewById(R.id.user_image);
+        navHeaderBackground = (ImageView) findViewById(R.id.nav_header_background);
 
         familyName.setText("משפחת " + db.getcurrentUserFamilyName());
         userEmail.setText(db.getcurrentUserEmail());
         userImage.setImageBitmap(db.getcurrentUserPicture());
 
+    }
+    private void printStandardDate() {
+        String currentDateTimeString = new SimpleDateFormat("HH.mm").format(new Date()).toString();
+        Toast.makeText(this,currentDateTimeString,Toast.LENGTH_LONG).show();
+        if(Double.valueOf(currentDateTimeString)>=20.57){
+            navHeaderBackground.setImageDrawable(getResources().getDrawable(R.drawable.img_drawer_header));
+        }else{
+            navHeaderBackground.setImageDrawable(getResources().getDrawable(R.drawable.app_bg));
+        }
     }
 
     @Override

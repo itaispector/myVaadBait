@@ -1,19 +1,24 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layoutDirection="ltr">
+    android:fitsSystemWindows="true">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/Base.ThemeOverlay.AppCompat.Dark" />
 
     <RelativeLayout
+        android:layoutDirection="ltr"
         android:id="@+id/user_propile_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <include
-            android:id="@+id/tool_bar"
-            layout="@layout/tool_bar"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@id/tool_bar">
+
         <RelativeLayout
-            android:layout_below="@id/tool_bar"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_centerHorizontal="true"
@@ -24,7 +29,6 @@
             android:id="@+id/userProimgView"
             android:layout_width="140dp"
             android:layout_height="140dp"
-            android:layout_below="@id/tool_bar"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp" />
 
@@ -158,4 +162,4 @@
 
 
     </RelativeLayout>
-</ScrollView>
+</RelativeLayout>

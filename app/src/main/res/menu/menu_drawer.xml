@@ -27,13 +27,13 @@
     <item android:title="אזור אישי">
         <menu>
             <item
-                android:id="@+id/navigation_logout"
-                android:icon="@drawable/logout_icon"
-                android:title="התנתק" />
-            <item
                 android:id="@+id/navigation_userPrifile"
                 android:icon="@drawable/settings_icon"
                 android:title="הגדרות משתמש" />
+            <item
+                android:id="@+id/navigation_logout"
+                android:icon="@drawable/logout_icon"
+                android:title="התנתק" />
         </menu>
 
     </item>
