@@ -65,8 +65,6 @@ public class NoticeBoardScreen extends Fragment {
         View rootView = inflater.inflate(R.layout.notice_board_screen, container, false);
         nameAndPicHolder = (RelativeLayout) rootView.findViewById(R.id.noticeBoardNamePicHolder);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setElevation(0);
-
-
         final SwipeRefreshLayout swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
         swipeView.setColorSchemeColors(Color.parseColor("#007ca2"), Color.parseColor("#007ca2"), Color.parseColor("#007ca2"), Color.parseColor("#007ca2"));
         swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
