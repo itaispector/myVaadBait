@@ -37,9 +37,9 @@
         android:layout_alignParentLeft="true"
         android:layout_margin="16dp"
         android:src="@drawable/add_user"
-        fab:fab_colorNormal="@color/ColorPrimary"
-        fab:fab_colorPressed="@color/ColorPrimaryDark"
-        fab:fab_colorRipple="@color/ColorPrimaryDark" />
+        fab:fab_colorNormal="@color/colorPrimary"
+        fab:fab_colorPressed="@color/colorPrimaryDark"
+        fab:fab_colorRipple="@color/colorPrimaryDark" />
 
 
 </RelativeLayout>

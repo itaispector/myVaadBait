@@ -18,13 +18,14 @@ import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.*;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.*;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.*;
 
-import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.melnykov.fab.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.Parse;
@@ -46,7 +47,7 @@ public class NoticeBoardScreen extends Fragment {
     RelativeLayout nameAndPicHolder;
     ParseDB db;
     Intent i;
-    ProgressBarCircularIndeterminate bar;
+ /**   ProgressBarCircularIndeterminate bar;**/
     View dialogLayout;
     Dialog noticesDialog;
     DrawerLayout mDrawerLayout;
@@ -63,9 +64,6 @@ public class NoticeBoardScreen extends Fragment {
         db = ParseDB.getInstance(getActivity());
         View rootView = inflater.inflate(R.layout.notice_board_screen, container, false);
         nameAndPicHolder = (RelativeLayout) rootView.findViewById(R.id.noticeBoardNamePicHolder);
-
-        bar = (ProgressBarCircularIndeterminate) rootView.findViewById(R.id.progressBarCircularIndeterminate);
-        bar.setVisibility(View.VISIBLE);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setElevation(0);
 
 
@@ -139,10 +137,10 @@ public class NoticeBoardScreen extends Fragment {
                         noticeBoardList.add(rowNoticeList);
                         adapter = new NoticesAdapter(getActivity(), noticeBoardList);
                         noticeBoardListView.setAdapter(adapter);
-                        bar.setVisibility(View.GONE);
+                   /**    bar.setVisibility(View.GONE);**/
                     }
                     if(noticeBoardList.isEmpty()){
-                        bar.setVisibility(View.GONE);
+                    /**    bar.setVisibility(View.GONE);**/
                         noNoticesText.setVisibility(View.VISIBLE);
                     }else{
                         noNoticesText.setVisibility(View.GONE);
@@ -394,7 +392,7 @@ public class NoticeBoardScreen extends Fragment {
     public void refreshNotices() {
         Fragment fragment1 = new NoticeBoardScreen();
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment1).commit();
+        fragmentManager.beginTransaction().replace(R.id.main_content, fragment1).commit();
     }
 
     public void deleteAllDialog() {

@@ -19,9 +19,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
-import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.melnykov.fab.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.FunctionCallback;
@@ -49,7 +46,7 @@ public class UsersScreen extends Fragment {
     EditText famName, apartNum;
     Button ok, cancel;
     List usersList = new ArrayList();
-    ProgressBarCircularIndeterminate bar;
+   /** ProgressBarCircularIndeterminate bar;**/
     TextView noUsersText;
 
 
@@ -58,9 +55,9 @@ public class UsersScreen extends Fragment {
         Parse.initialize(getActivity());
         db = ParseDB.getInstance(getActivity());
         View rootView = inflater.inflate(R.layout.users_screen, container, false);
-
+/**
         bar = (ProgressBarCircularIndeterminate) rootView.findViewById(R.id.progressBarCircularIndeterminate);
-        bar.setVisibility(View.VISIBLE);
+        bar.setVisibility(View.VISIBLE);**/
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             getActivity().getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
@@ -118,10 +115,10 @@ public class UsersScreen extends Fragment {
                         usersList.add(rowUserList);
                         adapter = new UsersAdapter(getActivity(), usersList, UsersScreen.this);
                         usersListView.setAdapter(adapter);
-                        bar.setVisibility(View.GONE);
+                      /**  bar.setVisibility(View.GONE);**/
                     }
                     if (usersList.isEmpty()){
-                        bar.setVisibility(View.GONE);
+                     /**   bar.setVisibility(View.GONE);**/
                         noUsersText.setVisibility(View.VISIBLE);
                     }else{
                         noUsersText.setVisibility(View.GONE);
@@ -151,10 +148,10 @@ public class UsersScreen extends Fragment {
                 String apartmentNumber = apartNum.getText().toString();
 
                 if (familyName.matches("") || (apartmentNumber.matches(""))) {
-                    bar.setVisibility(View.GONE);
+              /**      bar.setVisibility(View.GONE);**/
                     Toast.makeText(getActivity(), getResources().getString(R.string.empty_edittext_msg), Toast.LENGTH_SHORT).show();
                 } else {
-                    bar.setVisibility(View.VISIBLE);
+                /**    bar.setVisibility(View.VISIBLE);**/
                     addUser(familyName, apartmentNumber);
                     usersDialog.dismiss();
                 }
@@ -192,7 +189,7 @@ public class UsersScreen extends Fragment {
                         public void done(String result, ParseException e) {
                             if (e == null) {
                                 refreshUsers();
-                                bar.setVisibility(View.GONE);
+                              /** bar.setVisibility(View.GONE);**/
                                 //Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
                             } else {
                                 //Toast.makeText(getActivity(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
@@ -213,7 +210,7 @@ public class UsersScreen extends Fragment {
     }
 
     public void showLoader(){
-        bar.setVisibility(View.VISIBLE);
+       /** bar.setVisibility(View.VISIBLE);**/
     }
 
 

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:clickable="false"
+    android:layout_height="@dimen/nav_drawer_header_image_size"
+    android:layout_gravity="start">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/app_bg"/>
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_gravity="start"
+        android:layout_marginTop="@dimen/nav_drawer_header_image_marginTop"
+        android:src="@drawable/user_pic_header" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/settings_btn"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="20dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="18dp"
+        android:layout_gravity="bottom|start"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="10dp"
+        android:weightSum="2"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/nav_header_family_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="משפחת פרסקו"
+            android:layout_marginBottom="2dp"
+            android:textStyle="bold"
+            android:textColor="#fff" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="אימייל@אימיילץקום"
+            android:textColor="#fff" />
+    </LinearLayout>
+
+
+</FrameLayout>

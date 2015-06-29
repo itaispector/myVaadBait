@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.melnykov.fab.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.Parse;
@@ -50,7 +49,7 @@ public class FailuresScreen extends Fragment {
     Dialog failuresDialog, failuresAddDialog, failuresPriceDialog;
     Button addfailure, dialogFailureOkBtn, dialogFailureCancelBtn, add, edit, approval, delete, moveToPaymentsBtn, approveOkBtn, approveCancelBtn;
     FloatingActionButton addFailureBtn;
-    ProgressBarCircularIndeterminate bar;
+  /**  ProgressBarCircularIndeterminate bar;**/
     int position;
     ParseDB db;
     String title, failureContent = "", approvals, myList = "", failureObjectId;
@@ -65,8 +64,8 @@ public class FailuresScreen extends Fragment {
         db = ParseDB.getInstance(getActivity());
         View rootView = inflater.inflate(R.layout.failures_screen, container, false);
         //show loader
-        bar = (ProgressBarCircularIndeterminate) rootView.findViewById(R.id.progressBarCircularIndeterminate);
-        bar.setVisibility(View.VISIBLE);
+    /**   bar = (ProgressBarCircularIndeterminate) rootView.findViewById(R.id.progressBarCircularIndeterminate);
+        bar.setVisibility(View.VISIBLE);**/
 
         getActivity().setTitle(R.string.FailuresScreenTitle);
 
@@ -134,10 +133,10 @@ public class FailuresScreen extends Fragment {
                         outputFailuresList.add(rowFailureList);
                         adapter = new FailuresAdapter(getActivity(), outputFailuresList, db.isCurrentUserAdmin(), db.getcurrentUserFamilyName());
                         failuresList.setAdapter(adapter);
-                        bar.setVisibility(View.GONE);
+                      /**  bar.setVisibility(View.GONE);**/
                     }
                     if (outputFailuresList.isEmpty()) {
-                        bar.setVisibility(View.GONE);
+                       /** bar.setVisibility(View.GONE);**/
                         noFailuresTextView.setVisibility(View.VISIBLE);
                     } else {
                         noFailuresTextView.setVisibility(View.GONE);
