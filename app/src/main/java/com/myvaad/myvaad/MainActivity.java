@@ -1,8 +1,8 @@
 package com.myvaad.myvaad;
 
-import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -12,18 +12,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Layout;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -31,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView mDrawer;
     private DrawerLayout mDrawerLayout;
     TextView familyName, userEmail;
-    ImageView userImage,navHeaderBackground;
+    ImageView userImage, navHeaderBackground;
     ParseDB db;
     Fragment fragment0;
     FragmentManager fragmentManager;
@@ -47,7 +42,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
 
-
         fragmentManager = getFragmentManager();
         fragment0 = new NoticeBoardScreen();
         fragmentManager.beginTransaction().replace(R.id.main_content, fragment0).commit();
@@ -58,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawer = (NavigationView) findViewById(R.id.main_drawer);
         mDrawer.setNavigationItemSelectedListener(this);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolBar, R.string.drawer_open, R.string.drawer_close){
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolBar, R.string.drawer_open, R.string.drawer_close) {
             @Override
             public void onDrawerOpened(View drawerView) {
                 printStandardDate();
@@ -76,13 +70,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         userEmail.setText(db.getcurrentUserEmail());
         userImage.setImageBitmap(db.getcurrentUserPicture());
 
+        printStandardDate();
+
+        if(db.isCurrentUserAdmin()){
+            mDrawer.getMenu().findItem(R.id.users_screen).setVisible(true);
+        }
     }
+
     private void printStandardDate() {
         String currentDateTimeString = new SimpleDateFormat("HH.mm").format(new Date()).toString();
-        Toast.makeText(this,currentDateTimeString,Toast.LENGTH_LONG).show();
-        if(Double.valueOf(currentDateTimeString)>=20.57){
+        if (Double.valueOf(currentDateTimeString) >= 19.40) {
             navHeaderBackground.setImageDrawable(getResources().getDrawable(R.drawable.img_drawer_header));
-        }else{
+        } else {
             navHeaderBackground.setImageDrawable(getResources().getDrawable(R.drawable.app_bg));
         }
     }
@@ -146,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.navigation_logout:
                 db.logOutUser(this);
                 mDrawerLayout.closeDrawer(GravityCompat.START);
+                break;
             case R.id.navigation_userPrifile:
                 Intent i = new Intent(this, UserProfile.class);
                 startActivity(i);

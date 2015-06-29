@@ -20,6 +20,7 @@
             android:title="דף תשלומים" />
         <item
             android:id="@+id/users_screen"
+            android:visible="false"
             android:icon="@drawable/users_icon"
             android:title="ניהול דיירים" />
     </group>
