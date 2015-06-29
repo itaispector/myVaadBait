@@ -2,7 +2,6 @@ package com.myvaad.myvaad;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -18,6 +17,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -72,14 +73,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         printStandardDate();
 
-        if(db.isCurrentUserAdmin()){
+        if (db.isCurrentUserAdmin()) {
             mDrawer.getMenu().findItem(R.id.users_screen).setVisible(true);
         }
     }
 
     private void printStandardDate() {
-        String currentDateTimeString = new SimpleDateFormat("HH.mm").format(new Date()).toString();
-        if (Double.valueOf(currentDateTimeString) >= 19.40) {
+        String currentDateTimeString = new SimpleDateFormat("HH").format(new Date()).toString();
+        int currentTime = Integer.valueOf(currentDateTimeString);
+        if (currentTime >= 20 || currentTime < 6) {
             navHeaderBackground.setImageDrawable(getResources().getDrawable(R.drawable.img_drawer_header));
         } else {
             navHeaderBackground.setImageDrawable(getResources().getDrawable(R.drawable.app_bg));
@@ -158,8 +160,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
+        Fragment currentFragment = getFragmentManager().findFragmentById(R.id.main_content);
         if (mDrawerLayout.isDrawerOpen(mDrawer)) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
+        } else if (!(currentFragment instanceof NoticeBoardScreen)) {
+            fragmentManager.beginTransaction().replace(R.id.main_content, fragment0).commit();
+            mDrawer.getMenu().findItem(R.id.notice_board).setChecked(true);
         } else {
             super.onBackPressed();
         }

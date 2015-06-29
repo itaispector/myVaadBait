@@ -28,6 +28,8 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.rey.material.widget.ProgressView;
+
 import adapters.NoticesAdapter;
 
 public class NoticeBoardScreen extends Fragment {
@@ -41,6 +43,7 @@ public class NoticeBoardScreen extends Fragment {
     ParseDB db;
     Intent i;
     View dialogLayout;
+    ProgressView bar;
     Dialog noticesDialog;
     Button edit, update, delete, cancelBtn;
     String msg = "";
@@ -54,6 +57,8 @@ public class NoticeBoardScreen extends Fragment {
         View rootView = inflater.inflate(R.layout.notice_board_screen, container, false);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setElevation(0);
         final SwipeRefreshLayout swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
+        bar = (ProgressView) rootView.findViewById(R.id.progress_loader);
+        bar.setVisibility(View.VISIBLE);
         swipeView.setColorSchemeColors(Color.parseColor("#007ca2"), Color.parseColor("#007ca2"), Color.parseColor("#007ca2"), Color.parseColor("#007ca2"));
         swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -119,10 +124,10 @@ public class NoticeBoardScreen extends Fragment {
                         noticeBoardList.add(rowNoticeList);
                         adapter = new NoticesAdapter(getActivity(), noticeBoardList);
                         noticeBoardListView.setAdapter(adapter);
-                        /**    bar.setVisibility(View.GONE);**/
+                        bar.setVisibility(View.GONE);
                     }
                     if (noticeBoardList.isEmpty()) {
-                        /**    bar.setVisibility(View.GONE);**/
+                        bar.setVisibility(View.GONE);
                         noNoticesText.setVisibility(View.VISIBLE);
                     } else {
                         noNoticesText.setVisibility(View.GONE);
