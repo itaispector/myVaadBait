@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,16 +24,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar mToolBar;
     private NavigationView mDrawer;
     private DrawerLayout mDrawerLayout;
+    TextView familyName,userEmail;
+    ImageView userImage;
+    ParseDB db;
     private ActionBarDrawerToggle mDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_main);
+        db = ParseDB.getInstance(this);
         if (getWindow().getDecorView().getLayoutDirection() == View.LAYOUT_DIRECTION_LTR){
             getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
-        setContentView(R.layout.activity_main);
         mToolBar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(mToolBar);
         mDrawer = (NavigationView) findViewById(R.id.main_drawer);
@@ -41,6 +45,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolBar, R.string.drawer_open, R.string.drawer_close);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
+        familyName=(TextView)findViewById(R.id.nav_header_family_name);
+        userEmail=(TextView)findViewById(R.id.nav_header_email);
+        userImage=(ImageView)findViewById(R.id.user_image);
+
+        familyName.setText("משפחת "+db.getcurrentUserFamilyName());
+        userEmail.setText(db.getcurrentUserEmail());
+        userImage.setImageBitmap(db.getcurrentUserPicture());
+
     }
 
     @Override
@@ -100,6 +112,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragmentManager.beginTransaction().replace(R.id.main_content, fragment4).commit();
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 menuItem.setChecked(true);
+                break;
+            case R.id.navigation_logout:
+                db.logOutUser(this);
+                mDrawerLayout.closeDrawer(GravityCompat.START);
                 break;
         }
 
