@@ -18,7 +18,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.afollestad.materialdialogs.GravityEnum;
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -99,11 +101,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
+            case R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
+            case R.id.about:
+                new MaterialDialog.Builder(this)
+                        .iconRes(R.mipmap.ic_launcher)
+                        .titleGravity(GravityEnum.END)
+                        .contentGravity(GravityEnum.END)
+                        .positiveColorRes(R.color.colorPrimary)
+                        .neutralColorRes(R.color.colorPrimary)
+                        .negativeColorRes(R.color.colorPrimary)
+                        .widgetColorRes(R.color.colorPrimary)
+                        .customView(R.layout.about_dialog, true)
+                        .title("אודות הועד שלי")
+                        .positiveText("אישור")
+                        .btnStackedGravity(GravityEnum.CENTER)
+                        .forceStacking(true)
+                        .show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
