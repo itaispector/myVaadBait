@@ -19,9 +19,14 @@ import android.os.Handler;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.util.Log;
 import android.view.*;
 import android.widget.*;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.GravityEnum;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.melnykov.fab.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.Parse;
@@ -29,9 +34,12 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.rey.material.widget.ProgressView;
 
 import adapters.NoticesAdapter;
+import dialogs.RingProgressDialog;
 
 public class NoticeBoardScreen extends Fragment {
 
@@ -39,7 +47,7 @@ public class NoticeBoardScreen extends Fragment {
     FloatingActionButton addNoticeBtn;
     ListView noticeBoardListView;
     NoticesAdapter adapter;
-    TextView content,noNoticesText;
+    TextView content, noNoticesText;
     EditText contentEdit;
     ParseDB db;
     Intent i;
@@ -55,6 +63,7 @@ public class NoticeBoardScreen extends Fragment {
         //Initialize with keys
         Parse.initialize(getActivity());
         db = ParseDB.getInstance(getActivity());
+        db.saveUserInstallationInBackground();
         View rootView = inflater.inflate(R.layout.notice_board_screen, container, false);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setElevation(0);
         final SwipeRefreshLayout swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
@@ -146,8 +155,8 @@ public class NoticeBoardScreen extends Fragment {
         getActivity().setTitle(R.string.NoticeBoardScreenTitle);
 
         if (!db.isCurrentUserAdmin())
-           // trashBtn.setVisibility(View.GONE);
-        setHasOptionsMenu(true);
+            // trashBtn.setVisibility(View.GONE);
+            setHasOptionsMenu(true);
 
         //listview item click listener
         noticeBoardListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -162,15 +171,8 @@ public class NoticeBoardScreen extends Fragment {
 
         //scroll listener for listview
         noticeBoardListView.setOnScrollListener(new AbsListView.OnScrollListener() {
-
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-                /*
-                nameAndPicHolder.setVisibility(View.GONE);
-					if (scrollState==SCROLL_STATE_IDLE && noticeBoardListView.getChildAt(0).getTop()>=15){
-						nameAndPicHolder.setVisibility(View.VISIBLE);						
-					}
-					*/
             }
 
             @Override
@@ -181,7 +183,6 @@ public class NoticeBoardScreen extends Fragment {
                     swipeView.setEnabled(false);
             }
         });
-        //--------      
 
         //floating add Button
         addNoticeBtn = (FloatingActionButton) rootView.findViewById(R.id.add_notice_btn);
@@ -189,7 +190,50 @@ public class NoticeBoardScreen extends Fragment {
         addNoticeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addNotice();
+                new MaterialDialog.Builder(getActivity())
+                        .titleGravity(GravityEnum.END)
+                        .contentGravity(GravityEnum.END)
+                        .positiveColorRes(R.color.colorPrimary)
+                        .neutralColorRes(R.color.colorPrimary)
+                        .negativeColorRes(R.color.colorPrimary)
+                        .widgetColorRes(R.color.colorPrimary)
+                        .title(R.string.noticesShowDialogTitle)
+                        .inputType(InputType.TYPE_CLASS_TEXT |
+                                InputType.TYPE_TEXT_VARIATION_PERSON_NAME |
+                                InputType.TYPE_TEXT_FLAG_CAP_WORDS)
+                        .positiveText(R.string.add)
+                        .btnStackedGravity(GravityEnum.START)
+                        .forceStacking(true)
+                        .alwaysCallInputCallback() // this forces the callback to be invoked with every input change
+                        .input(R.string.noticesShowDialogData, 0, false, new MaterialDialog.InputCallback() {
+                            @Override
+                            public void onInput(MaterialDialog dialog, CharSequence input) {
+                                dialog.getActionButton(DialogAction.POSITIVE).setEnabled(true);
+                            }
+                        })
+                        .callback(new MaterialDialog.ButtonCallback() {
+                            @Override
+                            public void onPositive(final MaterialDialog dialog) {
+                                final RingProgressDialog loadDialog = new RingProgressDialog(getActivity());
+                                dialog.dismiss();
+                                ParseObject notice = new ParseObject("noticeBoard");
+                                ParseUser currentUser = db.getcurrentUser();
+                                //Get current user from the method getcurrentUser() and put him in a new field
+                                notice.put("user", currentUser);
+                                notice.put("userFamilyName", db.getcurrentUserFamilyName());
+                                notice.put("userPic", currentUser.getParseFile("picture"));
+                                notice.put("content", dialog.getInputEditText().getText().toString());
+                                //get current user buildingCode and put it in new field
+                                notice.put("buildingCode", currentUser.getString("buildingCode"));
+                                notice.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        refreshNotices();
+                                        loadDialog.dismiss();
+                                    }
+                                });
+                            }
+                        }).show();
             }
         });
 
@@ -197,147 +241,61 @@ public class NoticeBoardScreen extends Fragment {
 
     }
 
-    /*
-    @Override
-    public void onResume() {
-        super.onResume();
-        refreshNotices();
-    }
-    */
-
-    public void addNotice() {
-        dialogLayout = View.inflate(getActivity(), R.layout.notice_board_add_message_dialog, null);
-        noticesDialog = new Dialog(getActivity());
-        noticesDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        noticesDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        noticesDialog.setContentView(dialogLayout);
-        noticesDialog.show();
-
-        ok = (ImageView) dialogLayout.findViewById(R.id.noticesDialogNoticeOkBtn);
-        cancel = (ImageView) dialogLayout.findViewById(R.id.noticesDialogNoticeCancelBtn);
-
-        ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogButtons(v);
-            }
-        });
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogButtons(v);
-            }
-        });
-    }
-
-    //action for ok or cancel button - add notice or close dialog
-    public void dialogButtons(View v) {
-        contentEdit = (EditText) dialogLayout.findViewById(R.id.noticesDialogNoticeData);
-        msg = contentEdit.getText().toString();
-        if (v.getId() == R.id.noticesDialogNoticeCancelBtn) {
-            noticesDialog.dismiss();
-        } else {
-            if (msg.matches("")) {
-                Toast toast = Toast.makeText(getActivity(), R.string.empty_notice, Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-            } else {
-                db.updateNoticeBoard(msg);
-                refreshNotices();
-                noticesDialog.dismiss();
-            }
-        }
-    }
-
-
     public void showNotice(final List notice) {
-        dialogLayout = View.inflate(getActivity(), R.layout.notice_board_show_message_dialog, null);
-        noticesDialog = new Dialog(getActivity());
-        noticesDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        noticesDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        noticesDialog.setContentView(dialogLayout);
-        content = (TextView) dialogLayout.findViewById(R.id.noticesShowDialogNoticeDataTV);
-        content.setText("" + notice.get(1));
-        edit = (Button) dialogLayout.findViewById(R.id.noticesShowDialogNoticeEditBtn);
-        update = (Button) dialogLayout.findViewById(R.id.noticesShowDialogNoticeUpdateBtn);
-        delete = (Button) dialogLayout.findViewById(R.id.noticesShowDialogNoticeDeleteBtn);
-        cancelBtn = (Button) dialogLayout.findViewById(R.id.noticesShowDialogNoticeCancelBtn);
+        String hint = getResources().getString(R.string.noticesShowDialogData);
+        MaterialDialog.Builder dialogM = new MaterialDialog.Builder(getActivity())
+                .titleGravity(GravityEnum.END)
+                .contentGravity(GravityEnum.END)
+                .positiveColorRes(R.color.colorPrimary)
+                .neutralColorRes(R.color.colorPrimary)
+                .negativeColorRes(R.color.colorPrimary)
+                .widgetColorRes(R.color.colorPrimary)
+                .inputType(InputType.TYPE_CLASS_TEXT |
+                        InputType.TYPE_TEXT_VARIATION_PERSON_NAME |
+                        InputType.TYPE_TEXT_FLAG_CAP_WORDS)
+                .positiveText("ביטול")
+                .forceStacking(true)
+                .btnStackedGravity(GravityEnum.START)
+                .alwaysCallInputCallback() // this forces the callback to be invoked with every input change
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        if (("" + notice.get(3)).matches(db.getcurrentUserFamilyName()) || db.isCurrentUserAdmin()) {
+                            db.editNoticeBoard(dialog.getInputEditText().getText().toString(), "" + notice.get(0));
+                            refreshNotices();
+                            dialog.dismiss();
+                        } else {
+                            dialog.dismiss();
+                        }
+                    }
 
-        //checks who is the user to see what buttons to show in the notice show dialog
-        if (!("" + notice.get(3)).matches(db.getcurrentUserFamilyName()) && !db.isCurrentUserAdmin()) {
-            delete.setVisibility(View.GONE);
-            edit.setVisibility(View.GONE);
-        } else if (("" + notice.get(3)).matches(db.getcurrentUserFamilyName()) || db.isCurrentUserAdmin()) {
-            //allowing edit only of admin or notice owner
-            content.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        db.deleteNotice("" + notice.get(0));
+                        refreshNotices();
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onNeutral(MaterialDialog dialog) {
+                        dialog.dismiss();
+                    }
+                });
+        if (("" + notice.get(3)).matches(db.getcurrentUserFamilyName()) || db.isCurrentUserAdmin()) {
+            dialogM.input(hint, "" + notice.get(1), false, new MaterialDialog.InputCallback() {
                 @Override
-                public void onClick(View v) {
-                    editContent();
+                public void onInput(MaterialDialog dialog, CharSequence input) {
+                    dialog.getActionButton(DialogAction.POSITIVE).setEnabled(true);
                 }
             });
+            dialogM.positiveText("עדכן");
+            dialogM.negativeText("מחק");
+            dialogM.neutralText("ביטול");
+            dialogM.forceStacking(false);
+        }else{
+            dialogM.content("" + notice.get(1));
         }
-
-
-        noticesDialog.show();
-
-        //cancel button listener
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                noticesDialog.dismiss();
-            }
-        });
-
-        //edit button listener
-        edit.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                editContent();
-
-            }
-        });
-
-        //update button listener
-        update.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                msg = contentEdit.getText().toString();
-                db.editNoticeBoard(msg, "" + notice.get(0));
-                refreshNotices();
-                noticesDialog.dismiss();
-                edit.setVisibility(View.VISIBLE);
-                delete.setVisibility(View.VISIBLE);
-                update.setVisibility(View.GONE);
-
-            }
-        });
-
-        //delete button listener
-        delete.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                db.deleteNotice("" + notice.get(0));
-                refreshNotices();
-                noticesDialog.dismiss();
-            }
-        });
-    }
-
-    //sets the notice to be editabled
-    public void editContent() {
-        edit.setVisibility(View.GONE);
-        update.setVisibility(View.VISIBLE);
-        contentEdit = (EditText) dialogLayout.findViewById(R.id.noticesShowDialogNoticeData);
-        contentEdit.setText(content.getText().toString());
-        contentEdit.setVisibility(View.VISIBLE);
-        contentEdit.requestFocus();
-        content.setVisibility(View.GONE);
-        delete.setVisibility(View.GONE);
+        dialogM.show();
     }
 
     public void refreshNotices() {
@@ -347,24 +305,32 @@ public class NoticeBoardScreen extends Fragment {
     }
 
     public void deleteAllDialog() {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-        dialog.setMessage(R.string.title);
+        new MaterialDialog.Builder(getActivity())
+                .titleGravity(GravityEnum.END)
+                .contentGravity(GravityEnum.END)
+                .positiveColorRes(R.color.colorPrimary)
+                .neutralColorRes(R.color.colorPrimary)
+                .negativeColorRes(R.color.colorPrimary)
+                .widgetColorRes(R.color.colorPrimary)
+                .content(R.string.delete_all_notice_dialog_text)
+                .inputType(InputType.TYPE_CLASS_TEXT |
+                        InputType.TYPE_TEXT_VARIATION_PERSON_NAME |
+                        InputType.TYPE_TEXT_FLAG_CAP_WORDS)
+                .positiveText(R.string.yes)
+                .negativeText(R.string.no)
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        db.deleteAllNotices(db.getCurrentUserBuildingCode());
+                        refreshNotices();
+                        dialog.dismiss();
+                    }
 
-        dialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                db.deleteAllNotices(db.getCurrentUserBuildingCode());
-                refreshNotices();
-            }
-        });
-
-        dialog.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-
-        dialog.show();
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        dialog.dismiss();
+                    }
+                }).show();
     }
 
     public void myToast(String s) {
@@ -373,7 +339,7 @@ public class NoticeBoardScreen extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        if(db.isCurrentUserAdmin()){
+        if (db.isCurrentUserAdmin()) {
             inflater.inflate(R.menu.notice_board_menu, menu);
         }
         super.onCreateOptionsMenu(menu, inflater);

@@ -573,7 +573,12 @@ public class ParseDB {
         notice.put("content", noticeContent);
         //get current user buildingCode and put it in new field
         notice.put("buildingCode", currentUser.getString("buildingCode"));
-        notice.saveInBackground();
+        notice.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+
+            }
+        });
     }
 
     //**************************updated by ITAI 20/4
