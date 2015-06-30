@@ -1,5 +1,6 @@
 package com.myvaad.myvaad;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -102,6 +103,8 @@ public class NoticeBoardScreen extends Fragment {
             @Override
             public void done(List<ParseObject> notices, ParseException e) {
                 if (e == null) {
+                    //Creating instance of SimpleDateFormat
+                    SimpleDateFormat postFormatter = new SimpleDateFormat("EEEE   dd "+"ב"+"MMMM   HH:mm");
                     noticeBoardList.clear();
                     for (ParseObject noticeRow : notices) {
                         List rowNoticeList = new ArrayList();
@@ -109,7 +112,9 @@ public class NoticeBoardScreen extends Fragment {
                         String content = noticeRow.getString("content");
 
                         Date updatedAt = noticeRow.getUpdatedAt();
-                        String noticeTime = updatedAt.toLocaleString();
+
+                        //Changing Date and time format up to SimpleDateFormat
+                        String noticeTime = postFormatter.format(updatedAt);
                         String ObjectId = noticeRow.getObjectId();
 
                         String familyName = noticeRow.getString("userFamilyName");
