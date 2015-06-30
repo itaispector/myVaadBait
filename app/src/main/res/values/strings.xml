@@ -61,6 +61,7 @@
     <string name="no_internet_connection_msg">אין חיבור לרשת</string>
     <string name="empty_edittext_msg">אנא מלא/י את כל השדות</string>
     <string name="cant_use_hebrew_username">שם המשתמש יכול להכיל אותיות באנגלית קו-תחתון ומספרים בלבד</string>
+    <string name="password_short">הסיסמה חייבת להכיל לפחות 6 תווים ועד 20 תווים</string>
     <string name="street">רחוב</string>
     <string name="home_number">מספר בית</string>
     <string name="paypal_account">אימייל פיי-פל לקבלת תשלומים</string>
@@ -149,7 +150,8 @@
     <string name="enter_email">אנא הכנס/י כתובת אימייל</string>
     <string name="res_pass_dialog">אפס/י סיסמא</string>
     <string name="cancel">ביטול</string>
-    <string name="empty_email">אנא הכנס/י כתובת אימייל</string>
+    <string name="empty_email">אנא הכנס/י כתובת אימייל תקינה</string>
+    <string name="email_sent">האימייל נשלח אנא בדוק/י דואר נכנס</string>
 
     <!-- notices show notice dialog -->
     <string name="noticesShowDialogTitle">הוספת מודעה</string>
@@ -179,7 +181,9 @@
     <!--sign up screen + log in screen -->
     <string name="usernameTaken">שם המשתמש קיים במערכת</string>
     <string name="emailTaken">דואר אלקטרוני קיים במערכת</string>
+    <string name="InvalidEmail">איימיל לא חוקי</string>
     <string name="invalidLogInParameters">שם המשתמש או הסיסמא שגואים</string>
+    <string name="error">שגיאה! אנא נסה/י שנית</string>
     <!--Layout Titles-->
     <string name="SignUpScreenTitle">הרשמה</string>
     <string name="CreateBuildingTitle">הקם בניין</string>
