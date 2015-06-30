@@ -1,14 +1,10 @@
 package com.myvaad.myvaad;
 
-import com.parse.FindCallback;
-import com.parse.ParseException;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.Parse;
+import com.parse.ParseQueryAdapter;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +21,7 @@ public class BuildingExpenses extends Fragment {
     private BuildingExpensesAdapter customParseAdapter;
     private ListView listView;
     int totalExpensesAmount = 0;
-    private TextView buildingTotalExpenses;
+    private TextView buildingTotalExpensesTextView;
 
 
     @Override
@@ -34,22 +30,42 @@ public class BuildingExpenses extends Fragment {
 
         db = ParseDB.getInstance(getActivity());
 
-        buildingTotalExpenses = (TextView) rootView.findViewById(R.id.buildingTotalExpensesAmount);
+        buildingTotalExpensesTextView = (TextView) rootView.findViewById(R.id.buildingTotalExpensesAmount);
 
-        buildingTotalExpenses.setText("");
+        buildingTotalExpensesTextView.setText("");
 
         // Initialize the subclass of ParseQueryAdapter
         customParseAdapter = new BuildingExpensesAdapter(getActivity());
 
         customParseAdapter.setObjectsPerPage(4);
 
+
+       // customParseAdapter.loadObjects();
+
+        customParseAdapter.addOnQueryLoadListener(new ParseQueryAdapter.OnQueryLoadListener<ParseObject>() {
+            @Override
+            public void onLoading() {
+                //need to add loader here...
+            }
+
+            @Override
+            public void onLoaded(List<ParseObject> expenses, Exception e) {
+                //totalExpensesAmount =0;
+                for (ParseObject expensesRow : expenses) {
+                    //get specific data from each row
+                    String amount = expensesRow.getString("amount");
+                    totalExpensesAmount += Integer.parseInt(amount);
+                }
+                buildingTotalExpensesTextView.setText(getActivity().getString(R.string.total) + " " + getActivity().getString(R.string.shekel) + totalExpensesAmount);
+            }
+        });
+
         // Initialize ListView and set initial view to mainAdapter
         listView = (ListView) rootView.findViewById(R.id.buildingExpensesListview);
 
         listView.setAdapter(customParseAdapter);
-        customParseAdapter.loadObjects();
 
-
+/*
         ParseQuery<ParseObject> query = ParseQuery.getQuery("payments");
         //Query Constraints-->all users from specific building
         query.whereEqualTo("buildingCode", db.getCurrentUserBuildingCode());
@@ -70,13 +86,15 @@ public class BuildingExpenses extends Fragment {
 
                     }
 
-                    buildingTotalExpenses.setText(getActivity().getString(R.string.total) + " " + getActivity().getString(R.string.shekel) + totalExpensesAmount);
+                    buildingTotalExpensesTextView.setText(getActivity().getString(R.string.total) + " " + getActivity().getString(R.string.shekel) + totalExpensesAmount);
 
                 } else {//ParseException
                     Log.e("***Parse Exception***", e.getLocalizedMessage());
                 }
             }
         });
+*/
+
 
         return rootView;
     }
