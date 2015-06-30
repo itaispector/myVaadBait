@@ -2,6 +2,7 @@ package com.myvaad.myvaad;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -169,5 +170,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Fragment currentFragment = getFragmentManager().findFragmentById(R.id.main_content);
+        FragmentTransaction fragTransaction = (this).getFragmentManager().beginTransaction();
+        fragTransaction.detach(currentFragment);
+        fragTransaction.attach(currentFragment);
+        fragTransaction.commit();
+        Toast.makeText(this,"onRestart",Toast.LENGTH_LONG).show();
     }
 }
