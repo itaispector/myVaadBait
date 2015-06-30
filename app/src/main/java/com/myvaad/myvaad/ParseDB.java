@@ -2,6 +2,7 @@ package com.myvaad.myvaad;
 
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -198,7 +199,7 @@ public class ParseDB {
         byte[] image = convertImageToByteArray(picture);
 
         // Create the ParseFile
-        final ParseFile file = new ParseFile(userName + ".png", image);
+        final ParseFile file = new ParseFile("userImage" + ".png", image);
         // Upload the image into Parse Cloud
         //file.saveInBackground();
 
@@ -215,9 +216,8 @@ public class ParseDB {
                                 toast = Toast.makeText(context, R.string.signup_succeed, Toast.LENGTH_SHORT);
                                 toast.setGravity(Gravity.CENTER, 0, 150);
                                 toast.show();
-                                Intent i = new Intent(context, MainLoginScreen.class);
-                                context.startActivity(i);
-                                ((Activity) con).finish();
+                                FragmentManager fm = ((Activity) con).getFragmentManager();
+                                fm.popBackStack();
                                 dialog.dismiss();
                             } else {
                                 // Sign up didn't succeed. Look at the ParseException
@@ -231,6 +231,11 @@ public class ParseDB {
                                         break;
                                     case 203:
                                         toast = Toast.makeText(context, context.getString(R.string.emailTaken), Toast.LENGTH_SHORT);
+                                        toast.setGravity(Gravity.CENTER, 0, 150);
+                                        toast.show();
+                                        break;
+                                    case 125:
+                                        toast = Toast.makeText(context, context.getString(R.string.InvalidEmail), Toast.LENGTH_SHORT);
                                         toast.setGravity(Gravity.CENTER, 0, 150);
                                         toast.show();
                                         break;
@@ -294,8 +299,11 @@ public class ParseDB {
                             toast = Toast.makeText(context, context.getString(R.string.invalidLogInParameters), Toast.LENGTH_SHORT);
                             toast.setGravity(Gravity.CENTER, 0, 150);
                             toast.show();
-                            ;
-
+                            break;
+                        case 100:
+                            toast = Toast.makeText(context, context.getString(R.string.error), Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.CENTER, 0, 150);
+                            toast.show();
                             break;
                         default:
 
