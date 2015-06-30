@@ -253,7 +253,7 @@ public class NoticeBoardScreen extends Fragment {
                 .inputType(InputType.TYPE_CLASS_TEXT |
                         InputType.TYPE_TEXT_VARIATION_PERSON_NAME |
                         InputType.TYPE_TEXT_FLAG_CAP_WORDS)
-                .positiveText("ביטול")
+                .positiveText("סגור")
                 .forceStacking(true)
                 .btnStackedGravity(GravityEnum.START)
                 .alwaysCallInputCallback() // this forces the callback to be invoked with every input change
