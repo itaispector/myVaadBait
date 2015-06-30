@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingRight="10dp"
+    android:layoutDirection="ltr"
     android:paddingLeft="10dp">
 
     <TextView
@@ -72,12 +73,5 @@
         android:layout_below="@+id/all_rights"
         android:layout_marginTop="10dp"
         android:text="@string/about_dialog_icons"/>
-    <TextView
-        android:id="@+id/divider2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="end"
-        android:layout_below="@id/icons_r"
-        android:text="@string/about_dialog_divider"/>
 
 </RelativeLayout>
