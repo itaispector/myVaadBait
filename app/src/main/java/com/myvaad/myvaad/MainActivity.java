@@ -180,6 +180,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragTransaction.detach(currentFragment);
         fragTransaction.attach(currentFragment);
         fragTransaction.commit();
-        Toast.makeText(this,"onRestart",Toast.LENGTH_LONG).show();
     }
 }
