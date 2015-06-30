@@ -140,6 +140,7 @@
     <!-- Notices Screen Strings -->
     <string name="noticesDialogTitle">הוספת מודעה</string>
     <string name="add_note">הוסף מודעה</string>
+    <string name="add">הוסף</string>
     <string name="noticesDialogName">שם תקלה</string>
     <string name="noticesDialogData">פירוט מודעה</string>
     <string name="notices_none">אין</string>
@@ -159,7 +160,7 @@
 
     <!-- תוספת לקובץ -->
     <!-- notices are you sure dialog -->
-    <string name="title">פעולה זו תגרום למחיקת כל המודעות. האם אתה בטוח?</string>
+    <string name="delete_all_notice_dialog_text">פעולה זו תגרום למחיקת כל המודעות. האם אתה בטוח?</string>
     <string name="yes">כן</string>
     <string name="no">לא</string>
 
