@@ -11,6 +11,10 @@ import com.parse.ParseImageView;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
+import com.paypal.android.sdk.Z;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class BuildingExpensesAdapter extends ParseQueryAdapter<ParseObject> {
     Context context;
@@ -19,6 +23,7 @@ public class BuildingExpensesAdapter extends ParseQueryAdapter<ParseObject> {
         super(context, new ParseQueryAdapter.QueryFactory<ParseObject>() {
             public ParseQuery create() {
                 //Define query
+                //Date filter = 2015'-'06'-'27'T'21':'05':'08.992'Z;
                 ParseQuery query = new ParseQuery("payments");
                 query.whereEqualTo("buildingCode", "239250");
                 query.whereEqualTo("paymentType", "regular");
@@ -51,10 +56,15 @@ public class BuildingExpensesAdapter extends ParseQueryAdapter<ParseObject> {
         String thisExpense = object.getString("amount");
         amountView.setText(context.getString(R.string.shekel) + thisExpense);
 
-
         TextView createTimeView = (TextView)v.findViewById(R.id.expenseCreatTime);
-        String time = object.getCreatedAt().toLocaleString();
-        createTimeView.setText(time);
+
+        Date dateObj = object.getCreatedAt();
+        //Creating instance of SimpleDateFormat
+        SimpleDateFormat postFormatter = new SimpleDateFormat("HH:mm  dd.MM.yy");
+        //Changing Date and time format up to SimpleDateFormat
+        String newDateStr = postFormatter.format(dateObj);
+
+        createTimeView.setText(newDateStr);
 
 
         return v;
