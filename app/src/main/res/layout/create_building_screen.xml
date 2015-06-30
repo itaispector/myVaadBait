@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background">
+    android:background="@drawable/app_bg">
     <!-- the color here is just an example.
     I think the building code should come in a box design -->
     <RelativeLayout
