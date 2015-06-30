@@ -1,6 +1,7 @@
 package com.myvaad.myvaad;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -227,6 +228,14 @@ public class SignUp extends Fragment {
         String email = emailInput.getText().toString();
         if (fullName.matches("") || email.matches("") || userName.matches("") || passin1.matches("") || passin2.matches("")) {
             toast = Toast.makeText(getActivity(), R.string.empty_edittext_msg, Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+        } else if (!userName.matches("[_a-zA-Z0-9]*")){
+            toast = Toast.makeText(getActivity(), R.string.cant_use_hebrew_username, Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+        } else if (!passin1.matches(".{6,20}")) {
+            toast = Toast.makeText(getActivity(), R.string.password_short, Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
         } else if (!passin1.matches(passin2)) {
