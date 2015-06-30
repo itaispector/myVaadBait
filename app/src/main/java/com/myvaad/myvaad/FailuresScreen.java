@@ -450,7 +450,7 @@ public class FailuresScreen extends Fragment {
     public void refreshFailures() {
         Fragment fragment1 = new FailuresScreen();
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment1).commit();
+        fragmentManager.beginTransaction().replace(R.id.main_content, fragment1).commit();
     }
 
     public void myToast(String s) {
