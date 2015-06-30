@@ -2,8 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF0E0"
-    >
+    android:background="#e5e5e5" >
+  <!--  android:background="#FFF0E0" -->
+
+
  
     <ListView
         android:id="@+id/buildingExpensesListview"
@@ -18,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="10dp"
-        android:background="#FFF0E0"
+        android:background="#e5e5e5"
         android:text="textView"
         android:textDirection="rtl"
         android:textSize="26sp" />
