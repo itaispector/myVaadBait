@@ -30,16 +30,19 @@ public class BuildingExpensesAdapter extends ParseQueryAdapter<ParseObject> {
     }
 
     @Override
+    public ParseObject getItem(int index) {
+        return super.getItem(index);
+    }
+
+
+
+    @Override
     public View getItemView(ParseObject object, View v, ViewGroup parent) {
         if (v == null) {
             v = View.inflate(getContext(), R.layout.expenses_adapter_item, null);
         }
 
-        // Take advantage of ParseQueryAdapter's getItemView logic for
-        // populating the main TextView/ImageView.
-        // The IDs in your custom layout must match what ParseQueryAdapter expects
-        // if it will be populating a TextView or ImageView for you.
-        super.getItemView(object, v, parent);
+       // super.getItemView(object, v, parent);
 
         // Do additional configuration before returning the View.
         TextView descriptionView = (TextView) v.findViewById(R.id.expenseDescription);
@@ -57,6 +60,16 @@ public class BuildingExpensesAdapter extends ParseQueryAdapter<ParseObject> {
         return v;
 
     }
-
-
+    // Next page clicked view to load more rows
+    @Override
+    public View getNextPageView(View v, ViewGroup parent) {
+        if (v == null) {
+            v = View.inflate(getContext(), R.layout.expenses_next_page_adapter_item, null);
+        }
+        TextView textView1 = (TextView) v.findViewById(R.id.nextPageTitleText1);
+        textView1.setText("נטענו " + (getCount() - 1) + " שורות" );
+        TextView textView2 = (TextView) v.findViewById(R.id.nextPageTitleText2);
+        textView2.setText( "לחץ לטעינת עוד שורות");
+        return v;
+    }
 }
