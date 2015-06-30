@@ -125,9 +125,9 @@ public class NoticeBoardScreen extends Fragment {
                         //Changing Date and time format up to SimpleDateFormat
                         String noticeTime = postFormatter.format(updatedAt);
                         String ObjectId = noticeRow.getObjectId();
-
                         String familyName = noticeRow.getString("userFamilyName");
                         ParseFile userPicture = noticeRow.getParseFile("userPic");
+                        String apartmentNumber = noticeRow.getString("apartmentNumber");
                         Bitmap userPic = db.parseFileToBitmap(userPicture);
 
                         rowNoticeList.add(ObjectId);
@@ -135,6 +135,7 @@ public class NoticeBoardScreen extends Fragment {
                         rowNoticeList.add(noticeTime);
                         rowNoticeList.add(familyName);
                         rowNoticeList.add(userPic);
+                        rowNoticeList.add(apartmentNumber);
                         noticeBoardList.add(rowNoticeList);
                         adapter = new NoticesAdapter(getActivity(), noticeBoardList);
                         noticeBoardListView.setAdapter(adapter);
@@ -223,6 +224,7 @@ public class NoticeBoardScreen extends Fragment {
                                 notice.put("userFamilyName", db.getcurrentUserFamilyName());
                                 notice.put("userPic", currentUser.getParseFile("picture"));
                                 notice.put("content", dialog.getInputEditText().getText().toString());
+                                notice.put("apartmentNumber", currentUser.getString("apartmentNumber"));
                                 //get current user buildingCode and put it in new field
                                 notice.put("buildingCode", currentUser.getString("buildingCode"));
                                 notice.saveInBackground(new SaveCallback() {
