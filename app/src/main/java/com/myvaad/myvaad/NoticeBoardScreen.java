@@ -114,16 +114,29 @@ public class NoticeBoardScreen extends Fragment {
                 if (e == null) {
                     //Creating instance of SimpleDateFormat
                     SimpleDateFormat postFormatter = new SimpleDateFormat("EEEE   dd "+"ב"+"MMMM   HH:mm");
+                    SimpleDateFormat day = new SimpleDateFormat("EEEE");
+                    SimpleDateFormat month = new SimpleDateFormat("EEEE   dd "+"ב"+"MMMM   HH:mm");
+                    SimpleDateFormat time = new SimpleDateFormat("EEEE   dd "+"ב"+"MMMM   HH:mm");
                     noticeBoardList.clear();
                     for (ParseObject noticeRow : notices) {
+                        Date updatedAt = noticeRow.getUpdatedAt();
+                        String noticeTimeDay = day.format(updatedAt);
+                        String testt = "";
+                        switch (noticeTimeDay){
+                            case "Tuesday":
+                                testt="שלישי";
+                                break;
+                            case "שלישי":
+                                testt="שלישי";
+                                break;
+                        }
+
+
+
                         List rowNoticeList = new ArrayList();
                         //get specific data from each row
                         String content = noticeRow.getString("content");
-
-                        Date updatedAt = noticeRow.getUpdatedAt();
-
                         //Changing Date and time format up to SimpleDateFormat
-                        String noticeTime = postFormatter.format(updatedAt);
                         String ObjectId = noticeRow.getObjectId();
                         String familyName = noticeRow.getString("userFamilyName");
                         ParseFile userPicture = noticeRow.getParseFile("userPic");
@@ -132,7 +145,7 @@ public class NoticeBoardScreen extends Fragment {
 
                         rowNoticeList.add(ObjectId);
                         rowNoticeList.add(content);
-                        rowNoticeList.add(noticeTime);
+                        rowNoticeList.add(testt);
                         rowNoticeList.add(familyName);
                         rowNoticeList.add(userPic);
                         rowNoticeList.add(apartmentNumber);
