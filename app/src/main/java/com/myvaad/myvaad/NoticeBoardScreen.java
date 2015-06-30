@@ -33,9 +33,12 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.rey.material.widget.ProgressView;
 
 import adapters.NoticesAdapter;
+import dialogs.RingProgressDialog;
 
 public class NoticeBoardScreen extends Fragment {
 
@@ -59,6 +62,7 @@ public class NoticeBoardScreen extends Fragment {
         //Initialize with keys
         Parse.initialize(getActivity());
         db = ParseDB.getInstance(getActivity());
+        db.saveUserInstallationInBackground();
         View rootView = inflater.inflate(R.layout.notice_board_screen, container, false);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setElevation(0);
         final SwipeRefreshLayout swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
@@ -204,18 +208,25 @@ public class NoticeBoardScreen extends Fragment {
                         })
                         .callback(new MaterialDialog.ButtonCallback() {
                             @Override
-                            public void onPositive(MaterialDialog dialog) {
-                                db.updateNoticeBoard(dialog.getInputEditText().getText().toString());
-                                Handler handler = new Handler();
-                                handler.postDelayed(new Runnable() {
-
-                                    @Override
-                                    public void run() {
-                                        refreshNotices();
-                                    }
-
-                                },350);
+                            public void onPositive(final MaterialDialog dialog) {
+                                final RingProgressDialog loadDialog = new RingProgressDialog(getActivity());
                                 dialog.dismiss();
+                                ParseObject notice = new ParseObject("noticeBoard");
+                                ParseUser currentUser = db.getcurrentUser();
+                                //Get current user from the method getcurrentUser() and put him in a new field
+                                notice.put("user", currentUser);
+                                notice.put("userFamilyName", db.getcurrentUserFamilyName());
+                                notice.put("userPic", currentUser.getParseFile("picture"));
+                                notice.put("content", dialog.getInputEditText().getText().toString());
+                                //get current user buildingCode and put it in new field
+                                notice.put("buildingCode", currentUser.getString("buildingCode"));
+                                notice.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        refreshNotices();
+                                        loadDialog.dismiss();
+                                    }
+                                });
                             }
                         }).show();
             }
@@ -224,14 +235,6 @@ public class NoticeBoardScreen extends Fragment {
         return rootView;
 
     }
-
-    /*
-    @Override
-    public void onResume() {
-        super.onResume();
-        refreshNotices();
-    }
-    */
 
     public void showNotice(final List notice) {
         String hint = getResources().getString(R.string.noticesShowDialogData);
