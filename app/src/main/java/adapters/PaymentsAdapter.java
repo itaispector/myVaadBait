@@ -3,6 +3,7 @@ package adapters;
 import java.util.List;
 
 import com.myvaad.myvaad.R;
+import com.parse.ParseObject;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -22,9 +23,9 @@ public class PaymentsAdapter extends BaseAdapter {
 	ViewHolder holder;
 		
 	//data
-	List payments;
+	List<ParseObject> payments;
 	
-	public PaymentsAdapter(Context context, List payments) {
+	public PaymentsAdapter(Context context, List<ParseObject> payments) {
 		this.context = context;	
 		this.payments = payments;
 	}
@@ -39,11 +40,8 @@ public class PaymentsAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public String[] getItem(int idx) {
-		List tmpData = (List) this.payments.get(idx);
-		String[] myData = {""+tmpData.get(0),""+tmpData.get(1),""+tmpData.get(2),""+tmpData.get(3)};
-		//returns array - 0: paymentName, 1: amount, 2: date, 3: objectId
-		return myData;
+	public ParseObject getItem(int i) {
+		return payments.get(i);
 	}
 
 	@Override
@@ -53,7 +51,7 @@ public class PaymentsAdapter extends BaseAdapter {
 	}
 
 	//helper class for holding the views in the list view, better for performance
-	public class ViewHolder{
+	private class ViewHolder{
 		TextView payment,amount, date;		
 	}
 	
@@ -76,10 +74,10 @@ public class PaymentsAdapter extends BaseAdapter {
             holder = (ViewHolder)convertView.getTag();
 		
 		//setting the data of the row
-		String[] data = getItem(idx);
-		holder.payment.setText(data[0]);
-		holder.amount.setText("\u20AA "+data[1]);
-		holder.date.setText(data[2]);
+		ParseObject payment = getItem(idx);
+		holder.payment.setText(payment.getString("description"));
+		holder.amount.setText("\u20AA "+payment.getString("amount"));
+		holder.date.setText(""+payment.getCreatedAt().toLocaleString());
 
 		return convertView;
 	}

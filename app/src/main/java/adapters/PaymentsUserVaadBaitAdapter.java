@@ -7,7 +7,6 @@ import java.util.List;
 import com.myvaad.myvaad.PaymentsScreen;
 import com.myvaad.myvaad.R;
 
-import adapters.PaymentsAdapter.ViewHolder;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

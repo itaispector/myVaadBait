@@ -39,7 +39,7 @@ public class UserProfile extends AppCompatActivity {
         // enable ToolBar app icon to behave as action to toggle nav drawer
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.home_back_arrow);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_btn);
 
 
         //Initialize with keys

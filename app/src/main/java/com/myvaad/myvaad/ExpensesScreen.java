@@ -41,8 +41,8 @@ public class ExpensesScreen extends Fragment {
 
         //Initialize with keys
         db = ParseDB.getInstance(getActivity());
-        //final View rootView = inflater.inflate(resource, root, attachToRoot)
-        final View rootView = inflater.inflate(R.layout.expenses_main_layout, container, false);
+        //View rootView = inflater.inflate(resource, root, attachToRoot)
+        View rootView = inflater.inflate(R.layout.expenses_main_layout, container, false);
 
 
         getActivity().setTitle(R.string.expenses_screen_ttl);
