@@ -41,10 +41,7 @@ public class NotInBuilding extends FragmentActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.not_in_building);
-        String appId = "QdwF666zm76ORQcn4KF6JNwDfsb6cj97QunbpT1s";
-        String clientId = "OiJI3KdONEN9jML6Mi6r6iQTpR8mIOBv3YgsUhdv";
-        //Initialize with keys
-        Parse.initialize(this, appId, clientId);
+
         db = ParseDB.getInstance(this);
         closeNotInBuildingActivity = this;
 
