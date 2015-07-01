@@ -6,7 +6,8 @@
          would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
     -->
     <dimen name="activity_horizontal_margin">64dp</dimen>
-    <dimen name="nav_drawer_header_image_size">156dp</dimen>
+    <dimen name="nav_drawer_header_image_size">144dp</dimen>
     <dimen name="nav_drawer_header_image_marginTop">10dp</dimen>
+    <dimen name="user_profile_image_bg_height">180dp</dimen>
 
 </resources>

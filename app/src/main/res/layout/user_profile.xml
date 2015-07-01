@@ -1,165 +1,293 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/tool_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="@style/Base.ThemeOverlay.AppCompat.Dark" />
-
-    <RelativeLayout
-        android:layoutDirection="ltr"
-        android:id="@+id/user_propile_layout"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tool_bar">
+        android:fitsSystemWindows="true">
 
-        <RelativeLayout
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:background="#000000" />
-
-        <ImageView
-            android:id="@+id/userProimgView"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="25dp" />
-
-        <RelativeLayout
-            android:id="@+id/user_name_profile_layout"
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/tool_bar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/userProimgView"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp">
+            android:background="@color/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/Base.ThemeOverlay.AppCompat.Dark" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="2dp"
-                android:background="#e49c9c9c" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="#ffffff" />
-
-            <TextView
-                android:id="@+id/user_propile_name"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical|right"
-                android:paddingRight="10dp"
-                android:text="משפחת משרקי"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/user_propile_name_edit_text"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_alignParentRight="true"
-                android:gravity="right|center_vertical"
-                android:hint="@string/fullname"
-                android:minWidth="200dp"
-                android:paddingRight="10dp"
-                android:selectAllOnFocus="true"
-                android:textSize="18sp"
-                android:visibility="gone" />
-
-            <ImageView
-                android:id="@+id/edit_user_name_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/ic_action_edit" />
-
-            <ImageView
-                android:id="@+id/edit_user_name_v_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/ic_action_accept"
-                android:visibility="gone" />
-        </RelativeLayout>
-
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <RelativeLayout
-            android:id="@+id/user_email_profile_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/user_name_profile_layout"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp">
+            android:id="@+id/user_propile_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tool_bar"
+            android:layoutDirection="ltr">
 
             <RelativeLayout
+                android:id="@+id/image_bg"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="2dp"
-                android:background="#e49c9c9c" />
-
-            <TextView
-                android:id="@+id/user_propile_email"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="#ffffff"
-                android:gravity="center_vertical|right"
-                android:paddingRight="10dp"
-                android:text="danielm1199@gmail.com"
-                android:textSize="18sp" />
+                android:layout_height="160dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/app_bg" />
 
             <ImageView
-                android:id="@+id/edit_user_email_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/ic_action_edit" />
-        </RelativeLayout>
+                android:id="@+id/userProimgView"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp"
+                android:src="@drawable/user_pic_header" />
 
-        <RelativeLayout
-            android:id="@+id/user_password_profile_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/user_email_profile_layout"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp">
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="6"
+                android:layout_below="@id/userProimgView">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:textColor="#fff"
+                    android:text="שנה תמונה" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:textColor="#fff"
+                    android:text="שנה תמונה" />
+            </LinearLayout>
 
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="2dp"
-                android:background="#e49c9c9c" />
-
-            <TextView
-                android:id="@+id/user_propile_password"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="#ffffff"
-                android:gravity="center_vertical|right"
-                android:paddingRight="10dp"
-                android:text="********"
-                android:textSize="18sp" />
-
-            <ImageView
-                android:id="@+id/edit_user_password_icon"
+                android:id="@+id/user_name_profile_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/ic_action_edit" />
+                android:layout_below="@id/image_bg"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="2dp"
+                    android:background="#e49c9c9c" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#ffffff" />
+
+                <TextView
+                    android:id="@+id/user_propile_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:drawableLeft="@drawable/edit_icon"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/user_profile_icon"
+                    android:gravity="center_vertical|right"
+                    android:paddingRight="10dp"
+                    android:text="daniel"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/user_email_profile_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/user_name_profile_layout"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="2dp"
+                    android:background="#e49c9c9c" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#ffffff" />
+
+                <TextView
+                    android:id="@+id/user_propile_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:drawableLeft="@drawable/edit_icon"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/email_icon"
+                    android:gravity="center_vertical|right"
+                    android:paddingRight="10dp"
+                    android:text="danielm1199@gmail.com"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/user_family_profile_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/user_email_profile_layout"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="2dp"
+                    android:background="#e49c9c9c" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#ffffff" />
+
+                <TextView
+                    android:id="@+id/user_propile_family"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:drawableLeft="@drawable/edit_icon"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/family_icon"
+                    android:gravity="center_vertical|right"
+                    android:paddingRight="10dp"
+                    android:text="משפחת משרקי"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/user_password_profile_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/user_family_profile_layout"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="2dp"
+                    android:background="#e49c9c9c" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#ffffff" />
+
+                <TextView
+                    android:id="@+id/user_propile_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:drawableLeft="@drawable/edit_icon"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/user_password_icon"
+                    android:gravity="center_vertical|right"
+                    android:paddingRight="10dp"
+                    android:text="**********"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/user_paypal_profile_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/user_password_profile_layout"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="2dp"
+                    android:background="#e49c9c9c" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#ffffff" />
+
+                <TextView
+                    android:id="@+id/user_propile_paypal"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:drawableLeft="@drawable/edit_icon"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/paypal_icon"
+                    android:gravity="center_vertical|right"
+                    android:paddingRight="10dp"
+                    android:text="danielm1199@gmail.com"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/user_building_profile_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/user_paypal_profile_layout"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="2dp"
+                    android:background="#e49c9c9c" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#ffffff" />
+
+                <TextView
+                    android:id="@+id/user_building_paypal"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:drawableLeft="@drawable/edit_icon"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/building_icon"
+                    android:gravity="center_vertical|right"
+                    android:paddingRight="10dp"
+                    android:text="236544"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/user_push_profile_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/user_building_profile_layout"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="2dp"
+                    android:background="#e49c9c9c" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#ffffff" />
+
+                <TextView
+                    android:id="@+id/user_building_push"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:drawableLeft="@drawable/edit_icon"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/push_icon"
+                    android:gravity="center_vertical|right"
+                    android:paddingRight="10dp"
+                    android:text="קבל התראות"
+                    android:textSize="18sp" />
+            </RelativeLayout>
         </RelativeLayout>
-
-
+        </ScrollView>
     </RelativeLayout>
-</RelativeLayout>

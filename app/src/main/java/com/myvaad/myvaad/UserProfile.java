@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,13 +14,14 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import com.parse.Parse;
 import dialogs.AboutDialog;
 
 public class UserProfile extends AppCompatActivity {
+
     ParseDB db;
-    ImageView userImg,userNameEditIcon,userNameEditVIcon;
     TextView userName;
     EditText userNameEdit;
     InputMethodManager imm;
@@ -46,11 +49,9 @@ public class UserProfile extends AppCompatActivity {
         Parse.initialize(this);
         db=ParseDB.getInstance(this);
 
+        /*
         userName=(TextView)findViewById(R.id.user_propile_name);
         userImg=(ImageView)findViewById(R.id.userProimgView);
-        userNameEditIcon=(ImageView)findViewById(R.id.edit_user_name_icon);
-        userNameEditVIcon=(ImageView)findViewById(R.id.edit_user_name_v_icon);
-        userNameEdit=(EditText)findViewById(R.id.user_propile_name_edit_text);
         imm=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         this.setTitle(R.string.UserProfileTitle);
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/GISHA.TTF");
@@ -82,7 +83,7 @@ public class UserProfile extends AppCompatActivity {
                 userName.setText(db.getcurrentUserFamilyName());
                 imm.hideSoftInputFromWindow(userNameEdit.getWindowToken(), 0);
             }
-        });
+        });*/
     }
 
     @Override

@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,9 +28,10 @@ import android.widget.Toast;
 import com.parse.Parse;
 
 
-public class NotInBuilding extends FragmentActivity {
+public class NotInBuilding extends Activity {
     ParseDB db;
     EditText bCodeNumber;
+    private Toolbar mToolBar;
     View dialogLayout;
     Dialog joinBuildingDialog;
     Button ok, cancel, createBuildingBtn, joinBuildingBtn,logout;
