@@ -9,7 +9,7 @@ import android.widget.RelativeLayout;
 public class UserProfile extends AppCompatActivity {
 
     ParseDB db;
-    ImageView goBackBtn;
+    ImageView goBackBtn,userProfileImg;
     RelativeLayout userPaypal;
 
     @Override
@@ -27,6 +27,10 @@ public class UserProfile extends AppCompatActivity {
         if(db.isCurrentUserAdmin()){
             userPaypal.setVisibility(View.VISIBLE);
         }
+
+        userProfileImg = (ImageView)findViewById(R.id.user_profile_img);
+
+        userProfileImg.setImageBitmap(db.getcurrentUserPicture());
 
         goBackBtn = (ImageView)findViewById(R.id.go_back_btn);
         goBackBtn.setOnClickListener(new View.OnClickListener() {
