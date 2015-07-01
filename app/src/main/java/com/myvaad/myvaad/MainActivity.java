@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem menuItem) {
         Fragment fragment1 = new FailuresScreen();
         Fragment fragment2 = new ExpensesScreen();
-        Fragment fragment3 = new PScreen();
+        Fragment fragment3 = new PaymentsScreen();
         Fragment fragment4 = new UsersScreen();
 
         switch (menuItem.getItemId()) {
