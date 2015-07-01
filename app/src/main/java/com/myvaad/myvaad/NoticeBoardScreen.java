@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -13,6 +14,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.LocalServerSocket;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -113,7 +115,7 @@ public class NoticeBoardScreen extends Fragment {
             public void done(List<ParseObject> notices, ParseException e) {
                 if (e == null) {
                     //Creating instance of SimpleDateFormat
-                    SimpleDateFormat postFormatter = new SimpleDateFormat("EEEE   dd "+"ב"+"MMMM   HH:mm");
+                    SimpleDateFormat postFormatter = new SimpleDateFormat("EEEE  dd "+"ב"+"MMMM  HH:mm",new Locale("he"));
                     noticeBoardList.clear();
                     for (ParseObject noticeRow : notices) {
                         List rowNoticeList = new ArrayList();
