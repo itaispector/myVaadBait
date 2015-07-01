@@ -1,8 +1,10 @@
 package com.myvaad.myvaad;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import com.melnykov.fab.FloatingActionButton;
 import com.parse.FindCallback;
@@ -49,7 +51,9 @@ public class FailuresScreen extends Fragment {
     Dialog failuresDialog, failuresAddDialog, failuresPriceDialog;
     Button addfailure, dialogFailureOkBtn, dialogFailureCancelBtn, add, edit, approval, delete, moveToPaymentsBtn, approveOkBtn, approveCancelBtn;
     FloatingActionButton addFailureBtn;
-  /**  ProgressBarCircularIndeterminate bar;**/
+    /**
+     * ProgressBarCircularIndeterminate bar;*
+     */
     int position;
     ParseDB db;
     String title, failureContent = "", approvals, myList = "", failureObjectId;
@@ -64,8 +68,8 @@ public class FailuresScreen extends Fragment {
         db = ParseDB.getInstance(getActivity());
         View rootView = inflater.inflate(R.layout.failures_screen, container, false);
         //show loader
-    /**   bar = (ProgressBarCircularIndeterminate) rootView.findViewById(R.id.progressBarCircularIndeterminate);
-        bar.setVisibility(View.VISIBLE);**/
+        /**   bar = (ProgressBarCircularIndeterminate) rootView.findViewById(R.id.progressBarCircularIndeterminate);
+         bar.setVisibility(View.VISIBLE);**/
 
         getActivity().setTitle(R.string.FailuresScreenTitle);
 
@@ -77,9 +81,6 @@ public class FailuresScreen extends Fragment {
 
         //calls the list view and its adapter
         failuresList = (ListView) rootView.findViewById(R.id.FailuresListView);
-        //adapter =  new FailuresAdapter(getActivity(), db.getCurrentUserFailuresBoard(), db.isCurrentUserAdmin(), db.getcurrentUserFamilyName());
-        //failuresList.setAdapter(adapter);
-
 
         String CurrentUserBuildingCode = db.getCurrentUserBuildingCode();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("failures");
@@ -93,6 +94,10 @@ public class FailuresScreen extends Fragment {
             @Override
             public void done(List<ParseObject> failures, ParseException e) {
                 if (e == null) {
+                    outputFailuresList.clear();
+
+                    SimpleDateFormat postFormatter = new SimpleDateFormat("EEEE  dd " + "ב" + "MMMM  HH:mm", new Locale("he"));
+
                     for (ParseObject failuresRow : failures) {
                         List rowFailureList = new ArrayList();
                         //get specific data from each row
@@ -104,7 +109,7 @@ public class FailuresScreen extends Fragment {
 
                         String status = failuresRow.getString("status");
                         Date updatedAt = failuresRow.getCreatedAt();
-                        String noticeTime = updatedAt.toLocaleString();
+                        String noticeTime = postFormatter.format(updatedAt);
                         String ObjectId = failuresRow.getObjectId();
 
                         String familyName = failuresRow.getString("userFamilyName");
@@ -133,10 +138,10 @@ public class FailuresScreen extends Fragment {
                         outputFailuresList.add(rowFailureList);
                         adapter = new FailuresAdapter(getActivity(), outputFailuresList, db.isCurrentUserAdmin(), db.getcurrentUserFamilyName());
                         failuresList.setAdapter(adapter);
-                      /**  bar.setVisibility(View.GONE);**/
+                        /**  bar.setVisibility(View.GONE);**/
                     }
                     if (outputFailuresList.isEmpty()) {
-                       /** bar.setVisibility(View.GONE);**/
+                        /** bar.setVisibility(View.GONE);**/
                         noFailuresTextView.setVisibility(View.VISIBLE);
                     } else {
                         noFailuresTextView.setVisibility(View.GONE);
