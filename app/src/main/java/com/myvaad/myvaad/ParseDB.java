@@ -516,39 +516,7 @@ public class ParseDB {
         currentUser.saveInBackground();
     }
 
-
-    /**
-     * *******************UPDATED BY DANIEL NEWWWWW******************************
-     */
-    //This method update familyname to currentUser--
-    protected void updateUserEmail(String email) {
-        ParseUser currentUser = getcurrentUser();
-        currentUser.put("email", email);
-        currentUser.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                int errorCode = e.getCode();
-                switch (errorCode) {
-                    case 203:
-                        toast = Toast.makeText(context, context.getString(R.string.emailTaken), Toast.LENGTH_SHORT);
-                        toast.setGravity(Gravity.CENTER, 0, 150);
-                        toast.show();
-                        break;
-                    case 125:
-                        toast = Toast.makeText(context, context.getString(R.string.InvalidEmail), Toast.LENGTH_SHORT);
-                        toast.setGravity(Gravity.CENTER, 0, 150);
-                        toast.show();
-                        break;
-                    default:
-                        Log.e("**Exception CODE**", errorCode + "");
-                        Log.e("*****Exception*****", e.getLocalizedMessage());
-                        break;
-                }
-            }
-        });
-    }
-
-                //This method sign up new building in class(table)buildings-->created by building Admin
+    //This method sign up new building in class(table)buildings-->created by building Admin
 
     protected void signUpBuilding(String buildingCode, String address, String paypalEmail, String numberOfHouses) {
         //The user that sign Up the Building is the admin
@@ -1720,19 +1688,19 @@ protected List getCurrentUserFailuresBoard() {
         String cBuilding = getCurrentUserBuildingCode();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("noticeBoard");
         query.whereEqualTo("user", user);
-        final List daniel= new ArrayList();
+        final List daniel = new ArrayList();
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
-                for(ParseObject notice : list){
-                    notice.put("userFamilyName",familyName);
+                for (ParseObject notice : list) {
+                    notice.put("userFamilyName", familyName);
                     daniel.add(notice);
                 }
                 ParseObject.saveAllInBackground(daniel, new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        if(e!=null){
-                            Toast.makeText(context,"קרתה תקלה! אנא נסה/י שנית",Toast.LENGTH_LONG).show();
+                        if (e != null) {
+                            Toast.makeText(context, "קרתה תקלה! אנא נסה/י שנית", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
