@@ -126,6 +126,7 @@
     <string name="month">תשלום &#xA; חודשי (&#x20AA;)</string>
     <string name="no_payments">אין הוצאות</string>
     <string name="vaad_bait">ועד בית</string>
+    <string name="vaad_bait_exists">קיימים תשלומי ועד לשנה זאת</string>
 
     <string-array name="login_page_array">
         <item>תפריט</item>

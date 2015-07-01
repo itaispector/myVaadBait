@@ -87,9 +87,9 @@ public class PaymentsAdminUsersListAdapter extends BaseAdapter {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				String uObjectId = ""+data[1];
 				if (buttonView.isChecked()){
-					pScreen.PaidUserToPaymentList(true, objectId, uObjectId);
+					//pScreen.PaidUserToPaymentList(true, objectId, uObjectId);
 				}else{
-					pScreen.PaidUserToPaymentList(false, objectId, uObjectId);
+					//pScreen.PaidUserToPaymentList(false, objectId, uObjectId);
 				}
 			}
 		});
