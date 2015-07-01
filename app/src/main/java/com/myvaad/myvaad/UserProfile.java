@@ -222,43 +222,21 @@ public class UserProfile extends AppCompatActivity {
                     @Override
                     public void onPositive(final MaterialDialog dialog) {
                         hideKeyboard(dialog.getInputEditText());
-                        String pass = dialog.getInputEditText().getText().toString();
+                        final String pass = dialog.getInputEditText().getText().toString();
                         HashMap<String, Object> params = new HashMap<String, Object>();
                         params.put("password", pass);
-                        params.put("objectId", db.getCurrentUserObjectId());
-                        ParseCloud.callFunctionInBackground("checkIfPasswordMatch", params, new FunctionCallback<String>() {
-                            public void done(String result, ParseException e) {
+                        params.put("objectId", db.getcurrentUserName());
+                        ParseCloud.callFunctionInBackground("checkIfPasswordMatch", params, new FunctionCallback<Boolean>() {
+                            @Override
+                            public void done(Boolean result, ParseException e) {
                                 if (e == null) {
-                                    new MaterialDialog.Builder(getApplicationContext())
-                                            .titleGravity(GravityEnum.END)
-                                            .contentGravity(GravityEnum.END)
-                                            .positiveColorRes(R.color.colorPrimary)
-                                            .neutralColorRes(R.color.colorPrimary)
-                                            .negativeColorRes(R.color.colorPrimary)
-                                            .widgetColorRes(R.color.colorPrimary)
-                                            .title("עריכת סיסמה")
-                                            .positiveText("המשך")
-                                            .neutralText("ביטול")
-                                            .customView(R.layout.change_password_dialog, true)
-                                            .callback(new MaterialDialog.ButtonCallback() {
-                                                @Override
-                                                public void onPositive(MaterialDialog dialog) {
-                                                    View view = dialog.getCustomView();
-                                                    password = (EditText) view.findViewById(R.id.password);
-                                                    password2 = (EditText) view.findViewById(R.id.password2);
-                                                    String text = password.getText().toString() + password2.getText().toString();
-                                                    toast(text);
-                                                }
-
-                                                @Override
-                                                public void onNeutral(MaterialDialog dialog) {
-                                                    hideKeyboard(password);
-                                                    hideKeyboard(password2);
-                                                }
-                                            })
-                                            .show();
+                                    if (result) {
+                                        toast("תואם!!!");
+                                    } else {
+                                        toast("טעות");
+                                    }
                                 } else {
-                                    toast("טעות");
+                                    toast("שגיאה!@");
                                 }
                             }
                         });
