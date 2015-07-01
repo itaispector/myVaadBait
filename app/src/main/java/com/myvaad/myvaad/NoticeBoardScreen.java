@@ -121,7 +121,6 @@ public class NoticeBoardScreen extends Fragment {
                         List rowNoticeList = new ArrayList();
                         //get specific data from each row
                         String content = noticeRow.getString("content");
-
                         Date updatedAt = noticeRow.getUpdatedAt();
 
                         //Changing Date and time format up to SimpleDateFormat
