@@ -1678,4 +1678,21 @@ protected List getCurrentUserFailuresBoard() {
             }
         });
     }
+
+
+    /********************************** NEW BY DANIEL *********************************/
+    protected void updateUserFamilyNameInNotices(ParseUser user) {
+        String cBuilding = getCurrentUserBuildingCode();
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("noticeBoard");
+        query.whereEqualTo("user", user);
+        try {
+          // ParseObject notice =
+                   query.find();
+
+        } catch (ParseException e) {
+            Log.i("***Parse Exception****", e.getLocalizedMessage());
+            e.printStackTrace();
+        }
+    }
+
 }
