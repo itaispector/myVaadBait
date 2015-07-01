@@ -120,6 +120,11 @@
     <string name="no_users">אין דיירים בבניין</string>
     <string name="appartment">דירה</string>
     <string name="no_failures">אין תקלות</string>
+    <string name="vaad_bait_payments">תשלומי ועד</string>
+    <string name="general_payments">כללי</string>
+    <string name="year">שנה</string>
+    <string name="month">סכום חודשי</string>
+    <string name="no_payments">אין הוצאות</string>
 
     <string-array name="login_page_array">
         <item>תפריט</item>
