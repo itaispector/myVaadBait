@@ -13,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -29,6 +30,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.GravityEnum;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.parse.Parse;
 
 import java.net.URI;
@@ -41,7 +45,7 @@ public class Login extends Fragment {
     ParseDB db;
     RingProgressDialog dialog;
     Toast toast;
-    Button ok,loginBtn,signUpBtn;
+    Button ok, loginBtn, signUpBtn;
     TextView forgotPass;
     Button cancel;
     View dialogLayout;
@@ -63,8 +67,8 @@ public class Login extends Fragment {
         final SignUp signUpFragment = new SignUp();
         userNameInput = (EditText) rootView.findViewById(R.id.MainLoginScreenUserName);
         passwordInput = (EditText) rootView.findViewById(R.id.MainLoginScreenPassword);
-        forgotPass = (TextView)rootView.findViewById(R.id.forgotPassword);
-        loginBtn = (Button)rootView.findViewById(R.id.MainLoginScreenLoginBtn);
+        forgotPass = (TextView) rootView.findViewById(R.id.forgotPassword);
+        loginBtn = (Button) rootView.findViewById(R.id.MainLoginScreenLoginBtn);
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,7 +93,7 @@ public class Login extends Fragment {
                 }
             }
         });
-        signUpBtn = (Button)rootView.findViewById(R.id.MainLoginScreenSignUpBtn);
+        signUpBtn = (Button) rootView.findViewById(R.id.MainLoginScreenSignUpBtn);
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,7 +105,7 @@ public class Login extends Fragment {
                 } else {
                     getFragmentManager()
                             .beginTransaction()
-                            .setCustomAnimations(R.anim.gla_there_come, R.anim.gla_there_gone,R.anim.gla_back_gone, R.anim.gla_back_come)
+                            .setCustomAnimations(R.anim.gla_there_come, R.anim.gla_there_gone, R.anim.gla_back_gone, R.anim.gla_back_come)
                             .replace(R.id.content_frame, signUpFragment)
                             .addToBackStack("LoginFragment")
                             .commit();
@@ -134,66 +138,67 @@ public class Login extends Fragment {
         });
         return rootView;
     }
+
     //Check if internet is available method
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
+
     public void forgotPass() {
-        dialogLayout = View.inflate(getActivity(), R.layout.login_screen_forgot_password_dialog, null);
-        resPassDialog = new Dialog(getActivity());
-        resPassDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        resPassDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        resPassDialog.setContentView(dialogLayout);
-        resPassDialog.show();
+        new MaterialDialog.Builder(getActivity())
+                .titleGravity(GravityEnum.END)
+                .contentGravity(GravityEnum.END)
+                .positiveColorRes(R.color.colorPrimary)
+                .neutralColorRes(R.color.colorPrimary)
+                .negativeColorRes(R.color.colorPrimary)
+                .widgetColorRes(R.color.colorPrimary)
+                .title("איפוס סיסמה")
+                .content("אנא הכנס/י כתובת אימייל")
+                .positiveText("אפס סיסמה")
+                .negativeText("ביטול")
+                .btnStackedGravity(GravityEnum.START)
+                .buttonsGravity(GravityEnum.END)
+                .alwaysCallInputCallback() // this forces the callback to be invoked with every input change
+                .inputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
+                .input(R.string.email, 0, false, new MaterialDialog.InputCallback() {
+                    @Override
+                    public void onInput(MaterialDialog materialDialog, CharSequence charSequence) {
+                        materialDialog.getActionButton(DialogAction.POSITIVE).setEnabled(true);
 
-        ok = (Button) dialogLayout.findViewById(R.id.forgotPasswordOkBtn);
-        cancel = (Button) dialogLayout.findViewById(R.id.forgotPasswordCancelBtn);
+                    }
+                })
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        String text = dialog.getInputEditText().getText().toString();
+                        if (!text.matches("^(([_a-zA-Z0-9][.]?){1,})([^.][@]{1})(([a-zA-Z0-9]?){1,})([^.][.]{1})(([a-zA-Z0-9]?){1,})$")) {
+                            toast = Toast.makeText(getActivity(), R.string.empty_email, Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                            //Exit from keyboard when the dialog dismissed
+                            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(dialog.getInputEditText().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                        } else {
+                            db.resetUserPassword(text);
+                            //Exit from keyboard when the dialog dismissed
+                            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(dialog.getInputEditText().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                            toast = Toast.makeText(getActivity(), R.string.email_sent, Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                        }
+                    }
 
-        ok.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                dialogButtons(v);
-
-            }
-        });
-
-        cancel.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                dialogButtons(v);
-
-            }
-        });
-    }
-
-    public void dialogButtons(View v) {
-        EditText msg = (EditText) dialogLayout.findViewById(R.id.forgotPasswordEmail);
-        String text = msg.getText().toString();
-        if (v.getId() == R.id.forgotPasswordCancelBtn) {
-            //Exit from keyboard when the dialog dismissed
-            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(msg.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-            resPassDialog.dismiss();
-        } else {
-            if (!text.matches("")) {
-                db.resetUserPassword(text);
-                //Exit from keyboard when the dialog dismissed
-                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(msg.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                resPassDialog.dismiss();
-            } else {
-                toast = Toast.makeText(getActivity(), R.string.empty_email, Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-                //Exit from keyboard when the dialog dismissed
-                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(msg.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-            }
-
-        }
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        super.onNegative(dialog);
+                        //Exit from keyboard when the dialog dismissed
+                        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(dialog.getInputEditText().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    }
+                })
+                .show();
     }
 }

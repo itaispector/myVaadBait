@@ -76,7 +76,10 @@ public class NoticesAdapter extends BaseAdapter {
             holder = (ViewHolder)convertView.getTag();
 		
 		//List container = (List)notices.get(idx);
-		holder.fullname.setText("משפחת "+((List)notices.get(idx)).get(3));
+		holder.fullname.setText(context.getResources().getString(R.string.familyAndSpace)+" "
+				+((List)notices.get(idx)).get(3)+" - "
+				+context.getResources().getString(R.string.apartment)+" "
+				+((List)notices.get(idx)).get(5));
 		holder.content.setText(""+((List)notices.get(idx)).get(1));
 		holder.date.setText(""+((List)notices.get(idx)).get(2));
 		holder.image.setImageBitmap((Bitmap) ((List)notices.get(idx)).get(4));
