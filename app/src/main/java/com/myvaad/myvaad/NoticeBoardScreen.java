@@ -105,7 +105,7 @@ public class NoticeBoardScreen extends Fragment {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("noticeBoard");
         //Query Constraints-->all the notices for current user building
         query.whereContains("buildingCode", CurrentUserBuildingCode);
-        query.orderByDescending("updatedAt");
+        query.orderByDescending("craeatedAt");
 
         //finding all the notices for current user building
         query.findInBackground(new FindCallback<ParseObject>() {
