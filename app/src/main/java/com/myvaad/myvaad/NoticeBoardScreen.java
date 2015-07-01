@@ -2,7 +2,9 @@ package com.myvaad.myvaad;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -99,9 +101,6 @@ public class NoticeBoardScreen extends Fragment {
 
         noNoticesText = (TextView) rootView.findViewById(R.id.no_notices_text);
 
-
-        //adapter =  new NoticesAdapter(getActivity(),db.getCurrentUserNoticeBoard());
-        //noticeBoardListView.setAdapter(adapter);
         String CurrentUserBuildingCode = db.getCurrentUserBuildingCode();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("noticeBoard");
         //Query Constraints-->all the notices for current user building
@@ -114,17 +113,46 @@ public class NoticeBoardScreen extends Fragment {
             @Override
             public void done(List<ParseObject> notices, ParseException e) {
                 if (e == null) {
-                    //Creating instance of SimpleDateFormat
-                    SimpleDateFormat postFormatter = new SimpleDateFormat("EEEE  dd "+"ב"+"MMMM  HH:mm",new Locale("he"));
+                    //Get current time
+                    Calendar rightNow = Calendar.getInstance();
+                    //Creating instance of SimpleDateFormat and init with new Date format
+                    SimpleDateFormat postFormatter1 = new SimpleDateFormat("EEEE  dd "+"ב"+"MMMM  HH:mm",new Locale("he"));
+                    SimpleDateFormat postFormatter2 = new SimpleDateFormat("HH:mm",new Locale("he"));
+                    SimpleDateFormat postFormatter3 = new SimpleDateFormat("אתמול"+"  "+"HH:mm",new Locale("he"));
+                    SimpleDateFormat postFormatter4 = new SimpleDateFormat("EEEE  "+"HH:mm",new Locale("he"));
+                    SimpleDateFormat postFormatter5 = new SimpleDateFormat("dd "+"ב"+"MMMM",new Locale("he"));
+                    SimpleDateFormat toDayFormatter = new SimpleDateFormat("d");
+
+                    String currentDayStr = toDayFormatter.format(rightNow.getTime());
+                    int currentDay = Integer.parseInt(currentDayStr);
+
+                    String noticeTimeStr ="";
                     noticeBoardList.clear();
+
                     for (ParseObject noticeRow : notices) {
                         List rowNoticeList = new ArrayList();
                         //get specific data from each row
                         String content = noticeRow.getString("content");
                         Date updatedAt = noticeRow.getUpdatedAt();
 
-                        //Changing Date and time format up to SimpleDateFormat
-                        String noticeTime = postFormatter.format(updatedAt);
+                        String updateAtDayStr = toDayFormatter.format(updatedAt);
+                        int updateAtDay = Integer.parseInt(updateAtDayStr);
+                        int dayDiff = currentDay-updateAtDay;
+
+                        if(dayDiff < 0){//The message is in last month!!!
+                            dayDiff += getLastMonthTotalDays();
+                        }
+
+                        if(dayDiff == 0){//today
+                            noticeTimeStr = postFormatter2.format(updatedAt);
+                        }else if(dayDiff == 1){
+                            noticeTimeStr = postFormatter3.format(updatedAt);
+                        }else if(dayDiff > 3 && dayDiff < 7){
+                            noticeTimeStr = postFormatter4.format(updatedAt);
+                        }else{
+                            noticeTimeStr = postFormatter1.format(updatedAt);
+                        }
+
                         String ObjectId = noticeRow.getObjectId();
                         String familyName = noticeRow.getString("userFamilyName");
                         ParseFile userPicture = noticeRow.getParseFile("userPic");
@@ -133,7 +161,7 @@ public class NoticeBoardScreen extends Fragment {
 
                         rowNoticeList.add(ObjectId);
                         rowNoticeList.add(content);
-                        rowNoticeList.add(noticeTime);
+                        rowNoticeList.add(noticeTimeStr);
                         rowNoticeList.add(familyName);
                         rowNoticeList.add(userPic);
                         rowNoticeList.add(apartmentNumber);
@@ -356,6 +384,22 @@ public class NoticeBoardScreen extends Fragment {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public int getLastMonthTotalDays(){
+        //get current month and year
+        Calendar c = Calendar.getInstance();
+        int thisMonth = c.get(Calendar.MONTH);
+        int year = c.get(Calendar.YEAR);
+
+        if(thisMonth == 0)year -= 1; // thisMonth == 0 -->JANUARY
+        // Create a calendar object and set year and month to last month --> thisMonth-1 == last month
+        Calendar mycal = new GregorianCalendar(year , thisMonth-1 , 1);
+
+        // Get the number of days in that month
+        int daysInMonth = mycal.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+        return  daysInMonth;
     }
 }
 
