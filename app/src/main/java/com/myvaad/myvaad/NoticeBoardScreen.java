@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -13,6 +14,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.LocalServerSocket;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -113,30 +115,16 @@ public class NoticeBoardScreen extends Fragment {
             public void done(List<ParseObject> notices, ParseException e) {
                 if (e == null) {
                     //Creating instance of SimpleDateFormat
-                    SimpleDateFormat postFormatter = new SimpleDateFormat("EEEE   dd "+"ב"+"MMMM   HH:mm");
-                    SimpleDateFormat day = new SimpleDateFormat("EEEE");
-                    SimpleDateFormat month = new SimpleDateFormat("EEEE   dd "+"ב"+"MMMM   HH:mm");
-                    SimpleDateFormat time = new SimpleDateFormat("EEEE   dd "+"ב"+"MMMM   HH:mm");
+                    SimpleDateFormat postFormatter = new SimpleDateFormat("EEEE  dd "+"ב"+"MMMM  HH:mm",new Locale("he"));
                     noticeBoardList.clear();
                     for (ParseObject noticeRow : notices) {
-                        Date updatedAt = noticeRow.getUpdatedAt();
-                        String noticeTimeDay = day.format(updatedAt);
-                        String testt = "";
-                        switch (noticeTimeDay){
-                            case "Tuesday":
-                                testt="שלישי";
-                                break;
-                            case "שלישי":
-                                testt="שלישי";
-                                break;
-                        }
-
-
-
                         List rowNoticeList = new ArrayList();
                         //get specific data from each row
                         String content = noticeRow.getString("content");
+                        Date updatedAt = noticeRow.getUpdatedAt();
+
                         //Changing Date and time format up to SimpleDateFormat
+                        String noticeTime = postFormatter.format(updatedAt);
                         String ObjectId = noticeRow.getObjectId();
                         String familyName = noticeRow.getString("userFamilyName");
                         ParseFile userPicture = noticeRow.getParseFile("userPic");
@@ -145,7 +133,7 @@ public class NoticeBoardScreen extends Fragment {
 
                         rowNoticeList.add(ObjectId);
                         rowNoticeList.add(content);
-                        rowNoticeList.add(testt);
+                        rowNoticeList.add(noticeTime);
                         rowNoticeList.add(familyName);
                         rowNoticeList.add(userPic);
                         rowNoticeList.add(apartmentNumber);
