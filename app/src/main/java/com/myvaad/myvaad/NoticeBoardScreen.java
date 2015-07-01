@@ -116,17 +116,17 @@ public class NoticeBoardScreen extends Fragment {
                     //Get current time
                     Calendar rightNow = Calendar.getInstance();
                     //Creating instance of SimpleDateFormat and init with new Date format
-                    SimpleDateFormat postFormatter1 = new SimpleDateFormat("EEEE  dd "+"ב"+"MMMM  HH:mm",new Locale("he"));
-                    SimpleDateFormat postFormatter2 = new SimpleDateFormat("HH:mm",new Locale("he"));
-                    SimpleDateFormat postFormatter3 = new SimpleDateFormat("אתמול"+"  "+"HH:mm",new Locale("he"));
-                    SimpleDateFormat postFormatter4 = new SimpleDateFormat("EEEE  "+"HH:mm",new Locale("he"));
-                    SimpleDateFormat postFormatter5 = new SimpleDateFormat("dd "+"ב"+"MMMM",new Locale("he"));
+
+                    SimpleDateFormat postFormatter2 = new SimpleDateFormat("HH:mm", new Locale("he"));
+                    SimpleDateFormat postFormatter3 = new SimpleDateFormat("אתמול" + "  " + "HH:mm", new Locale("he"));
+                    SimpleDateFormat postFormatter4 = new SimpleDateFormat("EEEE  " + "HH:mm", new Locale("he"));
+                    SimpleDateFormat postFormatter5 = new SimpleDateFormat("dd " + "ב" + "MMMM", new Locale("he"));
                     SimpleDateFormat toDayFormatter = new SimpleDateFormat("d");
 
                     String currentDayStr = toDayFormatter.format(rightNow.getTime());
                     int currentDay = Integer.parseInt(currentDayStr);
 
-                    String noticeTimeStr ="";
+                    String noticeTimeStr = "";
                     noticeBoardList.clear();
 
                     for (ParseObject noticeRow : notices) {
@@ -137,20 +137,20 @@ public class NoticeBoardScreen extends Fragment {
 
                         String updateAtDayStr = toDayFormatter.format(updatedAt);
                         int updateAtDay = Integer.parseInt(updateAtDayStr);
-                        int dayDiff = currentDay-updateAtDay;
+                        int dayDiff = currentDay - updateAtDay;
 
-                        if(dayDiff < 0){//The message is in last month!!!
+                        if (dayDiff < 0) {//The message is in last month!!!
                             dayDiff += getLastMonthTotalDays();
                         }
 
-                        if(dayDiff == 0){//today
+                        if (dayDiff == 0) {//today
                             noticeTimeStr = postFormatter2.format(updatedAt);
-                        }else if(dayDiff == 1){
+                        } else if (dayDiff == 1) {
                             noticeTimeStr = postFormatter3.format(updatedAt);
-                        }else if(dayDiff > 3 && dayDiff < 7){
+                        } else if (dayDiff > 3 && dayDiff < 7) {
                             noticeTimeStr = postFormatter4.format(updatedAt);
-                        }else{
-                            noticeTimeStr = postFormatter1.format(updatedAt);
+                        } else {
+                            noticeTimeStr = postFormatter5.format(updatedAt);
                         }
 
                         String ObjectId = noticeRow.getObjectId();
@@ -323,7 +323,7 @@ public class NoticeBoardScreen extends Fragment {
             dialogM.negativeText("מחק");
             dialogM.neutralText("ביטול");
             dialogM.forceStacking(false);
-        }else{
+        } else {
             dialogM.content("" + notice.get(1));
         }
         dialogM.show();
@@ -386,20 +386,20 @@ public class NoticeBoardScreen extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    public int getLastMonthTotalDays(){
+    public int getLastMonthTotalDays() {
         //get current month and year
         Calendar c = Calendar.getInstance();
         int thisMonth = c.get(Calendar.MONTH);
         int year = c.get(Calendar.YEAR);
 
-        if(thisMonth == 0)year -= 1; // thisMonth == 0 -->JANUARY
+        if (thisMonth == 0) year -= 1; // thisMonth == 0 -->JANUARY
         // Create a calendar object and set year and month to last month --> thisMonth-1 == last month
-        Calendar mycal = new GregorianCalendar(year , thisMonth-1 , 1);
+        Calendar mycal = new GregorianCalendar(year, thisMonth - 1, 1);
 
         // Get the number of days in that month
         int daysInMonth = mycal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
-        return  daysInMonth;
+        return daysInMonth;
     }
 }
 
