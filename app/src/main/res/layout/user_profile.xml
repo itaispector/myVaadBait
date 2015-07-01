@@ -66,15 +66,14 @@
                         android:textColor="#fff" />
                 </LinearLayout>
             </LinearLayout>
-
             <RelativeLayout
-                android:id="@+id/user_name_profile_layout"
+                android:id="@+id/user_family_profile_layout"
+                android:onClick="changeUserFamily"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/image_bg"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:onClick="changeUserName"
                 android:layout_marginTop="20dp">
 
                 <RelativeLayout
@@ -89,15 +88,15 @@
                     android:background="#ffffff" />
 
                 <TextView
-                    android:id="@+id/user_propile_name"
+                    android:id="@+id/user_propile_family"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:drawableLeft="@drawable/edit_icon"
                     android:drawablePadding="10dp"
-                    android:drawableRight="@drawable/user_profile_icon"
+                    android:drawableRight="@drawable/family_icon"
                     android:gravity="center_vertical|right"
                     android:paddingRight="10dp"
-                    android:text="daniel"
+                    android:text="משפחת משרקי"
                     android:textSize="18sp" />
             </RelativeLayout>
 
@@ -105,8 +104,8 @@
                 android:id="@+id/user_email_profile_layout"
                 android:onClick="changeUserEmail"
                 android:layout_width="wrap_content"
+                android:layout_below="@id/user_family_profile_layout"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/user_name_profile_layout"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp">
@@ -136,45 +135,11 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/user_family_profile_layout"
-                android:onClick="changeUserFamily"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/user_email_profile_layout"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="2dp"
-                    android:background="#e49c9c9c" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="#ffffff" />
-
-                <TextView
-                    android:id="@+id/user_propile_family"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:drawableLeft="@drawable/edit_icon"
-                    android:drawablePadding="10dp"
-                    android:drawableRight="@drawable/family_icon"
-                    android:gravity="center_vertical|right"
-                    android:paddingRight="10dp"
-                    android:text="משפחת משרקי"
-                    android:textSize="18sp" />
-            </RelativeLayout>
-
-            <RelativeLayout
                 android:id="@+id/user_password_profile_layout"
                 android:layout_width="wrap_content"
                 android:onClick="changeUserPassword"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/user_family_profile_layout"
+                android:layout_below="@id/user_email_profile_layout"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp">
@@ -260,7 +225,7 @@
                     android:background="#ffffff" />
 
                 <TextView
-                    android:id="@+id/user_building_paypal"
+                    android:id="@+id/user_propile_building"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:drawableLeft="@drawable/edit_icon"
