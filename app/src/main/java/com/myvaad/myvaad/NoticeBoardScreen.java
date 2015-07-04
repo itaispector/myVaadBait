@@ -105,7 +105,7 @@ public class NoticeBoardScreen extends Fragment {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("noticeBoard");
         //Query Constraints-->all the notices for current user building
         query.whereContains("buildingCode", CurrentUserBuildingCode);
-        query.orderByDescending("craeatedAt");
+        query.orderByDescending("createdAt");
 
         //finding all the notices for current user building
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -133,9 +133,9 @@ public class NoticeBoardScreen extends Fragment {
                         List rowNoticeList = new ArrayList();
                         //get specific data from each row
                         String content = noticeRow.getString("content");
-                        Date updatedAt = noticeRow.getUpdatedAt();
+                        Date createdAt = noticeRow.getCreatedAt();
 
-                        String updateAtDayStr = toDayFormatter.format(updatedAt);
+                        String updateAtDayStr = toDayFormatter.format(createdAt);
                         int updateAtDay = Integer.parseInt(updateAtDayStr);
                         int dayDiff = currentDay - updateAtDay;
 
@@ -144,13 +144,13 @@ public class NoticeBoardScreen extends Fragment {
                         }
 
                         if (dayDiff == 0) {//today
-                            noticeTimeStr = postFormatter2.format(updatedAt);
+                            noticeTimeStr = postFormatter2.format(createdAt);
                         } else if (dayDiff == 1) {
-                            noticeTimeStr = postFormatter3.format(updatedAt);
-                        } else if (dayDiff > 3 && dayDiff < 7) {
-                            noticeTimeStr = postFormatter4.format(updatedAt);
+                            noticeTimeStr = postFormatter3.format(createdAt);
+                        } else if (dayDiff > 1 && dayDiff < 7) {
+                            noticeTimeStr = postFormatter4.format(createdAt);
                         } else {
-                            noticeTimeStr = postFormatter5.format(updatedAt);
+                            noticeTimeStr = postFormatter5.format(createdAt);
                         }
 
                         String ObjectId = noticeRow.getObjectId();
