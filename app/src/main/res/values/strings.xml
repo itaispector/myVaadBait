@@ -127,6 +127,7 @@
     <string name="no_payments">אין הוצאות</string>
     <string name="vaad_bait">ועד בית</string>
     <string name="vaad_bait_exists">קיימים תשלומי ועד לשנה זאת</string>
+    <string name="keep_changes">שמור שינויים</string>
 
     <string-array name="login_page_array">
         <item>תפריט</item>
