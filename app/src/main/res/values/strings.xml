@@ -132,6 +132,7 @@
     <string name="vaad_bait_title">תשלומי ועד בית</string>
     <string name="mark_all">סמן הכל</string>
     <string name="save">שמור</string>
+    <string name="next">המשך</string>
 
     <string-array name="login_page_array">
         <item>תפריט</item>
