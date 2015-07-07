@@ -133,6 +133,7 @@
     <string name="mark_all">סמן הכל</string>
     <string name="save">שמור</string>
     <string name="next">המשך</string>
+    <string name="vaad_bait_succes">תשלומים נוספו בהצלחה</string>
 
     <string-array name="login_page_array">
         <item>תפריט</item>
