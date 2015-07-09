@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onRestart() {
         super.onRestart();
         Fragment currentFragment = getFragmentManager().findFragmentById(R.id.main_content);
-        if (!(currentFragment instanceof ExpensesScreen)) {
+        if (!(currentFragment instanceof PaymentsScreen) && !(currentFragment instanceof ExpensesScreen)) {
             FragmentTransaction fragTransaction = (this).getFragmentManager().beginTransaction();
             fragTransaction.detach(currentFragment);
             fragTransaction.attach(currentFragment);
