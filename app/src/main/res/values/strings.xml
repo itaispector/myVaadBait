@@ -135,6 +135,15 @@
     <string name="next">המשך</string>
     <string name="vaad_bait_success">תשלומים נוספו בהצלחה</string>
     <string name="clean">נקה הכל</string>
+    <string name="multiple_choice">בחירה מרובה</string>
+    <string name="delete_all_payments">מחיקת כל התשלומים</string>
+    <string name="send_notice">התראה לכל מי שלא שילם</string>
+    <string name="send_notice_dialog_content">שלח התראה לכל מי שלא שילם?</string>
+    <string name="move_to_expenses_content">להעביר תשלום לפירוט הוצאות?</string>
+    <string name="delete_payment_content">האם אתה בטוח שאתה רוצה להסיר את התשלום?</string>
+    <string name="pay_with_paypal">שלם באמצעות פייפל או כרטיס אשראי</string>
+    <string name="no_paypal_message">אנו מתנצלים, כרגע אין אפשרות לשלם. ועד הבית טרם הזין פרטי חשבון</string>
+    <string name="close">סגור</string>
 
     <string-array name="login_page_array">
         <item>תפריט</item>
