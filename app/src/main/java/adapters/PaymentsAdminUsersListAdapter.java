@@ -1,36 +1,29 @@
 package adapters;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.TreeMap;
-
-import com.myvaad.myvaad.ParseDB;
-import com.myvaad.myvaad.PaymentsScreen;
-import com.myvaad.myvaad.R;
-
-import adapters.PaymentsUserVaadBaitAdapter.ViewHolder;
 import android.content.Context;
-import android.text.InputFilter.LengthFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.myvaad.myvaad.PaymentsScreen;
+import com.myvaad.myvaad.R;
+import com.parse.ParseObject;
+
+import java.util.List;
 
 public class PaymentsAdminUsersListAdapter extends BaseAdapter {
 	private Context context;
 	ViewHolder holder;
-	List users;
+	List<ParseObject> users;
 	int position;
 	PaymentsScreen pScreen;
 	String objectId;
 
-	public PaymentsAdminUsersListAdapter(Context context, List users, String objectId, PaymentsScreen pScreen){
+	public PaymentsAdminUsersListAdapter(Context context, List<ParseObject> users, String objectId, PaymentsScreen pScreen){
 		this.context = context;
 		this.users = users;
 		this.objectId = objectId;
@@ -44,11 +37,8 @@ public class PaymentsAdminUsersListAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public Object[] getItem(int idx) {
-		List tmpData =(List) this.users.get(idx);
-		Object[] myData = {""+tmpData.get(0),""+tmpData.get(1),(Boolean)tmpData.get(2)};
-		//returns array - 0: famName(String), 1: uObjectId(String), 2: paid or not(Boolean)
-		return myData;
+	public List getItem(int idx) {
+		return (List)users.get(idx);
 	}
 
 	@Override
@@ -59,7 +49,7 @@ public class PaymentsAdminUsersListAdapter extends BaseAdapter {
 
 	public class ViewHolder{
 		TextView name;
-		CheckBox cb;
+		CheckBox checkBox;
 	}
 	
 	@Override
@@ -71,29 +61,18 @@ public class PaymentsAdminUsersListAdapter extends BaseAdapter {
 			convertView = myInflater.inflate(R.layout.payments_admin_list_row, null);           
             holder = new ViewHolder();     
             holder.name=(TextView)convertView.findViewById(R.id.paymentsAdminListViewName);
-            holder.cb=(CheckBox)convertView.findViewById(R.id.paymentsAdminListViewCB);           
+			holder.checkBox=(CheckBox)convertView.findViewById(R.id.usersListCB);
             convertView.setTag(holder);
        
 		}else
             holder = (ViewHolder)convertView.getTag();
 		
 		//setting the data of the row
-		final Object[] data = getItem(idx);
-		holder.name.setText(""+data[0]);
-		holder.cb.setChecked((Boolean)data[2]);
-		
-		holder.cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {		
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				String uObjectId = ""+data[1];
-				if (buttonView.isChecked()){
-					//pScreen.PaidUserToPaymentList(true, objectId, uObjectId);
-				}else{
-					//pScreen.PaidUserToPaymentList(false, objectId, uObjectId);
-				}
-			}
-		});
-		
+		List user = getItem(idx);
+		String famName = (String)user.get(0);
+		boolean state = (boolean)user.get(2);
+		holder.name.setText(context.getString(R.string.family) + " " + famName);
+		holder.checkBox.setChecked(state);
 		return convertView;
 	}
 }

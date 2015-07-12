@@ -66,7 +66,7 @@ public class PaymentsAdapter extends BaseAdapter {
             holder = new ViewHolder();     
             holder.payment=(TextView)convertView.findViewById(R.id.paymentsRowFamilyName);
             holder.amount=(TextView)convertView.findViewById(R.id.paymentsRowAmount);
-            holder.date=(TextView)convertView.findViewById(R.id.paymentsRowDate);
+            //holder.date=(TextView)convertView.findViewById(R.id.paymentsRowDate);
             
             convertView.setTag(holder);
        
@@ -77,7 +77,7 @@ public class PaymentsAdapter extends BaseAdapter {
 		ParseObject payment = getItem(idx);
 		holder.payment.setText(payment.getString("description"));
 		holder.amount.setText("\u20AA "+payment.getString("amount"));
-		holder.date.setText(""+payment.getCreatedAt().toLocaleString());
+		//holder.date.setText(""+payment.getCreatedAt().toLocaleString());
 
 		return convertView;
 	}

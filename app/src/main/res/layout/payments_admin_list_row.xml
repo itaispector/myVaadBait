@@ -1,22 +1,46 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/list_item_background">
-
-    <TextView
-        android:id="@+id/paymentsAdminListViewName"
-        android:layout_width="wrap_content"
+    android:layout_margin="4dp"
+    android:layoutDirection="ltr">
+    <!-- A CardView that contains a TextView -->
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:padding="10dp"
-        android:text="משפחת אבולעפיה"
-        android:textSize="20dp"
-        android:textStyle="bold" />
+        android:layout_gravity="center"
+        card_view:cardCornerRadius="2dp"
+>
 
-    <CheckBox
-        android:id="@+id/paymentsAdminListViewCB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:descendantFocusability="blocksDescendants" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/default_button"
+            android:descendantFocusability="blocksDescendants">
+
+            <TextView
+                android:id="@+id/paymentsAdminListViewName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:padding="8dp"
+                android:text="משפחת אבולעפיה"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="20sp" />
+
+            <CheckBox
+                android:id="@+id/usersListCB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_margin="4dp"
+                android:button="@drawable/my_check_box"
+                android:padding="8dp"></CheckBox>
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
 </RelativeLayout>

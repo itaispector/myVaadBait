@@ -9,13 +9,8 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-
 import com.parse.Parse;
-import com.rey.material.widget.ProgressView;
-
 import adapters.PaymentsPagerAdapter;
-import adapters.ViewPagerAdapter;
 
 
 public class PaymentsScreen extends Fragment {
@@ -23,11 +18,8 @@ public class PaymentsScreen extends Fragment {
     ViewPager pager;
     PaymentsPagerAdapter adapter;
     SlidingTabLayout tabs;
-    ProgressView bar;
-
     int Numboftabs = 2;
     FragmentActivity myContext;
-
     FragmentManager fragManager;
 
 
@@ -37,21 +29,16 @@ public class PaymentsScreen extends Fragment {
         super.onAttach(activity);
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         CharSequence Titles[] = {getActivity().getString(R.string.general_payments), getActivity().getString(R.string.vaad_bait_payments)};
 
-        String appId = "QdwF666zm76ORQcn4KF6JNwDfsb6cj97QunbpT1s";
-        String clientId = "OiJI3KdONEN9jML6Mi6r6iQTpR8mIOBv3YgsUhdv";
-        //Initialize with keys
-        Parse.initialize(getActivity(), appId, clientId);
+        Parse.initialize(getActivity());
         db = ParseDB.getInstance(getActivity());
         //View rootView = inflater.inflate(resource, root, attachToRoot)
         View rootView = inflater.inflate(R.layout.payments_main_layout, container, false);
-        bar = (ProgressView)rootView.findViewById(R.id.progress_loader);
 
         fragManager = myContext.getSupportFragmentManager();
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
@@ -78,5 +65,6 @@ public class PaymentsScreen extends Fragment {
 
         return rootView;
     }
+
 
 }

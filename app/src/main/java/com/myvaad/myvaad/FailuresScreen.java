@@ -291,15 +291,7 @@ public class FailuresScreen extends Fragment {
 
         dialogFailureOkBtn = (Button) failuresAddDialog.findViewById(R.id.failuresAddDialogFailureOkBtn);
         dialogFailureCancelBtn = (Button) failuresAddDialog.findViewById(R.id.failuresAddDialogFailureCancelBtn);
-
-        dialogFailureCancelBtn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                failuresAddDialog.dismiss();
-
-            }
-        });
+        dialogFailureCancelBtn.setVisibility(View.GONE);
 
         dialogFailureOkBtn.setOnClickListener(new View.OnClickListener() {
 

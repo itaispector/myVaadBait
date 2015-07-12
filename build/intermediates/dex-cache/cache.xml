@@ -2,18 +2,18 @@
 <items version="2" >
 
     <item
-        jar="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/jars/classes.jar"
+        jar="/Users/itaispector/Documents/android-sdk-macosx/extras/android/m2repository/com/android/support/support-annotations/22.2.0/support-annotations-22.2.0.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
-        <dex dex="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/pre-dexed/debug/classes-cce7634bffe4446249c8038037006a973f363f71.jar" />
+        sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
+        <dex dex="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/pre-dexed/debug/support-annotations-22.2.0-7d3213701018bd70c889dd5250ba1ef0a206da95.jar" />
     </item>
     <item
-        jar="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/22.2.0/jars/classes.jar"
+        jar="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/exploded-aar/com.rengwuxian.materialedittext/library/2.1.4/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="5b37cf49773f7f17aca9830efd3053b0cac56728">
-        <dex dex="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/pre-dexed/debug/classes-059576b9e32657a351236c9cc3cbede2fe3983fe.jar" />
+        sha1="288913b440a3c61c30aa171095453a605432277a">
+        <dex dex="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/pre-dexed/debug/classes-0f53d0e27d844039dad64f043bf39828c400125d.jar" />
     </item>
     <item
         jar="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/exploded-aar/com.github.rey5137/material/1.1.1/jars/classes.jar"
@@ -23,39 +23,25 @@
         <dex dex="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/pre-dexed/debug/classes-472ec4f59f601c0afbd0fd562d598fd3a367288c.jar" />
     </item>
     <item
-        jar="/Users/itaispector/StudioProjects/myVaad/app/libs/bolts-android-1.2.0-javadoc.jar"
+        jar="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/exploded-aar/myVaad/library/unspecified/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="0b98cf117d6ed838f776a7f0765c7f04191d7b8e">
-        <dex dex="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/pre-dexed/debug/bolts-android-1.2.0-javadoc-2f481234df16fdfcdde339b8026cf639d9304109.jar" />
+        sha1="49af293aaf6cf990f7218b4247e4d2f502cceb55">
+        <dex dex="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/pre-dexed/debug/classes-36b3863b37fd4f66a2494fa86590e13dff24f100.jar" />
     </item>
     <item
-        jar="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/exploded-aar/com.melnykov/floatingactionbutton/1.3.0/jars/classes.jar"
+        jar="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="8c6ebb7d087d1a30bf84356bd2aecf85309fc024">
-        <dex dex="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/pre-dexed/debug/classes-42484f783152a3f761571729aba860ad132f0526.jar" />
+        sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
+        <dex dex="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/pre-dexed/debug/classes-cce7634bffe4446249c8038037006a973f363f71.jar" />
     </item>
     <item
-        jar="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/exploded-aar/com.afollestad/material-dialogs/0.7.6.0/jars/classes.jar"
+        jar="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/exploded-aar/com.wdullaer/materialdatetimepicker/1.4.0/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="1c83e45c56a824bc54f276b2fa071f1914cceba7">
-        <dex dex="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/pre-dexed/debug/classes-ad4e33d4d682a798d75cc2dfb10431491c1ba929.jar" />
-    </item>
-    <item
-        jar="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/libs/internal_impl-22.2.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
-        <dex dex="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/pre-dexed/debug/internal_impl-22.2.0-01416c37a42768dce5109109e188174c8e3b7fbb.jar" />
-    </item>
-    <item
-        jar="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/exploded-aar/com.android.support/design/22.2.0/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="fc63b820d54c8a27a3a614bdd93920e0076581c2">
-        <dex dex="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/pre-dexed/debug/classes-7bd85e394f4975af9e1a7a14cc0988a9be5c1095.jar" />
+        sha1="fe6914b816cd1270da26db769f62a8a4e13a0730">
+        <dex dex="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/pre-dexed/debug/classes-3a53a53838e7341d72bdb41abd7d5557d19453e0.jar" />
     </item>
     <item
         jar="/Users/itaispector/.gradle/caches/modules-2/files-2.1/com.nineoldandroids/library/2.4.0/e9b63380f3a242dbdbf103a2355ad7e43bad17cb/library-2.4.0.jar"
@@ -63,13 +49,6 @@
         revision="22.0.1"
         sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
         <dex dex="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/pre-dexed/debug/library-2.4.0-6f0b789563395dfea434efb14d7cef6e601f0e8f.jar" />
-    </item>
-    <item
-        jar="/Users/itaispector/StudioProjects/myVaad/app/libs/Parse-1.9.2.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="fe739334780fe321141e62720822c2d456061899">
-        <dex dex="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/pre-dexed/debug/Parse-1.9.2-625a2990f9d248df4b8c164f0423ace8a1464461.jar" />
     </item>
     <item
         jar="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/classes.jar"
@@ -86,11 +65,18 @@
         <dex dex="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/pre-dexed/debug/PayPalAndroidSDK-ad9bcde21d8fdc1a310257b908e3924a634a3fbd.jar" />
     </item>
     <item
-        jar="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.2/jars/classes.jar"
+        jar="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/22.2.0/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="b017100da14f9c158c9f5f2f508333c224b24a7c">
-        <dex dex="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/pre-dexed/debug/classes-722802ef0760e32ac4c4396eee8ab72f9d234214.jar" />
+        sha1="5b37cf49773f7f17aca9830efd3053b0cac56728">
+        <dex dex="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/pre-dexed/debug/classes-059576b9e32657a351236c9cc3cbede2fe3983fe.jar" />
+    </item>
+    <item
+        jar="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/exploded-aar/com.melnykov/floatingactionbutton/1.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="8c6ebb7d087d1a30bf84356bd2aecf85309fc024">
+        <dex dex="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/pre-dexed/debug/classes-42484f783152a3f761571729aba860ad132f0526.jar" />
     </item>
     <item
         jar="/Users/itaispector/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.2.0/6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd/bolts-android-1.2.0.jar"
@@ -100,11 +86,46 @@
         <dex dex="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/pre-dexed/debug/bolts-android-1.2.0-e615f086cd92d34806587cf19176566ab7a40044.jar" />
     </item>
     <item
-        jar="/Users/itaispector/Documents/android-sdk-macosx/extras/android/m2repository/com/android/support/support-annotations/22.2.0/support-annotations-22.2.0.jar"
+        jar="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.3/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
-        <dex dex="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/pre-dexed/debug/support-annotations-22.2.0-7d3213701018bd70c889dd5250ba1ef0a206da95.jar" />
+        sha1="00b0b7233e1ec64acebfac40d4983d32d4712426">
+        <dex dex="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/pre-dexed/debug/classes-c25a073a513b7876c7e0e28fe1dcaebe91c9b106.jar" />
+    </item>
+    <item
+        jar="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/exploded-aar/com.afollestad/material-dialogs/0.7.6.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="1c83e45c56a824bc54f276b2fa071f1914cceba7">
+        <dex dex="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/pre-dexed/debug/classes-ad4e33d4d682a798d75cc2dfb10431491c1ba929.jar" />
+    </item>
+    <item
+        jar="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/libs/internal_impl-22.2.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
+        <dex dex="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/pre-dexed/debug/internal_impl-22.2.0-01416c37a42768dce5109109e188174c8e3b7fbb.jar" />
+    </item>
+    <item
+        jar="/Users/itaispector/StudioProjects/myVaad/app/libs/Parse-1.9.2.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="fe739334780fe321141e62720822c2d456061899">
+        <dex dex="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/pre-dexed/debug/Parse-1.9.2-625a2990f9d248df4b8c164f0423ace8a1464461.jar" />
+    </item>
+    <item
+        jar="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/exploded-aar/com.android.support/design/22.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="fc63b820d54c8a27a3a614bdd93920e0076581c2">
+        <dex dex="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/pre-dexed/debug/classes-7bd85e394f4975af9e1a7a14cc0988a9be5c1095.jar" />
+    </item>
+    <item
+        jar="/Users/itaispector/StudioProjects/myVaad/app/libs/bolts-android-1.2.0-javadoc.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="0b98cf117d6ed838f776a7f0765c7f04191d7b8e">
+        <dex dex="/Users/itaispector/StudioProjects/myVaad/app/build/intermediates/pre-dexed/debug/bolts-android-1.2.0-javadoc-2f481234df16fdfcdde339b8026cf639d9304109.jar" />
     </item>
 
 </items>
