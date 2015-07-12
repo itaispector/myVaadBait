@@ -1,0 +1,68 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_margin"
+    android:layoutDirection="ltr"
+    >
+
+    <TextView
+        android:id="@+id/paymentsDialogTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:paddingRight="24dp"
+        android:paddingTop="24dp"
+        android:text="ועד בית תשלום חודשי"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/paymentsMonth"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/paymentsDialogTitle"
+        android:paddingLeft="16dp"
+        android:paddingRight="24dp"
+        android:paddingTop="10dp"
+        android:text="@string/month"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="16sp" />
+
+
+    <net.simonvt.numberpicker.NumberPicker
+        android:id="@+id/paymentsDialogMonthNumberPicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/paymentsDialogTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="12dp"
+
+        />
+
+    <Button
+        android:id="@+id/paymentsDialogConfirmBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/paymentsDialogMonthNumberPicker"
+        android:height="36dp"
+        android:background="@android:color/transparent"
+        android:enabled="false"
+        android:minWidth="64dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="16dp"
+        android:paddingStart="16dp"
+        android:text="אישור"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

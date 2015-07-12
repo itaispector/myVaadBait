@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/paymentsGeneralLayoutViewFlipper"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="ltr">
+
+    <!--regular payments-->
+    <RelativeLayout
+        android:id="@+id/payments_general_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/PaymentsFamilyListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animationCache="false"
+            android:divider="#00000000"
+            android:dividerHeight="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:scrollingCache="false"
+            android:smoothScrollbar="true" />
+
+        <com.melnykov.fab.FloatingActionButton
+            android:id="@+id/add_payment_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_margin="16dp"
+            android:src="@drawable/add_payment"
+            fab:fab_colorNormal="@color/colorPrimary"
+            fab:fab_colorPressed="@color/colorPrimaryDark"
+            fab:fab_colorRipple="@color/colorPrimaryDark" />
+        <!-- loader -->
+        <com.rey.material.widget.ProgressView
+            android:id="@+id/my_progress_loader"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            app:pv_autostart="true"
+            app:pv_circular="true"
+            app:pv_progressMode="indeterminate"
+            app:pv_progressStyle="@style/Material.Drawable.CircularProgress" />
+
+
+    </RelativeLayout>
+
+    <!-- admin - single payment layout -->
+    <RelativeLayout
+        android:id="@+id/paymentsAdminLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/singlePaymentTopBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark">
+
+            <ImageView
+                android:id="@+id/trashToolBar"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:padding="10dp"
+                android:src="@drawable/trash_btn"
+                />
+
+            <ImageView
+                android:id="@+id/cashToolBar"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_toEndOf="@id/trashToolBar"
+                android:layout_toRightOf="@id/trashToolBar"
+                android:padding="10dp"
+                android:src="@drawable/cash_btn" />
+
+            <ImageView
+                android:id="@+id/notificationToolBar"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_toEndOf="@id/cashToolBar"
+                android:layout_toRightOf="@id/cashToolBar"
+                android:padding="10dp"
+                android:contentDescription="@string/send_notice"
+                android:src="@drawable/notification_btn" />
+
+            <ImageView
+                android:id="@+id/backToolBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:padding="10dp"
+                android:src="@drawable/home_back_arrow" />
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/paymentsDayarimListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/singlePaymentTopBar"
+            android:animationCache="false"
+            android:divider="#00000000"
+            android:dividerHeight="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:scrollingCache="false"
+            android:smoothScrollbar="true">
+
+        </ListView>
+
+    </RelativeLayout>
+
+
+</ViewFlipper>

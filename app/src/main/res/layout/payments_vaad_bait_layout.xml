@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/paymentsVaadBaitViewFlipper"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/paymentsAdminVaadBaitLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/vaadBaitTopBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark">
+
+            <Button
+                android:id="@+id/currentDisplayedYear"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:text="2016"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:background="@color/transparent"/>
+
+            <ImageView
+                android:id="@+id/multiChoice"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:padding="10dp"
+                android:src="@drawable/list_icon100"
+                android:contentDescription="@string/multiple_choice"/>
+
+            <ImageView
+                android:id="@+id/trashToolBar"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_toEndOf="@id/multiChoice"
+                android:layout_toRightOf="@id/multiChoice"
+                android:padding="10dp"
+                android:src="@drawable/trash100"
+                android:contentDescription="@string/delete_all_payments"/>
+
+            <ImageView
+                android:id="@+id/notificationToolBar"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_toEndOf="@id/trashToolBar"
+                android:layout_toRightOf="@id/trashToolBar"
+                android:padding="10dp"
+                android:src="@drawable/notification_icon"
+                android:contentDescription="@string/send_notice"/>
+
+
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/paymentsAdminVaadBaitListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/vaadBaitTopBar" />
+
+
+        <com.melnykov.fab.FloatingActionButton
+            android:id="@+id/add_payment_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_margin="16dp"
+            android:src="@drawable/add_payment"
+            android:visibility="visible"
+            fab:fab_colorNormal="@color/colorPrimary"
+            fab:fab_colorPressed="@color/colorPrimaryDark"
+            fab:fab_colorRipple="@color/colorPrimaryDark" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/paymentsDayarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/goBackBtn3"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/back_btn" />
+
+        <ListView
+            android:id="@+id/paymentsDayarVaadBaitListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/goBackBtn3"
+            android:layout_margin="5dp" />
+
+        <Button
+            android:id="@+id/paymentsDayarVaadBaitPayAllBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/goBackBtn3"
+            android:layout_alignBottom="@+id/goBackBtn3"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/goBackBtn3"
+            android:text="שלם הכל" />
+
+        <TextView
+            android:id="@+id/no_payments_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/no_payments"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+</ViewFlipper>

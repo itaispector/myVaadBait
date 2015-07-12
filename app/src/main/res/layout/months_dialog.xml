@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_margin">
+
+    <TextView
+        android:id="@+id/months_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:paddingRight="24dp"
+        android:paddingTop="24dp"
+        android:text="@string/vaad_bait_title"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/months_family_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/months_title"
+        android:layout_marginTop="10dp"
+        android:paddingRight="24dp"
+        android:text="משפחת ישראלי"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="16sp" />
+
+
+    <RelativeLayout
+        android:id="@+id/months_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/months_family_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp">
+
+        <CheckedTextView
+            android:id="@+id/cb1"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/circle_check_box"
+            android:gravity="center"
+            android:text="1"
+            android:textAlignment="gravity"
+            android:textColor="@color/circle_check_box_color"
+            android:textSize="16sp"
+            />
+
+        <CheckedTextView
+            android:id="@+id/cb2"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginRight="8dp"
+            android:layout_toRightOf="@id/cb1"
+            android:background="@drawable/circle_check_box"
+            android:gravity="center"
+            android:text="2"
+            android:textAlignment="gravity"
+            android:textColor="@color/circle_check_box_color"
+            android:textSize="16sp" />
+
+        <CheckedTextView
+            android:id="@+id/cb3"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginRight="8dp"
+            android:layout_toRightOf="@id/cb2"
+            android:background="@drawable/circle_check_box"
+            android:gravity="center"
+            android:text="3"
+            android:textAlignment="gravity"
+            android:textColor="@color/circle_check_box_color"
+            android:textSize="16sp" />
+
+        <CheckedTextView
+            android:id="@+id/cb4"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_toRightOf="@id/cb3"
+            android:background="@drawable/circle_check_box"
+            android:gravity="center"
+            android:text="4"
+            android:textAlignment="gravity"
+            android:textColor="@color/circle_check_box_color"
+            android:textSize="16sp" />
+
+        <CheckedTextView
+            android:id="@+id/cb5"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_below="@id/cb1"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/circle_check_box"
+            android:gravity="center"
+            android:text="5"
+            android:textAlignment="gravity"
+            android:textColor="@color/circle_check_box_color"
+            android:textSize="16sp" />
+
+        <CheckedTextView
+            android:id="@+id/cb6"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_below="@id/cb2"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@id/cb5"
+            android:background="@drawable/circle_check_box"
+            android:gravity="center"
+            android:text="6"
+            android:textAlignment="gravity"
+            android:textColor="@color/circle_check_box_color"
+            android:textSize="16sp" />
+
+        <CheckedTextView
+            android:id="@+id/cb7"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_below="@id/cb3"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@id/cb6"
+            android:background="@drawable/circle_check_box"
+            android:gravity="center"
+            android:text="7"
+            android:textAlignment="gravity"
+            android:textColor="@color/circle_check_box_color"
+            android:textSize="16sp" />
+
+        <CheckedTextView
+            android:id="@+id/cb8"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_below="@id/cb4"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@id/cb7"
+            android:background="@drawable/circle_check_box"
+            android:gravity="center"
+            android:text="8"
+            android:textAlignment="gravity"
+            android:textColor="@color/circle_check_box_color"
+            android:textSize="16sp" />
+
+        <CheckedTextView
+            android:id="@+id/cb9"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_below="@id/cb5"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/circle_check_box"
+            android:gravity="center"
+            android:text="9"
+            android:textAlignment="gravity"
+            android:textColor="@color/circle_check_box_color"
+            android:textSize="16sp" />
+
+        <CheckedTextView
+            android:id="@+id/cb10"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_below="@id/cb6"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@id/cb9"
+            android:background="@drawable/circle_check_box"
+            android:gravity="center"
+            android:text="10"
+            android:textAlignment="gravity"
+            android:textColor="@color/circle_check_box_color"
+            android:textSize="16sp" />
+
+        <CheckedTextView
+            android:id="@+id/cb11"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_below="@id/cb7"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@id/cb10"
+            android:background="@drawable/circle_check_box"
+            android:gravity="center"
+            android:text="11"
+            android:textAlignment="gravity"
+            android:textColor="@color/circle_check_box_color"
+            android:textSize="16sp" />
+
+        <CheckedTextView
+            android:id="@+id/cb12"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_below="@id/cb8"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@id/cb11"
+            android:background="@drawable/circle_check_box"
+            android:gravity="center"
+            android:text="12"
+            android:textAlignment="gravity"
+            android:textColor="@color/circle_check_box_color"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/monthsKeepChangesBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/months_cb"
+        android:height="36dp"
+        android:background="@android:color/transparent"
+        android:minWidth="64dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="16dp"
+        android:paddingStart="16dp"
+        android:text="@string/save"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/monthsMarkAllBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/months_cb"
+        android:layout_toEndOf="@+id/monthsKeepChangesBtn"
+        android:layout_toRightOf="@+id/monthsKeepChangesBtn"
+        android:height="36dp"
+        android:background="@android:color/transparent"
+        android:minWidth="64dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="8dp"
+        android:text="@string/mark_all"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/monthsCancelBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/months_cb"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:height="36dp"
+        android:background="@android:color/transparent"
+        android:minWidth="64dp"
+        android:paddingBottom="8dp"
+        android:paddingRight="16dp"
+        android:paddingEnd="16dp"
+        android:text="@string/cancel"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+</RelativeLayout>
