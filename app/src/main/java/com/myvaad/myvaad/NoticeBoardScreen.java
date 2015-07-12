@@ -64,8 +64,7 @@ public class NoticeBoardScreen extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //Initialize with keys
-        Parse.initialize(getActivity());
+
         db = ParseDB.getInstance(getActivity());
         db.saveUserInstallationInBackground();
         View rootView = inflater.inflate(R.layout.notice_board_screen, container, false);
