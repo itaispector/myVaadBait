@@ -12,6 +12,9 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class UserExpensesAdapter extends ParseQueryAdapter<ParseObject> {
     Context context;
     ParseDB db;
@@ -26,9 +29,9 @@ public class UserExpensesAdapter extends ParseQueryAdapter<ParseObject> {
                 ParseQuery query = new ParseQuery("payments");
                 query.whereEqualTo("buildingCode", "239250");
                 query.whereEqualTo("paymentType", "vaad");
-                query.whereEqualTo("paymentApproved", true);
                 query.whereEqualTo("paidBy", currentUserObjectId);
                 query.orderByDescending("createdAt");
+
                 return query;
             }
         });
@@ -45,15 +48,21 @@ public class UserExpensesAdapter extends ParseQueryAdapter<ParseObject> {
 
         // Do additional configuration before returning the View.
         TextView descriptionView = (TextView) v.findViewById(R.id.expenseDescription);
-        descriptionView.setText(object.getString("description"));
+        descriptionView.setText(object.getString("description")+ " " +object.getString("period") + "-" + object.getString("year") );
         TextView amountView = (TextView) v.findViewById(R.id.expenseAmount);
         String thisExpense = object.getString("amount");
         amountView.setText(context.getString(R.string.shekel) + thisExpense);
 
 
         TextView createTimeView = (TextView) v.findViewById(R.id.expenseCreatTime);
-        String time = object.getCreatedAt().toLocaleString();
-        createTimeView.setText(time);
+
+        Date dateObj = object.getCreatedAt();
+        //Creating instance of SimpleDateFormat
+        SimpleDateFormat postFormatter = new SimpleDateFormat("HH:mm  dd.MM.yy");
+        //Changing Date and time format up to SimpleDateFormat
+        String newDateStr = postFormatter.format(dateObj);
+
+        createTimeView.setText(newDateStr);
 
 
         return v;
