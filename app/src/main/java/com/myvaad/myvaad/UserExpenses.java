@@ -35,7 +35,11 @@ public class UserExpenses extends Fragment {
 
         // Initialize the subclass of ParseQueryAdapter
         customParseAdapter = new UserExpensesAdapter(getActivity(), db.getCurrentUserObjectId());
-        customParseAdapter.setObjectsPerPage(4);
+
+        //disable Pagination
+        customParseAdapter.setPaginationEnabled(false);
+
+       //customParseAdapter.setObjectsPerPage(4);
 
 
         customParseAdapter.addOnQueryLoadListener(new ParseQueryAdapter.OnQueryLoadListener<ParseObject>() {
@@ -61,43 +65,12 @@ public class UserExpenses extends Fragment {
                     Log.d("***Exception***", e.getLocalizedMessage());
                 }
 
-
             }
         });
 
         listView = (ListView) rootView.findViewById(R.id.userExpensesListview);
         listView.setAdapter(customParseAdapter);
-        //customParseAdapter.loadObjects();
-/*
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("payments");
-        //Query Constraints-->all users from specific building
-        query.whereEqualTo("buildingCode", db.getCurrentUserBuildingCode());
-        query.whereEqualTo("paymentType", "vaad");
-        query.whereEqualTo("paidBy", db.getCurrentUserObjectId());
-        query.whereEqualTo("paymentApproved", true);
-        query.orderByDescending("createdAt");
 
-        //finding all payments for current user
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> payments, ParseException e) {
-                if (e == null) {
-                    for (ParseObject paymentRow : payments) {
-
-                        //get specific data from each row
-                        String amount = paymentRow.getString("amount");
-                        totalExpensesAmount += Integer.parseInt(amount);
-
-                    }
-
-                    userTotalExpensesTextView.setText(getActivity().getString(R.string.total) + " " + getActivity().getString(R.string.shekel) + totalExpensesAmount);
-
-                } else {//ParseException
-                    Log.e("***Parse Exception***", e.getLocalizedMessage());
-                }
-            }
-        });
-*/
         return rootView;
     }
 
