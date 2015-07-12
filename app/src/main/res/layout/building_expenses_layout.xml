@@ -1,18 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e5e5e5" >
-  <!--  android:background="#FFF0E0" -->
+    android:background="#e5e5e5">
+
+    <com.rey.material.widget.ProgressView
+        android:id="@+id/progress_loader"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:pv_autostart="true"
+        app:pv_circular="true"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        app:pv_progressStyle="@style/Material.Drawable.CircularProgress"
+        app:pv_progressMode="indeterminate"/>
 
 
- 
     <ListView
         android:id="@+id/buildingExpensesListview"
         android:layout_width="match_parent"
-        android:layout_height="400dp" >
-        
+        android:layout_height="400dp">
+
     </ListView>
+
 
     <TextView
         android:id="@+id/buildingTotalExpensesAmount"
@@ -24,5 +37,18 @@
         android:text="textView"
         android:textDirection="rtl"
         android:textSize="26sp" />
- 
+
+    <com.melnykov.fab.FloatingActionButton
+        android:id="@+id/add_filter_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="16dp"
+        android:src="@drawable/add_filter"
+        fab:fab_colorNormal="@color/colorPrimary"
+        fab:fab_colorPressed="@color/colorPrimaryDark"
+        fab:fab_colorRipple="@color/colorPrimaryDark" />
+
 </RelativeLayout>
