@@ -1,10 +1,13 @@
 package com.myvaad.myvaad;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -14,11 +17,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
@@ -65,9 +72,8 @@ public class GeneralPayments extends Fragment {
     private String paymentObjectId, vaadPayPalAccount;
     private ParseObject payment;
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //parse init
         Parse.initialize(getActivity());
         db = ParseDB.getInstance(getActivity());
@@ -121,12 +127,43 @@ public class GeneralPayments extends Fragment {
             @Override
             public void onClick(View view) {
                 // if current user is admin, open add payment dialog
-                if (!db.isCurrentUserAdmin()){
+                if (db.isCurrentUserAdmin()) {
                     loader.setVisibility(View.VISIBLE);
                     addPaymentDialog();
-                }else{
-                    // current user is not admin, open pay all dialog
+                } else {
+                    // inflate list of all existing payments
+                    LinearLayout myView = new LinearLayout(getActivity());
+                    myView.setOrientation(LinearLayout.VERTICAL);
+                    for (int i=0; i < paymentsAdapter.getCount(); i++){
+                        View inflation = View.inflate(getActivity(), R.layout.pay_all_item, null);
+                        TextView pName = (TextView)inflation.findViewById(R.id.list_item_paymentName);
+                        TextView pAmount = (TextView)inflation.findViewById(R.id.list_item_paymentAmount);
+                        pName.setText(((paymentsAdapter.getItem(i)).getString("description")));
+                        pAmount.setText(getResources().getString(R.string.shekel) + " "+(paymentsAdapter.getItem(i)).getString("amount"));
+                        myView.addView(inflation);
+                    }
 
+                    new MaterialDialog.Builder(getActivity())
+                            .title(R.string.pay_all)
+                            .titleGravity(GravityEnum.END)
+                            .customView(myView, true)
+                            .positiveText(R.string.yes)
+                            .positiveColorRes(R.color.colorPrimary)
+                            .buttonsGravity(GravityEnum.END)
+                            .negativeText(R.string.no)
+                            .negativeColorRes(R.color.colorPrimary)
+                            .callback(new MaterialDialog.ButtonCallback() {
+                                @Override
+                                public void onPositive(MaterialDialog dialog) {
+                                    // pay all method
+                                }
+
+                                @Override
+                                public void onNegative(MaterialDialog dialog) {
+                                    super.onNegative(dialog);
+                                }
+                            })
+                            .show();
                 }
 
             }
@@ -232,7 +269,7 @@ public class GeneralPayments extends Fragment {
 
     private void listViewQueryInBackground() {
         String buildingCode = db.getCurrentUserBuildingCode();
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("payments");
+        final ParseQuery<ParseObject> query = ParseQuery.getQuery("payments");
         query.whereContains("buildingCode", buildingCode);
         query.whereContains("paymentType", "regular");
         query.whereEqualTo("paymentApproved", false);
@@ -248,6 +285,12 @@ public class GeneralPayments extends Fragment {
                 if (e == null) {
                     paymentsAdapter = new PaymentsAdapter(getActivity(), payments);
                     generalPaymentsListView.setAdapter(paymentsAdapter);
+                    if (payments.size() == 0) {
+                        // show no payments
+
+                        // if current its current user, hide pay all button
+                        addPaymentBtn.setVisibility(View.GONE);
+                    }
                     loader.setVisibility(View.GONE);
                 } else {
                     Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -362,7 +405,7 @@ public class GeneralPayments extends Fragment {
         myDialog(R.layout.single_payment_dialog);
         paymentTitle = (TextView) dialogLayout.findViewById(R.id.paymentTitle);
         paymentPrice = (TextView) dialogLayout.findViewById(R.id.paymentPrice);
-        payBtn=(Button)dialogLayout.findViewById(R.id.payBtn);
+        payBtn = (Button) dialogLayout.findViewById(R.id.payBtn);
         String paymentName = payment.getString("description");
         String paymentPriceString = payment.getString("amount");
         paymentTitle.setText(paymentName);
@@ -375,29 +418,29 @@ public class GeneralPayments extends Fragment {
         });
     }
 
-    public void isExistPaypalAccount(){
+    public void isExistPaypalAccount() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("buildings");
         query.whereEqualTo("buildingCode", db.getCurrentUserBuildingCode());
         query.getFirstInBackground(new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject parseObject, ParseException e) {
-                if (e==null){
+                if (e == null) {
                     // paypal account exist, can open pay dialog
-                    if (parseObject.getString("paypal")!=null){
+                    if (parseObject.getString("paypal") != null) {
                         vaadPayPalAccount = parseObject.getString("paypal");
                         paymentDialog();
-                    }else{
+                    } else {
                         // paypal account doesn't exist, show error dialog
                         loader.setVisibility(View.GONE);
                         new MaterialDialog.Builder(getActivity())
                                 .content(R.string.no_paypal_message)
                                 .contentGravity(GravityEnum.END)
                                 .buttonsGravity(GravityEnum.END)
-                                .neutralText(R.string.close)
-                                .neutralColorRes(R.color.colorPrimary)
+                                .positiveText(R.string.close)
+                                .positiveColorRes(R.color.colorPrimary)
                                 .show();
                     }
-                }else{
+                } else {
                     Log.v("******PARSE ERROR******", e.getMessage());
                 }
 
