@@ -14,16 +14,44 @@ import com.parse.ParseQueryAdapter;
 import com.paypal.android.sdk.Z;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class BuildingExpensesAdapter extends ParseQueryAdapter<ParseObject> {
     Context context;
-    public BuildingExpensesAdapter(Context context) {
+
+
+    public BuildingExpensesAdapter(Context context , final int startYear, final int startMonthOfYear, final int startDayOfMonth ,final int endYear, final int endMonthOfYear, final int endDayOfMonth) {
         // Use the QueryFactory to construct a PQA
+
         super(context, new ParseQueryAdapter.QueryFactory<ParseObject>() {
             public ParseQuery create() {
                 //Define query
-                //Date filter = 2015'-'06'-'27'T'21':'05':'08.992'Z;
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(startYear,startMonthOfYear,startDayOfMonth);
+                Date startDate = calendar.getTime();
+                calendar.set(endYear,endMonthOfYear,endDayOfMonth);
+                Date endDate = calendar.getTime();
+
+                ParseQuery query = new ParseQuery("payments");
+                query.whereEqualTo("buildingCode", "239250");
+                query.whereEqualTo("paymentType", "regular");
+                query.whereGreaterThanOrEqualTo("createdAt", startDate);
+                query.whereLessThanOrEqualTo("createdAt", endDate);
+                query.orderByDescending("createdAt");
+                return query;
+            }
+        });
+        this.context=context;
+    }
+
+    public BuildingExpensesAdapter(Context context) {
+        // Use the QueryFactory to construct a PQA
+
+        super(context, new ParseQueryAdapter.QueryFactory<ParseObject>() {
+            public ParseQuery create() {
+                //Define queryS
                 ParseQuery query = new ParseQuery("payments");
                 query.whereEqualTo("buildingCode", "239250");
                 query.whereEqualTo("paymentType", "regular");
