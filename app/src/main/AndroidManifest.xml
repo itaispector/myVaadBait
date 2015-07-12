@@ -47,7 +47,8 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
-            android:screenOrientation="locked"/>
+            android:screenOrientation="locked"
+            android:theme="@style/AppTheme.Base"/>
         <activity
             android:name=".MainLoginScreen"
             android:label="@string/app_name"
@@ -67,6 +68,12 @@
             android:screenOrientation="locked"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <activity
+            android:name=".PayPalActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
+        </activity>
 
         <!-- Parse PushService-->
         <service android:name="com.parse.PushService" />
