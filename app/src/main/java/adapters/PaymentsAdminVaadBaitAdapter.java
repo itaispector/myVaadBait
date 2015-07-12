@@ -137,7 +137,7 @@ public class PaymentsAdminVaadBaitAdapter extends BaseAdapter {
 				
 				@Override
 				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-					pScreen.paidAllVaadBait(uObjectId);				
+					//pScreen.paidAllVaadBait(uObjectId);
 				}
 			});
 			

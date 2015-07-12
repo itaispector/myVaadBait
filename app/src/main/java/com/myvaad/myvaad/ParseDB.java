@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.FunctionCallback;
 import com.parse.GetCallback;
@@ -1707,6 +1708,57 @@ protected List getCurrentUserFailuresBoard() {
             }
         });
 
+    }
+
+    /*********************Itai new 9/7/15
+     *
+     * @param objectId
+     */
+    //move payment to expenses
+    protected void movePaymentToExpenses(String objectId) {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("payments");
+        query.getInBackground(objectId, new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject payment, ParseException e) {
+                payment.put("paymentApproved", true);
+                payment.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            mToast("save succesfull");
+                        } else {
+                            Log.v("******P Error********", e.getMessage());
+                        }
+                    }
+                });
+            }
+        });
+        ;
+    }
+
+    protected void deletePayment(String objectId){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("payments");
+        query.getInBackground(objectId, new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject payment, ParseException e) {
+                if (e==null){
+                    payment.deleteInBackground(new DeleteCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e!=null){
+                                mToast(""+e);
+                            }
+                        }
+                    });
+                }else {
+                    mToast(""+e);
+                }
+            }
+        });
+    }
+
+    private void mToast(String s){
+        Toast.makeText(context, s, Toast.LENGTH_LONG).show();
     }
 
 }

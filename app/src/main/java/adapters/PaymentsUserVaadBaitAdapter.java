@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.myvaad.myvaad.PaymentsScreen;
 import com.myvaad.myvaad.R;
+import com.parse.ParseObject;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -18,7 +19,7 @@ import android.widget.TextView;
 public class PaymentsUserVaadBaitAdapter extends BaseAdapter {
 	private Context context;
 	ViewHolder holder;
-	List payments;
+	List<ParseObject> payments;
 	String uObjectId;
 	PaymentsScreen pScreen;
 
@@ -41,10 +42,8 @@ public class PaymentsUserVaadBaitAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public List getItem(int idx) {
-		List myData=(List)this.payments.get(idx);
-		//returns List - 0: paymentName(String), 1: amount(String), 2: objectId(String)
-		return myData;
+	public ParseObject getItem(int idx) {
+		return payments.get(idx);
 	}
 
 	@Override
@@ -75,11 +74,11 @@ public class PaymentsUserVaadBaitAdapter extends BaseAdapter {
             holder = (ViewHolder)convertView.getTag();
 		
 		//setting the data of the row
-		List myData = getItem(idx);
-		final String payment = ""+myData.get(0);
-		final String amount = ""+myData.get(1);
-		final String objectId = ""+myData.get(2);
-		holder.payment.setText(payment);
+		ParseObject payment = getItem(idx);
+		final String paymentName = payment.getString("description");
+		final String amount = payment.getString("amount");
+		final String objectId = payment.getObjectId();
+		holder.payment.setText(paymentName);
 		holder.amount.setText(amount);
 		
 		//set listener to pay btn
@@ -87,7 +86,7 @@ public class PaymentsUserVaadBaitAdapter extends BaseAdapter {
 			
 			@Override
 			public void onClick(View v) {				
-				pScreen.pay(amount, payment, objectId, uObjectId);
+				//pScreen.pay(amount, payment, objectId, uObjectId);
 			}
 		});
 		
