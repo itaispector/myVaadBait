@@ -1,21 +1,28 @@
 package com.myvaad.myvaad;
 
-import java.math.BigDecimal;
-import java.util.List;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Toast;
 
+import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.Toast;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+import dialogs.RingProgressDialog;
 
 public class PayPalActivity extends Activity {
 	// Can be NO_NETWORK for OFFLINE, SANDBOX for TESTING and LIVE for PRODUCTION
@@ -29,13 +36,14 @@ public class PayPalActivity extends Activity {
 	private List objectIds;
 	ParseDB db;
 	PaymentsScreen pScreen;
+	Context context;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);		
 		String appId="QdwF666zm76ORQcn4KF6JNwDfsb6cj97QunbpT1s";
         String clientId="OiJI3KdONEN9jML6Mi6r6iQTpR8mIOBv3YgsUhdv";
         //Initialize with keys
-        Context context = getApplicationContext();
+        context = getApplicationContext();
         Parse.initialize(context, appId, clientId);
     	db=ParseDB.getInstance(context);
 		Intent i = this.getIntent();
@@ -57,7 +65,6 @@ public class PayPalActivity extends Activity {
 		  intent.putExtra(PaymentActivity.EXTRA_LANGUAGE_OR_LOCALE, "he");
 		  intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
 		  intent.putExtra(PaymentActivity.EXTRA_PAYER_ID, "myPayer");
-		  	   
 		  startActivityForResult(intent, 0);
 	
 	}
@@ -68,13 +75,51 @@ public class PayPalActivity extends Activity {
 		    if (confirm != null) {
 		      //String amountS = data.getParcelableExtra(PaymentActivity.EXTRA_PAYMENT);
 		      verifyPayment(confirm);
-		      if (objectIds!=null){
-		    	  for(int i=0;i<objectIds.size();i++){
-		    		  objectId = (String)objectIds.get(i);
-		    		  db.addPaidUserToPaymentList(objectId, uObjectId);
-		    	  }
+		      // multi payment
+				if (objectIds!=null){
+					final List<ParseObject> payments = new ArrayList<ParseObject>();
+					ParseQuery<ParseObject> query = ParseQuery.getQuery("payments");
+					query.whereContainedIn("objectId", objectIds);
+					query.findInBackground(new FindCallback<ParseObject>() {
+						@Override
+						public void done(List<ParseObject> list, ParseException e) {
+							for (ParseObject payment : list){
+								payment.addUnique("paidBy", uObjectId);
+								payments.add(payment);
+							}
+							ParseObject.saveAllInBackground(payments, new SaveCallback() {
+								@Override
+								public void done(ParseException e) {
+									if (e==null){
+										Toast.makeText(getApplicationContext(), "התשלום בוצע בהצלחה", Toast.LENGTH_LONG).show();
+										finish();
+										goBacktoScreen();
+									}else{
+										Toast.makeText(getApplicationContext(), "התשלום נכשל", Toast.LENGTH_LONG).show();
+										finish();
+										goBacktoScreen();
+									}
+								}
+							});
+						}
+					});
 		      }else{
-		    	  db.addPaidUserToPaymentList(objectId, uObjectId);  
+		    	  // single payment
+				  ParseQuery<ParseObject> query = ParseQuery.getQuery("payments");
+				  query.getInBackground(objectId, new GetCallback<ParseObject>() {
+					  @Override
+					  public void done(ParseObject parseObject, ParseException e) {
+						  parseObject.addUnique("paidBy", uObjectId);
+						  parseObject.saveInBackground(new SaveCallback() {
+							  @Override
+							  public void done(ParseException e) {
+								  Toast.makeText(getApplicationContext(), "התשלום בוצע בהצלחה", Toast.LENGTH_LONG).show();
+								  finish();
+								  goBacktoScreen();
+							  }
+						  });
+					  }
+				  });
 		      }		      
 		      Toast.makeText(getApplicationContext(), "התשלום בוצע בהצלחה", Toast.LENGTH_LONG).show();      
 		      finish();
@@ -82,14 +127,14 @@ public class PayPalActivity extends Activity {
 		    }
 		  } else if (resultCode == Activity.RESULT_CANCELED) {
 		    // Show the user that this got canceled
-			  Toast.makeText(getApplicationContext(), "התשלום נכשל 1", Toast.LENGTH_LONG).show();
+			  Toast.makeText(getApplicationContext(), "התשלום נכשל", Toast.LENGTH_LONG).show();
 			  finish();
 			  goBacktoScreen();
 			  
 
 		  } else if (resultCode == PaymentActivity.RESULT_PAYMENT_INVALID) {
 		    // Check the docs ;)
-			  Toast.makeText(getApplicationContext(), "התשלום נכשל 2", Toast.LENGTH_LONG).show();
+			  Toast.makeText(getApplicationContext(), "התשלום נכשל", Toast.LENGTH_LONG).show();
 			  finish();
 			  goBacktoScreen();  
 		  }
