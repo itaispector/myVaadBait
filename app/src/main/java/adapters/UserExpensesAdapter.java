@@ -13,6 +13,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class UserExpensesAdapter extends ParseQueryAdapter<ParseObject> {
@@ -30,6 +31,31 @@ public class UserExpensesAdapter extends ParseQueryAdapter<ParseObject> {
                 query.whereEqualTo("buildingCode", "239250");
                 query.whereEqualTo("paymentType", "vaad");
                 query.whereEqualTo("paidBy", currentUserObjectId);
+                query.orderByDescending("createdAt");
+
+                return query;
+            }
+        });
+        this.context = context;
+    }
+
+    public UserExpensesAdapter(Context context, final String currentUserObjectId, final int startYear, final int startMonthOfYear, final int startDayOfMonth ,final int endYear, final int endMonthOfYear, final int endDayOfMonth) {
+
+        // Use the QueryFactory to construct a PQA
+        super(context, new QueryFactory<ParseObject>() {
+            public ParseQuery create() {
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(startYear,startMonthOfYear,startDayOfMonth);
+                Date startDate = calendar.getTime();
+                calendar.set(endYear,endMonthOfYear,endDayOfMonth);
+                Date endDate = calendar.getTime();
+                //Define query
+                ParseQuery query = new ParseQuery("payments");
+                query.whereEqualTo("buildingCode", "239250");
+                query.whereEqualTo("paymentType", "vaad");
+                query.whereEqualTo("paidBy", currentUserObjectId);
+                query.whereGreaterThanOrEqualTo("createdAt", startDate);
+                query.whereLessThanOrEqualTo("createdAt", endDate);
                 query.orderByDescending("createdAt");
 
                 return query;
