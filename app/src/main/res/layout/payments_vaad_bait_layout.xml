@@ -1,129 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/tools"
-    android:id="@+id/paymentsVaadBaitViewFlipper"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <!-- custom tool bar -->
     <RelativeLayout
-        android:id="@+id/paymentsAdminVaadBaitLayout"
+        android:id="@+id/vaadBaitTopBar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark">
+
+        <Button
+            android:id="@+id/currentDisplayedYear"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/default_button"
+            android:text=""
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/multiChoice"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:contentDescription="@string/multiple_choice"
+            android:padding="10dp"
+            android:src="@drawable/list_icon100" />
+
+        <ImageView
+            android:id="@+id/trashToolBar"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_toEndOf="@id/multiChoice"
+            android:layout_toRightOf="@id/multiChoice"
+            android:contentDescription="@string/delete_all_payments"
+            android:padding="10dp"
+            android:src="@drawable/trash100" />
+
+        <ImageView
+            android:id="@+id/notificationToolBar"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_toEndOf="@id/trashToolBar"
+            android:layout_toRightOf="@id/trashToolBar"
+            android:contentDescription="@string/send_notice"
+            android:padding="10dp"
+            android:src="@drawable/notification_icon" />
+
+    </RelativeLayout>
+
+    <ViewFlipper
+        android:id="@+id/paymentsVaadBaitViewFlipper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/vaadBaitTopBar">
 
         <RelativeLayout
-            android:id="@+id/vaadBaitTopBar"
+            android:id="@+id/paymentsAdminVaadBaitLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark">
+            android:layout_height="match_parent">
 
-            <Button
-                android:id="@+id/currentDisplayedYear"
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/default_button"
-                android:text=""
-                android:textColor="@android:color/white"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+            <ListView
+                android:id="@+id/paymentsAdminVaadBaitListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="#00000000"
+                android:dividerHeight="4dp"
+                android:padding="6dp" />
 
-            <ImageView
-                android:id="@+id/multiChoice"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:contentDescription="@string/multiple_choice"
-                android:padding="10dp"
-                android:src="@drawable/list_icon100" />
-
-            <ImageView
-                android:id="@+id/trashToolBar"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_toEndOf="@id/multiChoice"
-                android:layout_toRightOf="@id/multiChoice"
-                android:contentDescription="@string/delete_all_payments"
-                android:padding="10dp"
-                android:src="@drawable/trash100" />
-
-            <ImageView
-                android:id="@+id/notificationToolBar"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_toEndOf="@id/trashToolBar"
-                android:layout_toRightOf="@id/trashToolBar"
-                android:contentDescription="@string/send_notice"
-                android:padding="10dp"
-                android:src="@drawable/notification_icon" />
 
         </RelativeLayout>
 
-        <ListView
-            android:id="@+id/paymentsAdminVaadBaitListView"
+        <RelativeLayout
+            android:id="@+id/paymentsDayarLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/vaadBaitTopBar"
-            android:divider="#00000000"
-            android:dividerHeight="4dp"
-            android:padding="6dp" />
+            android:layout_height="match_parent">
 
+            <ListView
+                android:id="@+id/paymentsDayarVaadBaitListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="#00000000"
+                android:dividerHeight="4dp"
+                android:padding="6dp" />
 
-        <com.melnykov.fab.FloatingActionButton
-            android:id="@+id/add_payment_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_margin="16dp"
-            android:src="@drawable/add_payment"
-            android:visibility="visible"
-            fab:fab_colorNormal="@color/colorPrimary"
-            fab:fab_colorPressed="@color/colorPrimaryDark"
-            fab:fab_colorRipple="@color/colorPrimaryDark" />
-        <!-- loader -->
-        <com.rey.material.widget.ProgressView
-            android:id="@+id/progress_loader"
-            app:pv_autostart="true"
-            app:pv_circular="true"
-            app:pv_progressMode="indeterminate"
-            app:pv_progressStyle="@style/Material.Drawable.CircularProgress"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:visibility="gone" />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/no_payments_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="@string/no_payments"
+                android:visibility="gone" />
 
-    <RelativeLayout
-        android:id="@+id/paymentsDayarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        </RelativeLayout>
 
-        <ListView
-            android:id="@+id/paymentsDayarVaadBaitListView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/goBackBtn3"
-            android:divider="#00000000"
-            android:dividerHeight="10dp"
-            android:paddingBottom="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp" />
-
-        <TextView
-            android:id="@+id/no_payments_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="@string/no_payments"
-            android:visibility="gone" />
-
-    </RelativeLayout>
-
-</ViewFlipper>
+    </ViewFlipper>
+    <com.melnykov.fab.FloatingActionButton
+        android:id="@+id/add_payment_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="16dp"
+        android:src="@drawable/add_payment"
+        android:visibility="visible"
+        fab:fab_colorNormal="@color/colorPrimary"
+        fab:fab_colorPressed="@color/colorPrimaryDark"
+        fab:fab_colorRipple="@color/colorPrimaryDark" />
+    <!-- loader -->
+    <com.rey.material.widget.ProgressView
+        android:id="@+id/progress_loader"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        app:pv_autostart="true"
+        app:pv_circular="true"
+        app:pv_progressMode="indeterminate"
+        app:pv_progressStyle="@style/Material.Drawable.CircularProgress" />
+</RelativeLayout>
