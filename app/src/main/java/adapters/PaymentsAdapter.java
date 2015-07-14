@@ -1,5 +1,8 @@
 package adapters;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import com.myvaad.myvaad.R;
@@ -24,17 +27,16 @@ public class PaymentsAdapter extends BaseAdapter {
 		
 	//data
 	List<ParseObject> payments;
-	
-	public PaymentsAdapter(Context context, List<ParseObject> payments) {
+	int houses;
+	boolean isAdmin;
+
+	public PaymentsAdapter(Context context, List<ParseObject> payments, int houses, boolean isAdmin) {
 		this.context = context;	
 		this.payments = payments;
+		this.houses = houses;
+		this.isAdmin = isAdmin;
 	}
-	
-	public void reloadData(List payments) {
-		this.payments = payments;
-		notifyDataSetChanged();
-	}
-	
+
 	public int getCount() {
 		return payments.size();
 	}
@@ -66,7 +68,7 @@ public class PaymentsAdapter extends BaseAdapter {
             holder = new ViewHolder();     
             holder.payment=(TextView)convertView.findViewById(R.id.paymentsRowFamilyName);
             holder.amount=(TextView)convertView.findViewById(R.id.paymentsRowAmount);
-            //holder.date=(TextView)convertView.findViewById(R.id.paymentsRowDate);
+            holder.date=(TextView)convertView.findViewById(R.id.paymentsRowDate);
             
             convertView.setTag(holder);
        
@@ -76,8 +78,17 @@ public class PaymentsAdapter extends BaseAdapter {
 		//setting the data of the row
 		ParseObject payment = getItem(idx);
 		holder.payment.setText(payment.getString("description"));
-		holder.amount.setText("\u20AA "+payment.getString("amount"));
-		//holder.date.setText(""+payment.getCreatedAt().toLocaleString());
+		if (isAdmin){
+			holder.amount.setText("\u20AA "+payment.getString("amount"));
+		}else{
+			double mAmount = Math.round(Double.parseDouble(payment.getString("amount")) / houses * 100.0)/100.0;
+			NumberFormat nf = new DecimalFormat("#");
+			holder.amount.setText("\u20AA "+ nf.format(mAmount));
+		}
+		SimpleDateFormat postFormatter = new SimpleDateFormat("dd.MM.yy");
+		//Changing Date and time format up to SimpleDateFormat
+		String newDateStr = postFormatter.format(payment.getCreatedAt());
+		holder.date.setText(newDateStr);
 
 		return convertView;
 	}
