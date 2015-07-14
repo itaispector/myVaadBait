@@ -21,20 +21,13 @@ public class PaymentsUserVaadBaitAdapter extends BaseAdapter {
 	ViewHolder holder;
 	List<ParseObject> payments;
 	String uObjectId;
-	PaymentsScreen pScreen;
 
-	public PaymentsUserVaadBaitAdapter(Context context, List payments, String uObjectId, PaymentsScreen pScreen){
+	public PaymentsUserVaadBaitAdapter(Context context, List<ParseObject> payments){
 		this.context=context;
 		this.payments=payments;
 		this.uObjectId=uObjectId;
-		this.pScreen = pScreen;
 	}
-	
-	public void reloadData(List payments){
-		this.payments = payments;
-		notifyDataSetChanged();
-	}
-	
+
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
@@ -53,8 +46,7 @@ public class PaymentsUserVaadBaitAdapter extends BaseAdapter {
 	}
 
 	public class ViewHolder{
-		TextView payment,amount;	
-		Button pay;
+		TextView payment,amount, year;
 	}
 	
 	@Override
@@ -66,30 +58,21 @@ public class PaymentsUserVaadBaitAdapter extends BaseAdapter {
 			convertView = myInflater.inflate(R.layout.payments_user_list_view_row, null);           
             holder = new ViewHolder();     
             holder.payment=(TextView)convertView.findViewById(R.id.paymentVaadBaitName);
-            holder.amount=(TextView)convertView.findViewById(R.id.paymentVaadBaitAmount);           
-            holder.pay=(Button)convertView.findViewById(R.id.paypalVaadBaitPay);
-            convertView.setTag(holder);
+            holder.amount=(TextView)convertView.findViewById(R.id.paymentVaadBaitAmount);
+			holder.year=(TextView)convertView.findViewById(R.id.paymentVaadBaitYear);
+			convertView.setTag(holder);
        
 		} else
             holder = (ViewHolder)convertView.getTag();
 		
 		//setting the data of the row
 		ParseObject payment = getItem(idx);
-		final String paymentName = payment.getString("description");
-		final String amount = payment.getString("amount");
-		final String objectId = payment.getObjectId();
-		holder.payment.setText(paymentName);
-		holder.amount.setText(amount);
-		
-		//set listener to pay btn
-		holder.pay.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {				
-				//pScreen.pay(amount, payment, objectId, uObjectId);
-			}
-		});
-		
+		String name = payment.getString("description");
+		String period = payment.getString("period");
+		String amount = payment.getString("amount");
+		holder.payment.setText(name + " - "+context.getResources().getString(R.string._month)+" "+period);
+		holder.amount.setText(context.getResources().getString(R.string.shekel)+" "+amount);
+		holder.year.setText(payment.getString("year"));
 
 		return convertView;
 	}
