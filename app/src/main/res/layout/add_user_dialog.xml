@@ -25,7 +25,9 @@
         android:paddingBottom="5dp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        android:paddingTop="5dp" />
+        android:paddingTop="5dp"
+        android:marqueeRepeatLimit="marquee_forever"
+        />
 
     <EditText
         android:id="@+id/usersAddDialogApartNum"

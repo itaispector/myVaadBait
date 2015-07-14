@@ -19,11 +19,8 @@
             android:layout_height="match_parent"
             android:animationCache="false"
             android:divider="#00000000"
-            android:dividerHeight="10dp"
-            android:paddingBottom="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
+            android:dividerHeight="4dp"
+            android:padding="6dp"
             android:scrollingCache="false"
             android:smoothScrollbar="true" />
 
@@ -74,7 +71,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:padding="10dp"
-                android:src="@drawable/trash_btn"
+                android:src="@drawable/trash"
                 />
 
             <ImageView
@@ -113,11 +110,8 @@
             android:layout_below="@id/singlePaymentTopBar"
             android:animationCache="false"
             android:divider="#00000000"
-            android:dividerHeight="10dp"
-            android:paddingBottom="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
+            android:dividerHeight="4dp"
+            android:padding="6dp"
             android:scrollingCache="false"
             android:smoothScrollbar="true">
 

@@ -1689,15 +1689,15 @@ protected List getCurrentUserFailuresBoard() {
         String cBuilding = getCurrentUserBuildingCode();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("noticeBoard");
         query.whereEqualTo("user", user);
-        final List daniel = new ArrayList();
+        final List notices = new ArrayList();
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
                 for (ParseObject notice : list) {
                     notice.put("userFamilyName", familyName);
-                    daniel.add(notice);
+                    notices.add(notice);
                 }
-                ParseObject.saveAllInBackground(daniel, new SaveCallback() {
+                ParseObject.saveAllInBackground(notices, new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
                         if (e != null) {
