@@ -242,7 +242,10 @@ public class GeneralPayments extends Fragment {
     }
 
     private void listViewQueryInBackground() {
-        ParseQuery.getQuery("buildings").whereEqualTo("buildingCode",db.getCurrentUserBuildingCode()).whereExists("houses").getFirstInBackground(new GetCallback<ParseObject>() {
+        ParseQuery.getQuery("buildings")
+                .whereEqualTo("buildingCode",db.getCurrentUserBuildingCode())
+                .whereExists("houses")
+                .getFirstInBackground(new GetCallback<ParseObject>() {
             @Override
             public void done(final ParseObject houses, ParseException e) {
                 if (e == null) {
