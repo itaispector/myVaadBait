@@ -44,6 +44,7 @@ public class UserExpenses extends Fragment implements DatePickerDialog.OnDateSet
     private int endYear;
     private int endMonthOfYear;
     private int endDayOfMonth;
+    private String buildingCode;
 
     @Override
     public void onAttach(Activity activity) {
@@ -71,13 +72,15 @@ public class UserExpenses extends Fragment implements DatePickerDialog.OnDateSet
 
         db = ParseDB.getInstance(getActivity());
 
+        buildingCode = db.getCurrentUserBuildingCode();
+
         bar = (ProgressView) rootView.findViewById(R.id.progress_loader);
 
         userTotalExpensesTextView = (TextView) rootView.findViewById(R.id.userTotalExpensesAmount);
         userTotalExpensesTextView.setText("");
 
         // Initialize the subclass of ParseQueryAdapter
-        customParseAdapter = new UserExpensesAdapter(getActivity(), db.getCurrentUserObjectId());
+        customParseAdapter = new UserExpensesAdapter(getActivity(),buildingCode ,db.getCurrentUserObjectId());
 
         //disable Pagination
         customParseAdapter.setPaginationEnabled(false);
@@ -164,10 +167,20 @@ public class UserExpenses extends Fragment implements DatePickerDialog.OnDateSet
 
     public void calcExpenses(List<ParseObject> expenses){
         totalExpensesAmount = 0;
+        int housesInBuilding = customParseAdapter.housesInBuilding;
+
         for (ParseObject expensesRow : expenses) {
             //get specific data from each row
             String amount = expensesRow.getString("amount");
-            totalExpensesAmount += Integer.parseInt(amount);
+
+            String paymentType = expensesRow.getString("paymentType");
+
+            if(paymentType.equals("extra")){
+                totalExpensesAmount += Integer.parseInt(amount)/housesInBuilding;
+
+            }else{
+                totalExpensesAmount += Integer.parseInt(amount);
+            }
         }
         userTotalExpensesTextView.setText(getActivity().getString(R.string.total) + " " + getActivity().getString(R.string.shekel) + totalExpensesAmount);
     }
@@ -198,7 +211,7 @@ public class UserExpenses extends Fragment implements DatePickerDialog.OnDateSet
                         Date endDate = calendar.getTime();
                         if (startDate.before(endDate)) {
                             Log.d("***compere dates***", "start before end");
-                            customParseAdapter = new UserExpensesAdapter(getActivity(), db.getCurrentUserObjectId(), startYear, startMonthOfYear, startDayOfMonth, endYear, endMonthOfYear, endDayOfMonth);
+                            customParseAdapter = new UserExpensesAdapter(getActivity(),buildingCode, db.getCurrentUserObjectId(), startYear, startMonthOfYear, startDayOfMonth, endYear, endMonthOfYear, endDayOfMonth);
                             customParseAdapter.setPaginationEnabled(false);
                             customParseAdapter.addOnQueryLoadListener(new ParseQueryAdapter.OnQueryLoadListener<ParseObject>() {
                                 @Override
