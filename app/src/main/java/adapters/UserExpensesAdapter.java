@@ -20,7 +20,7 @@ import java.util.Date;
 public class UserExpensesAdapter extends ParseQueryAdapter<ParseObject> {
     Context context;
     ParseDB db;
-    int housesInBuilding =10;
+    public  int housesInBuilding =10;
 
 
     public UserExpensesAdapter(Context context, final String currentUserObjectId) {
