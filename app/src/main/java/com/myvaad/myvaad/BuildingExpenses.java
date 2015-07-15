@@ -125,7 +125,10 @@ public class BuildingExpenses extends Fragment implements DatePickerDialog.OnDat
 
                 Log.d("***item description***", customParseAdapter.getItem(position).getObjectId());
                 ParseObject expenseObject = customParseAdapter.getItem(position);
-                showDeleteNotice(expenseObject);
+                if(db.isCurrentUserAdmin()){
+                    showDeleteNotice(expenseObject);
+                }
+
 
             }
         });
