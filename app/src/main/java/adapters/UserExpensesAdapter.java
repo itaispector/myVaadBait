@@ -19,18 +19,16 @@ import java.util.Date;
 
 public class UserExpensesAdapter extends ParseQueryAdapter<ParseObject> {
     Context context;
-    ParseDB db;
     public  int housesInBuilding =10;
 
-
-    public UserExpensesAdapter(Context context, final String currentUserObjectId) {
+    public UserExpensesAdapter(Context context, final String buildingCode, final String currentUserObjectId) {
 
         // Use the QueryFactory to construct a PQA
         super(context, new QueryFactory<ParseObject>() {
             public ParseQuery create() {
                 //Define query
                 ParseQuery query = new ParseQuery("payments");
-                query.whereEqualTo("buildingCode", "239250");
+                query.whereEqualTo("buildingCode", buildingCode);
                 query.whereEqualTo("paidBy", currentUserObjectId);
                 query.orderByDescending("createdAt");
 
@@ -38,9 +36,10 @@ public class UserExpensesAdapter extends ParseQueryAdapter<ParseObject> {
             }
         });
         this.context = context;
+
     }
 
-    public UserExpensesAdapter(Context context, final String currentUserObjectId, final int startYear, final int startMonthOfYear, final int startDayOfMonth ,final int endYear, final int endMonthOfYear, final int endDayOfMonth) {
+    public UserExpensesAdapter(Context context,final String buildingCode, final String currentUserObjectId, final int startYear, final int startMonthOfYear, final int startDayOfMonth ,final int endYear, final int endMonthOfYear, final int endDayOfMonth) {
 
         // Use the QueryFactory to construct a PQA
         super(context, new QueryFactory<ParseObject>() {
@@ -48,11 +47,11 @@ public class UserExpensesAdapter extends ParseQueryAdapter<ParseObject> {
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(startYear,startMonthOfYear,startDayOfMonth);
                 Date startDate = calendar.getTime();
-                calendar.set(endYear,endMonthOfYear,endDayOfMonth);
+                calendar.set(endYear, endMonthOfYear, endDayOfMonth);
                 Date endDate = calendar.getTime();
                 //Define query
                 ParseQuery query = new ParseQuery("payments");
-                query.whereEqualTo("buildingCode", "239250");
+                query.whereEqualTo("buildingCode", buildingCode);
                 query.whereEqualTo("paidBy", currentUserObjectId);
                 query.whereGreaterThanOrEqualTo("createdAt", startDate);
                 query.whereLessThanOrEqualTo("createdAt", endDate);
@@ -62,6 +61,7 @@ public class UserExpensesAdapter extends ParseQueryAdapter<ParseObject> {
             }
         });
         this.context = context;
+
     }
 
     @Override
