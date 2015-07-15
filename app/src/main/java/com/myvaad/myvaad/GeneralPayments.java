@@ -71,7 +71,7 @@ public class GeneralPayments extends Fragment {
     private ImageView backBtn, sendNotifications, moveToExpensesBtn, deletePaymentBtn;
     private TextView paymentTitle, paymentPrice;
     private List usersList;
-    private String paymentObjectId, vaadPayPalAccount;
+    private String paymentObjectId, vaadPayPalAccount, paymentType;
     private int numOfhouses;
     private ParseObject payment;
     private double amountToPay, total=0.0;
@@ -337,13 +337,13 @@ public class GeneralPayments extends Fragment {
         });
     }
 
-    private void createPayment(String paymentName, String paymentPrice) {
+    private void createPayment(String paymentName, String paymentPrice, String paymentType) {
         String currentBuilding = db.getCurrentUserBuildingCode();
         ParseObject payment = new ParseObject("payments");
         payment.put("buildingCode", currentBuilding);
         payment.put("description", paymentName);
         payment.put("amount", paymentPrice);
-        payment.put("paymentType", "regular");
+        payment.put("paymentType", paymentType);
         payment.put("paymentApproved", false);
         payment.saveInBackground(new SaveCallback() {
             @Override
@@ -356,35 +356,51 @@ public class GeneralPayments extends Fragment {
     }
 
     private void addPaymentDialog() {
-        myDialog(R.layout.add_payment_dialog);
+        new MaterialDialog.Builder(getActivity())
+                .title(R.string.add_expense)
+                .titleGravity(GravityEnum.END)
+                .content(R.string.choose_type)
+                .contentGravity(GravityEnum.END)
+                .items(R.array.payment_types)
+                .itemsGravity(GravityEnum.END)
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog materialDialog, View view, int i, CharSequence charSequence) {
+                        paymentType = getResources().getStringArray(R.array.payment_types)[i];
+                        myDialog(R.layout.add_payment_dialog);
 
-        loader.setVisibility(View.GONE);
+                        loader.setVisibility(View.GONE);
 
-        paymentNameField = (EditText) dialogLayout.findViewById(R.id.addPaymentDialogName);
-        paymentPriceField = (EditText) dialogLayout.findViewById(R.id.addPaymentDialogPrice);
+                        paymentNameField = (EditText) dialogLayout.findViewById(R.id.addPaymentDialogName);
+                        paymentPriceField = (EditText) dialogLayout.findViewById(R.id.addPaymentDialogPrice);
 
-        dialogPaymentOkBtn = (Button) dialogLayout.findViewById(R.id.addPaymentDialogConfirmBtn);
+                        dialogPaymentOkBtn = (Button) dialogLayout.findViewById(R.id.addPaymentDialogConfirmBtn);
 
-        paymentNameField.addTextChangedListener(textWatcherListener);
-        paymentPriceField.addTextChangedListener(textWatcherListener);
+                        paymentNameField.addTextChangedListener(textWatcherListener);
+                        paymentPriceField.addTextChangedListener(textWatcherListener);
 
-        dialogPaymentOkBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loader.setVisibility(View.VISIBLE);
-                String paymentName = paymentNameField.getText().toString();
-                String paymentPrice = paymentPriceField.getText().toString();
-                if ((paymentName.matches("\\s+")) || (paymentPrice.matches("\\s+"))) {
-                    Toast toast = Toast.makeText(getActivity(), getResources().getString(R.string.empty_edittext_msg), Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.CENTER, 0, 0);
-                    toast.show();
-                } else {
-                    paymentsDialog.dismiss();
-                    createPayment(paymentName, paymentPrice);
-                    loader.setVisibility(View.VISIBLE);
-                }
-            }
-        });
+                        dialogPaymentOkBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                loader.setVisibility(View.VISIBLE);
+                                String paymentName = paymentNameField.getText().toString();
+                                String paymentPrice = paymentPriceField.getText().toString();
+                                if ((paymentName.matches("\\s+")) || (paymentPrice.matches("\\s+"))) {
+                                    Toast toast = Toast.makeText(getActivity(), getResources().getString(R.string.empty_edittext_msg), Toast.LENGTH_SHORT);
+                                    toast.setGravity(Gravity.CENTER, 0, 0);
+                                    toast.show();
+                                } else {
+                                    paymentsDialog.dismiss();
+                                    createPayment(paymentName, paymentPrice, paymentType);
+                                    loader.setVisibility(View.VISIBLE);
+                                }
+                            }
+                        });
+                    }
+                })
+                .show();
+
+
 
     }
 
