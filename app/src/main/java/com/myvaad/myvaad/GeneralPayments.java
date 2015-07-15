@@ -350,6 +350,7 @@ public class GeneralPayments extends Fragment {
             public void done(ParseException e) {
                 if (e == null) {
                     refreshPage();
+                    loader.setVisibility(View.GONE);
                 }
             }
         });
@@ -391,8 +392,8 @@ public class GeneralPayments extends Fragment {
                                     toast.show();
                                 } else {
                                     paymentsDialog.dismiss();
-                                    createPayment(paymentName, paymentPrice, paymentType);
                                     loader.setVisibility(View.VISIBLE);
+                                    createPayment(paymentName, paymentPrice, paymentType);
                                 }
                             }
                         });
