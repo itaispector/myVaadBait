@@ -1,6 +1,7 @@
 package adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import java.util.Date;
 public class UserExpensesAdapter extends ParseQueryAdapter<ParseObject> {
     Context context;
     ParseDB db;
+    int housesInBuilding =10;
 
 
     public UserExpensesAdapter(Context context, final String currentUserObjectId) {
@@ -29,7 +31,6 @@ public class UserExpensesAdapter extends ParseQueryAdapter<ParseObject> {
                 //Define query
                 ParseQuery query = new ParseQuery("payments");
                 query.whereEqualTo("buildingCode", "239250");
-                query.whereEqualTo("paymentType", "vaad");
                 query.whereEqualTo("paidBy", currentUserObjectId);
                 query.orderByDescending("createdAt");
 
@@ -52,7 +53,6 @@ public class UserExpensesAdapter extends ParseQueryAdapter<ParseObject> {
                 //Define query
                 ParseQuery query = new ParseQuery("payments");
                 query.whereEqualTo("buildingCode", "239250");
-                query.whereEqualTo("paymentType", "vaad");
                 query.whereEqualTo("paidBy", currentUserObjectId);
                 query.whereGreaterThanOrEqualTo("createdAt", startDate);
                 query.whereLessThanOrEqualTo("createdAt", endDate);
@@ -69,18 +69,10 @@ public class UserExpensesAdapter extends ParseQueryAdapter<ParseObject> {
         if (v == null) {
             v = View.inflate(getContext(), R.layout.expenses_adapter_item, null);
         }
-
-       // super.getItemView(object, v, parent);
-
         // Do additional configuration before returning the View.
         TextView descriptionView = (TextView) v.findViewById(R.id.expenseDescription);
-        descriptionView.setText(object.getString("description")+ " " +object.getString("period") + "-" + object.getString("year") );
         TextView amountView = (TextView) v.findViewById(R.id.expenseAmount);
-        String thisExpense = object.getString("amount");
-        amountView.setText(context.getString(R.string.shekel) + thisExpense);
-
-
-        TextView createTimeView = (TextView) v.findViewById(R.id.expenseCreatTime);
+        TextView createdTimeView = (TextView) v.findViewById(R.id.expenseCreatTime);
 
         Date dateObj = object.getCreatedAt();
         //Creating instance of SimpleDateFormat
@@ -88,8 +80,24 @@ public class UserExpensesAdapter extends ParseQueryAdapter<ParseObject> {
         //Changing Date and time format up to SimpleDateFormat
         String newDateStr = postFormatter.format(dateObj);
 
-        createTimeView.setText(newDateStr);
+        String thisExpense = object.getString("amount");
 
+        String paymentType = object.getString("paymentType");
+
+        if(paymentType.equals("extra")){
+            descriptionView.setText(object.getString("description"));
+
+            amountView.setText(context.getString(R.string.shekel) + Integer.parseInt(thisExpense)/housesInBuilding);
+
+        }else{
+            descriptionView.setText(object.getString("description")+ " " +object.getString("period") + "-" + object.getString("year") );
+
+            amountView.setText(context.getString(R.string.shekel) + thisExpense);
+        }
+
+
+
+        createdTimeView.setText(newDateStr);
 
         return v;
 
