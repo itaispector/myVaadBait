@@ -22,7 +22,7 @@ public class BuildingExpensesAdapter extends ParseQueryAdapter<ParseObject> {
     Context context;
 
 
-    public BuildingExpensesAdapter(Context context , final int startYear, final int startMonthOfYear, final int startDayOfMonth ,final int endYear, final int endMonthOfYear, final int endDayOfMonth) {
+    public BuildingExpensesAdapter(Context context ,final String buildingCode, final int startYear, final int startMonthOfYear, final int startDayOfMonth ,final int endYear, final int endMonthOfYear, final int endDayOfMonth) {
         // Use the QueryFactory to construct a PQA
 
         super(context, new ParseQueryAdapter.QueryFactory<ParseObject>() {
@@ -35,7 +35,7 @@ public class BuildingExpensesAdapter extends ParseQueryAdapter<ParseObject> {
                 Date endDate = calendar.getTime();
 
                 ParseQuery query = new ParseQuery("payments");
-                query.whereEqualTo("buildingCode", "239250");
+                query.whereEqualTo("buildingCode", buildingCode);
                 query.whereNotEqualTo("paymentType", "vaad");
                 query.whereGreaterThanOrEqualTo("createdAt", startDate);
                 query.whereLessThanOrEqualTo("createdAt", endDate);
@@ -46,14 +46,14 @@ public class BuildingExpensesAdapter extends ParseQueryAdapter<ParseObject> {
         this.context=context;
     }
 
-    public BuildingExpensesAdapter(Context context) {
+    public BuildingExpensesAdapter(Context context,final String buildingCode) {
         // Use the QueryFactory to construct a PQA
 
         super(context, new ParseQueryAdapter.QueryFactory<ParseObject>() {
             public ParseQuery create() {
                 //Define queryS
                 ParseQuery query = new ParseQuery("payments");
-                query.whereEqualTo("buildingCode", "239250");
+                query.whereEqualTo("buildingCode", buildingCode);
                 query.whereNotEqualTo("paymentType", "vaad");
                 query.orderByDescending("createdAt");
                 return query;
