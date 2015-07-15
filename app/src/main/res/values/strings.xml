@@ -32,14 +32,9 @@
     <string name="parse_client_key">OiJI3KdONEN9jML6Mi6r6iQTpR8mIOBv3YgsUhdv</string>
 
 
-
     <!-- NoticesAdapter -->
     <string name="familyAndSpace">משפחת</string>
     <string name="apartment">דירה</string>
-
-
-
-
 
 
     <string-array name="array_main_menu">
@@ -149,7 +144,16 @@
     <string name="choose_year">בחר שנה</string>
     <string name="delete_vaad_bait_payments">מחק תשלומי ועד לשנת</string>
     <string name="_month">חודש</string>
-
+    <string name="add_expense">הוסף הוצאה</string>
+    <string name="choose_type">בחר סוג:</string>
+    <string-array name="payment_types_list">
+        <item>הוצאה שוטפת</item>
+        <item>הוצאה חריגה</item>
+    </string-array>
+    <string-array name="payment_types">
+        <item>regular</item>
+        <item>extra</item>
+    </string-array>
     <string-array name="login_page_array">
         <item>תפריט</item>
         <item>של</item>
