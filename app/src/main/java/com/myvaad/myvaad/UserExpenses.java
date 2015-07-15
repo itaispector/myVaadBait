@@ -12,12 +12,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +26,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import adapters.BuildingExpensesAdapter;
 import adapters.UserExpensesAdapter;
 
 public class UserExpenses extends Fragment implements DatePickerDialog.OnDateSetListener {
@@ -108,6 +107,8 @@ public class UserExpenses extends Fragment implements DatePickerDialog.OnDateSet
 
 
 
+
+
         listView = (ListView) rootView.findViewById(R.id.userExpensesListview);
         listView.setAdapter(customParseAdapter);
 
@@ -119,7 +120,7 @@ public class UserExpenses extends Fragment implements DatePickerDialog.OnDateSet
             @Override
             public void onClick(View v) {
 
-                showNotice();
+                showFilterNotice();
 
             }
         });
@@ -135,13 +136,13 @@ public class UserExpenses extends Fragment implements DatePickerDialog.OnDateSet
                 this.startYear = year;
                 this.startMonthOfYear = monthOfYear;
                 this.startDayOfMonth = dayOfMonth;
-                showNotice();
+                showFilterNotice();
                 break;
             case "end":
                 this.endYear = year;
                 this.endMonthOfYear = monthOfYear;
                 this.endDayOfMonth = dayOfMonth;
-                showNotice();
+                showFilterNotice();
                 break;
         }
     }
@@ -171,7 +172,7 @@ public class UserExpenses extends Fragment implements DatePickerDialog.OnDateSet
         userTotalExpensesTextView.setText(getActivity().getString(R.string.total) + " " + getActivity().getString(R.string.shekel) + totalExpensesAmount);
     }
 
-    public void showNotice() {
+    public void showFilterNotice() {
 
         final MaterialDialog dialogM = new MaterialDialog.Builder(getActivity())
                 .title("סינון")
@@ -220,7 +221,7 @@ public class UserExpenses extends Fragment implements DatePickerDialog.OnDateSet
 
                         } else {
                             Log.d("***compere dates***", "end before start");
-                            showNotice();
+                            showFilterNotice();
                             myToast("בחר תאריך התחלה קודם לתאריך סיום");
 
                         }
@@ -264,6 +265,8 @@ public class UserExpenses extends Fragment implements DatePickerDialog.OnDateSet
         toast.setGravity(Gravity.CENTER, 0, 150);
         toast.show();
     }
+
+
 
 
 }
