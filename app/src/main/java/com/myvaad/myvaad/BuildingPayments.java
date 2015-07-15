@@ -1,16 +1,22 @@
 package com.myvaad.myvaad;
 
+import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckedTextView;
@@ -26,6 +32,7 @@ import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.melnykov.fab.FloatingActionButton;
 import com.parse.CountCallback;
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.Parse;
@@ -63,7 +70,7 @@ public class BuildingPayments extends Fragment {
     private RelativeLayout monthsCb;
     private List<ParseObject> months;
     private TextView familyNameTextView, paymentTitle, paymentPrice, paymentYear;
-    private boolean markAllBtnPressed = false;
+    private boolean markAllBtnPressed = false, buttonMoved = false;
     private int year, selectedYear;
     private String[] years;
     private ProgressView loader;
@@ -117,7 +124,7 @@ public class BuildingPayments extends Fragment {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     payment = paymentsUserVaadBaitAdapter.getItem(i);
-                    paymentDialog();
+                    isExistPaypalAccount(false);
                 }
             });
         }
@@ -137,7 +144,7 @@ public class BuildingPayments extends Fragment {
                     setPaymentDialogYear();
                 } else {
                     // clicked by user, open pay all dialog
-                    payAllDialog();
+                    isExistPaypalAccount(true);
                 }
 
             }
@@ -207,7 +214,7 @@ public class BuildingPayments extends Fragment {
             public void onClick(View view) {
                 // delete all payments for this year
                 new MaterialDialog.Builder(getActivity())
-                        .content(getResources().getString(R.string.delete_vaad_bait_payments) + " " + year + "?")
+                        .content(getResources().getString(R.string.delete_vaad_bait_payments) + " " + selectedYear + "?")
                         .contentGravity(GravityEnum.END)
                         .positiveText(R.string.yes)
                         .positiveColorRes(R.color.colorPrimary)
@@ -218,7 +225,32 @@ public class BuildingPayments extends Fragment {
                             @Override
                             public void onPositive(MaterialDialog dialog) {
                                 super.onPositive(dialog);
-                                // delete all payments for this year
+                                ParseQuery.getQuery("payments")
+                                        .whereEqualTo("year", selectedYear+"")
+                                        .findInBackground(new FindCallback<ParseObject>() {
+                                            @Override
+                                            public void done(List<ParseObject> list, ParseException e) {
+                                                if (e == null) {
+                                                    mToast(list + "");
+
+                                                    ParseObject.deleteAllInBackground(list, new DeleteCallback() {
+                                                        @Override
+                                                        public void done(ParseException e) {
+                                                            if (e == null) {
+                                                                mToast("success");
+                                                            } else {
+                                                                mToast("failure");
+                                                            }
+                                                        }
+                                                    });
+
+                                                } else {
+                                                    mToast(e.getMessage());
+                                                }
+
+                                            }
+                                        });
+
                             }
                         })
                         .show();
@@ -232,9 +264,25 @@ public class BuildingPayments extends Fragment {
             multiChoiceBtn.setVisibility(View.GONE);
         }
 
+        final float startPoint = addPaymentBtn.getX();
         multiChoiceBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                WindowManager wm = (WindowManager) getActivity().getSystemService(getActivity().WINDOW_SERVICE);
+                Point size = new Point();
+                Display display = wm.getDefaultDisplay();
+                display.getSize(size);
+                int width = size.x;
+                int buttonWidth = addPaymentBtn.getWidth();
+
+                if (!buttonMoved){
+                    ObjectAnimator.ofFloat(addPaymentBtn, "translationX", addPaymentBtn.getX(), width/2-(buttonWidth)).setDuration(600).start();
+                    buttonMoved=true;
+                }else{
+                    ObjectAnimator.ofFloat(addPaymentBtn, "translationX", addPaymentBtn.getX(), startPoint+(buttonWidth/2)).setDuration(600).start();
+                    buttonMoved=false;
+                }
+
 
             }
         });
@@ -452,27 +500,28 @@ public class BuildingPayments extends Fragment {
 
         okDialog = (Button) dialogLayout.findViewById(R.id.paymentsDialogConfirmBtn);
 
+        npYear = (NumberPicker) dialogLayout.findViewById(R.id.paymentsDialogNumberPicker);
+
         String currentYear[] = {"" + year};
         yearValue = currentYear[0];
 
-        npYear = (NumberPicker) dialogLayout.findViewById(R.id.paymentsDialogNumberPicker);
         //set max value for np
         final String[] years = new String[2101-year];
-        // set numbers of picker
 
-        for (int i = years.length-1; i >= 0; i--) {
-            years[i] = Integer.toString(i * 1 + year);
+        // set numbers of picker
+        for (int i=0; i<years.length;i++){
+            years[i]=""+(year+i);
         }
 
         npYear.setDisplayedValues(years);
         npYear.setMaxValue(years.length - 1);
         npYear.setMinValue(0);
-        npYear.setValue(year);
-        //disable picking loop
-        npYear.setWrapSelectorWheel(false);
-        //disable keyboard pop up
+
+        // disable picking loop
+        npYear.setWrapSelectorWheel(true);
+        // disable keyboard pop up
         npYear.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-        //number picker listener
+        // number picker listener
         npYear.setOnValueChangedListener(new net.simonvt.numberpicker.NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(net.simonvt.numberpicker.NumberPicker picker, int oldVal, int newVal) {
