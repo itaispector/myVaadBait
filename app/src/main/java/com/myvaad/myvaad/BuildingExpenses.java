@@ -4,6 +4,8 @@ package com.myvaad.myvaad;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.melnykov.fab.FloatingActionButton;
+import com.parse.DeleteCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQueryAdapter;
 import com.rey.material.widget.ProgressView;
@@ -20,6 +22,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -116,6 +119,17 @@ public class BuildingExpenses extends Fragment implements DatePickerDialog.OnDat
 
         listView.setAdapter(customParseAdapter);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Log.d("***item description***", customParseAdapter.getItem(position).getObjectId());
+                ParseObject expenseObject = customParseAdapter.getItem(position);
+                showDeleteNotice(expenseObject);
+
+            }
+        });
+
         //floating add Button
         addFilterBtn = (FloatingActionButton) rootView.findViewById(R.id.add_filter_btn);
         addFilterBtn.attachToListView(listView);
@@ -206,30 +220,9 @@ public class BuildingExpenses extends Fragment implements DatePickerDialog.OnDat
                         calendar.set(endYear, endMonthOfYear, endDayOfMonth);
                         Date endDate = calendar.getTime();
                         if (startDate.before(endDate)) {
-                            Log.d("***compere dates***", "start before end");
-                            customParseAdapter = new BuildingExpensesAdapter(getActivity(), startYear, startMonthOfYear, startDayOfMonth, endYear, endMonthOfYear, endDayOfMonth);
-                            customParseAdapter.setPaginationEnabled(false);
-                            customParseAdapter.addOnQueryLoadListener(new ParseQueryAdapter.OnQueryLoadListener<ParseObject>() {
-                                @Override
-                                public void onLoading() {
-                                    //loader here...
-                                    bar.setVisibility(View.VISIBLE);
-                                }
-
-                                @Override
-                                public void onLoaded(List<ParseObject> expenses, Exception e) {
-                                    bar.setVisibility(View.GONE);
-                                    if (e == null) {
-                                        calcExpenses(expenses);
-                                    } else {
-                                        Log.d("***Exception***", e.getLocalizedMessage());
-                                    }
-                                }
-                            });
-                            listView.setAdapter(customParseAdapter);
+                            reloadListView();
 
                         } else {
-                            Log.d("***compere dates***", "end before start");
                             showNotice();
                             myToast("בחר תאריך התחלה קודם לתאריך סיום");
 
@@ -270,9 +263,70 @@ public class BuildingExpenses extends Fragment implements DatePickerDialog.OnDat
     }
 
     public void myToast(String content) {
-        Toast toast = Toast.makeText(getActivity(), content , Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(getActivity(), content, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 150);
         toast.show();
+    }
+
+    public void showDeleteNotice(final ParseObject expenseObject) {
+
+        String description = expenseObject.getString("description")+"  "+expenseObject.getString("amount")+" "+getActivity().getString(R.string.shekel);
+
+         MaterialDialog dialogM = new MaterialDialog.Builder(getActivity())
+                .title("מחיקת הוצאה")
+                .content(description)
+                .titleGravity(GravityEnum.START)
+                .contentGravity(GravityEnum.START)
+                .positiveColorRes(R.color.colorPrimary)
+                .negativeColorRes(R.color.colorPrimary)
+                .widgetColorRes(R.color.colorPrimary)
+                .negativeText("ביטול")
+                .positiveText("מחק")
+                .buttonsGravity(GravityEnum.END)
+                .forceStacking(false)
+                .btnStackedGravity(GravityEnum.END)
+                .alwaysCallInputCallback() // this forces the callback to be invoked with every input change
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        expenseObject.deleteInBackground(new DeleteCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                reloadListView();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+
+                    }
+
+                })
+                .show();
+    }
+
+    public void reloadListView(){
+        customParseAdapter = new BuildingExpensesAdapter(getActivity(), startYear, startMonthOfYear, startDayOfMonth, endYear, endMonthOfYear, endDayOfMonth);
+        customParseAdapter.setPaginationEnabled(false);
+        customParseAdapter.addOnQueryLoadListener(new ParseQueryAdapter.OnQueryLoadListener<ParseObject>() {
+            @Override
+            public void onLoading() {
+                //loader here...
+                bar.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onLoaded(List<ParseObject> expenses, Exception e) {
+                bar.setVisibility(View.GONE);
+                if (e == null) {
+                    calcExpenses(expenses);
+                } else {
+                    Log.d("***Exception***", e.getLocalizedMessage());
+                }
+            }
+        });
+        listView.setAdapter(customParseAdapter);
     }
 
 
