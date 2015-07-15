@@ -361,7 +361,7 @@ public class GeneralPayments extends Fragment {
                 .titleGravity(GravityEnum.END)
                 .content(R.string.choose_type)
                 .contentGravity(GravityEnum.END)
-                .items(R.array.payment_types)
+                .items(R.array.payment_types_list)
                 .itemsGravity(GravityEnum.END)
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
