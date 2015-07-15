@@ -30,7 +30,7 @@ import com.parse.Parse;
 
 public class NotInBuilding extends Activity {
     ParseDB db;
-    EditText bCodeNumber;
+    EditText bCodeNumber, apartmentNumber;
     private Toolbar mToolBar;
     View dialogLayout;
     Dialog joinBuildingDialog;
@@ -86,6 +86,7 @@ public class NotInBuilding extends Activity {
         ok = (Button) dialogLayout.findViewById(R.id.joinBuildingDialogOkBtn);
         cancel = (Button) dialogLayout.findViewById(R.id.joinBuildingDialogCancelBtn);
         bCodeNumber = (EditText) dialogLayout.findViewById(R.id.JoinBuildingEnterBuildingCode);
+        apartmentNumber = (EditText) dialogLayout.findViewById(R.id.add_apartment_number);
 
         ok.setOnClickListener(new View.OnClickListener() {
 
@@ -109,6 +110,7 @@ public class NotInBuilding extends Activity {
 
     public void dialogButtons(View v) {
         String buildingCodeText = bCodeNumber.getText().toString();
+        String userApartmentNumber = apartmentNumber.getText().toString();
         if (v.getId() == R.id.joinBuildingDialogCancelBtn) {
             //Exit from keyboard when the dialog dismissed
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -124,7 +126,7 @@ public class NotInBuilding extends Activity {
                 imm.hideSoftInputFromWindow(bCodeNumber.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             } else {
                 if (db.isBuildingCodeExists(buildingCodeText)) {
-                    db.updateUserBuildingCode(buildingCodeText);
+                    db.updateUserBuildingCode(buildingCodeText, userApartmentNumber);
                     //Exit from keyboard when the dialog dismissed
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(bCodeNumber.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
