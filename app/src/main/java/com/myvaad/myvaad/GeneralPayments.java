@@ -252,7 +252,7 @@ public class GeneralPayments extends Fragment {
                     numOfhouses = Integer.parseInt(houses.getString("houses"));
                     ParseQuery<ParseObject> query = ParseQuery.getQuery("payments");
                     query.whereContains("buildingCode", db.getCurrentUserBuildingCode());
-                    query.whereContains("paymentType", "regular");
+                    query.whereContains("paymentType", "extra");
                     query.whereEqualTo("paymentApproved", false);
                     //if current user is not admin, exclude paid payments of user in listview
                     if (!db.isCurrentUserAdmin()) {
