@@ -50,6 +50,7 @@ public class BuildingExpenses extends Fragment implements DatePickerDialog.OnDat
     private int endYear;
     private int endMonthOfYear;
     private int endDayOfMonth;
+    private String buildingCode;
 
 
     @Override
@@ -78,6 +79,8 @@ public class BuildingExpenses extends Fragment implements DatePickerDialog.OnDat
 
         db = ParseDB.getInstance(getActivity());
 
+        buildingCode = db.getCurrentUserBuildingCode();
+
         bar = (ProgressView) rootView.findViewById(R.id.progress_loader);
 
 
@@ -86,7 +89,7 @@ public class BuildingExpenses extends Fragment implements DatePickerDialog.OnDat
         buildingTotalExpensesTextView.setText("");
 
         // Initialize the subclass of ParseQueryAdapter
-        customParseAdapter = new BuildingExpensesAdapter(getActivity(), startYear, startMonthOfYear, startDayOfMonth, endYear, endMonthOfYear, endDayOfMonth);
+        customParseAdapter = new BuildingExpensesAdapter(getActivity(),buildingCode, startYear, startMonthOfYear, startDayOfMonth, endYear, endMonthOfYear, endDayOfMonth);
 
         //disable Pagination
         customParseAdapter.setPaginationEnabled(false);
@@ -310,7 +313,7 @@ public class BuildingExpenses extends Fragment implements DatePickerDialog.OnDat
     }
 
     public void reloadListView(){
-        customParseAdapter = new BuildingExpensesAdapter(getActivity(), startYear, startMonthOfYear, startDayOfMonth, endYear, endMonthOfYear, endDayOfMonth);
+        customParseAdapter = new BuildingExpensesAdapter(getActivity(),buildingCode, startYear, startMonthOfYear, startDayOfMonth, endYear, endMonthOfYear, endDayOfMonth);
         customParseAdapter.setPaginationEnabled(false);
         customParseAdapter.addOnQueryLoadListener(new ParseQueryAdapter.OnQueryLoadListener<ParseObject>() {
             @Override
