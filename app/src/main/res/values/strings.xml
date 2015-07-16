@@ -118,6 +118,8 @@
     <string name="vaad_bait_payments">תשלומי ועד</string>
     <string name="general_payments">כללי</string>
     <string name="year">שנה</string>
+    <string name="no_vaad_bait_payments">אין תשלומי ועד בית</string>
+    <string name="_no_payments">אין תשלומים</string>
     <string name="month">תשלום &#xA; חודשי (&#x20AA;)</string>
     <string name="no_payments">אין הוצאות</string>
     <string name="vaad_bait">ועד בית</string>
