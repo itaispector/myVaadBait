@@ -228,7 +228,7 @@ public class BuildingExpenses extends Fragment implements DatePickerDialog.OnDat
 
                         } else {
                             showNotice();
-                            myToast("בחר תאריך התחלה קודם לתאריך סיום");
+                            myToast(getActivity().getString(R.string.choose_start_date_before_end));
 
                         }
 
