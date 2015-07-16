@@ -276,10 +276,10 @@ public class BuildingPayments extends Fragment {
                 int buttonWidth = addPaymentBtn.getWidth();
 
                 if (!buttonMoved){
-                    ObjectAnimator.ofFloat(addPaymentBtn, "translationX", addPaymentBtn.getX(), width/2-(buttonWidth)).setDuration(600).start();
+                    ObjectAnimator.ofFloat(addPaymentBtn, "translationX", addPaymentBtn.getX(), width/2-(buttonWidth)).setDuration(350).start();
                     buttonMoved=true;
                 }else{
-                    ObjectAnimator.ofFloat(addPaymentBtn, "translationX", addPaymentBtn.getX(), startPoint+(buttonWidth/2)).setDuration(600).start();
+                    ObjectAnimator.ofFloat(addPaymentBtn, "translationX", addPaymentBtn.getX(), startPoint).setDuration(350).start();
                     buttonMoved=false;
                 }
 
@@ -752,7 +752,10 @@ public class BuildingPayments extends Fragment {
     public void pay() {
         Intent i = new Intent(getActivity(), PayPalActivity.class);
         i.putExtra("amount", payment.getString("amount"));
-        i.putExtra("paymentName", payment.getString("description"));
+        String pName = payment.getString("description");
+        String pMonth = payment.getString("period");
+        String month = getResources().getString(R.string._month);
+        i.putExtra("paymentName", pName + " - " + month + " " + pMonth);
         i.putExtra("paymentObjectId", payment.getObjectId());
         i.putExtra("userObjectId", db.getCurrentUserObjectId());
         i.putExtra("email", vaadPayPalAccount);
@@ -762,7 +765,7 @@ public class BuildingPayments extends Fragment {
 
     public void pay(double total, ArrayList<String> objectIds) {
         Intent i = new Intent(getActivity(), PayPalActivity.class);
-        i.putExtra("amount", total + ".0");
+        i.putExtra("amount", total+"");
         i.putExtra("paymentName", getResources().getString(R.string.total_pay));
         i.putStringArrayListExtra("objectIds", objectIds);
         i.putExtra("userObjectId", db.getCurrentUserObjectId());
