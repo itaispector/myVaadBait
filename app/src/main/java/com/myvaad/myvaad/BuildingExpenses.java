@@ -1,19 +1,7 @@
 package com.myvaad.myvaad;
 
 
-import com.afollestad.materialdialogs.GravityEnum;
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.melnykov.fab.FloatingActionButton;
-import com.parse.DeleteCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQueryAdapter;
-import com.rey.material.widget.ProgressView;
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
-
-
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -26,6 +14,16 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.afollestad.materialdialogs.GravityEnum;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.melnykov.fab.FloatingActionButton;
+import com.parse.DeleteCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQueryAdapter;
+import com.rey.material.widget.ProgressView;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
 import java.util.Date;

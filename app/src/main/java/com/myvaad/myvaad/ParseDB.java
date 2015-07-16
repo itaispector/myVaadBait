@@ -16,7 +16,6 @@ import com.parse.FindCallback;
 import com.parse.FunctionCallback;
 import com.parse.GetCallback;
 import com.parse.LogInCallback;
-import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseCloud;
 import com.parse.ParseException;
@@ -503,9 +502,10 @@ public class ParseDB {
     }
 
     //This method adding buildingCode to currentUser-->used when user signUp for building
-    protected void updateUserBuildingCode(String buildingCode) {
+    protected void updateUserBuildingCode(String buildingCode, String userApartmentNumber) {
         ParseUser currentUser = getcurrentUser();
         currentUser.put("buildingCode", buildingCode);
+        currentUser.put("apartmentNumber", userApartmentNumber);
         currentUser.saveInBackground();
     }
 
@@ -524,7 +524,7 @@ public class ParseDB {
         ParseUser currentUser = getcurrentUser();
         currentUser.put("isAdmin", true);
         //the admin that create the building add automatically to the building
-        updateUserBuildingCode(buildingCode);
+        updateUserBuildingCode(buildingCode, "111");
         ParseObject building = new ParseObject("buildings");
         building.put("buildingCode", buildingCode);
         building.put("address", address);
@@ -539,7 +539,7 @@ public class ParseDB {
         ParseUser currentUser = getcurrentUser();
         currentUser.put("isAdmin", true);
         //the admin that create the building add automatically to the building/
-        updateUserBuildingCode(buildingCode);
+        updateUserBuildingCode(buildingCode, "111");
         ParseObject building = new ParseObject("buildings");
         building.put("buildingCode", buildingCode);
         building.put("address", address);

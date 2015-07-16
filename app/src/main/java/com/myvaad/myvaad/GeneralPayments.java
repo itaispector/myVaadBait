@@ -72,9 +72,8 @@ public class GeneralPayments extends Fragment {
     private TextView paymentTitle, paymentPrice;
     private List usersList;
     private String paymentObjectId, vaadPayPalAccount, paymentType;
-    private int numOfhouses;
     private ParseObject payment;
-    private double amountToPay, total=0.0;
+    private double amountToPay, total = 0.0;
     private ArrayList objectIds = new ArrayList<String>();
     private RingProgressDialog loaderDialog;
 
@@ -242,44 +241,31 @@ public class GeneralPayments extends Fragment {
     }
 
     private void listViewQueryInBackground() {
-        ParseQuery.getQuery("buildings")
-                .whereEqualTo("buildingCode",db.getCurrentUserBuildingCode())
-                .whereExists("houses")
-                .getFirstInBackground(new GetCallback<ParseObject>() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("payments");
+        query.whereContains("buildingCode", db.getCurrentUserBuildingCode());
+        query.whereContains("paymentType", "extra");
+        query.whereEqualTo("paymentApproved", false);
+        //if current user is not admin, exclude paid payments of user in listview
+        if (!db.isCurrentUserAdmin()) {
+            String userObjectId = db.getCurrentUserObjectId();
+            query.whereNotEqualTo("paidBy", userObjectId);
+        }
+        query.addDescendingOrder("createdAt");
+        query.findInBackground(new FindCallback<ParseObject>() {
             @Override
-            public void done(final ParseObject houses, ParseException e) {
+            public void done(List<ParseObject> payments, ParseException e) {
                 if (e == null) {
-                    numOfhouses = Integer.parseInt(houses.getString("houses"));
-                    ParseQuery<ParseObject> query = ParseQuery.getQuery("payments");
-                    query.whereContains("buildingCode", db.getCurrentUserBuildingCode());
-                    query.whereContains("paymentType", "extra");
-                    query.whereEqualTo("paymentApproved", false);
-                    //if current user is not admin, exclude paid payments of user in listview
-                    if (!db.isCurrentUserAdmin()) {
-                        String userObjectId = db.getCurrentUserObjectId();
-                        query.whereNotEqualTo("paidBy", userObjectId);
-                    }
-                    query.addDescendingOrder("createdAt");
-                    query.findInBackground(new FindCallback<ParseObject>() {
-                        @Override
-                        public void done(List<ParseObject> payments, ParseException e) {
-                            if (e == null) {
-                                paymentsAdapter = new PaymentsAdapter(getActivity(), payments, numOfhouses, db.isCurrentUserAdmin());
-                                generalPaymentsListView.setAdapter(paymentsAdapter);
-                                if (payments.size() == 0) {
-                                    // show no payments
+                    paymentsAdapter = new PaymentsAdapter(getActivity(), payments, db.isCurrentUserAdmin());
+                    generalPaymentsListView.setAdapter(paymentsAdapter);
+                    if (payments.size() == 0) {
+                        // show no payments
 
-                                    // if current its current user, hide pay all button
-                                    addPaymentBtn.setVisibility(View.GONE);
-                                }
-                                loader.setVisibility(View.GONE);
-                            } else {
-                                //Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                                Log.v("***PARSE ERROR***", e.getMessage());
-                            }
-                        }
-                    });
+                        // if current its current user, hide pay all button
+                        addPaymentBtn.setVisibility(View.GONE);
+                    }
+                    loader.setVisibility(View.GONE);
                 } else {
+                    //Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
                     Log.v("***PARSE ERROR***", e.getMessage());
                 }
             }
@@ -337,23 +323,35 @@ public class GeneralPayments extends Fragment {
         });
     }
 
-    private void createPayment(String paymentName, String paymentPrice, String paymentType) {
-        String currentBuilding = db.getCurrentUserBuildingCode();
-        ParseObject payment = new ParseObject("payments");
-        payment.put("buildingCode", currentBuilding);
-        payment.put("description", paymentName);
-        payment.put("amount", paymentPrice);
-        payment.put("paymentType", paymentType);
-        payment.put("paymentApproved", false);
-        payment.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    refreshPage();
-                    loader.setVisibility(View.GONE);
-                }
-            }
-        });
+    private void createPayment(final String paymentName, final String paymentPrice, final String paymentType) {
+        final String currentBuilding = db.getCurrentUserBuildingCode();
+        ParseQuery.getQuery("payments")
+                .whereEqualTo("buildingCode", currentBuilding)
+                .getFirstInBackground(new GetCallback<ParseObject>() {
+                    @Override
+                    public void done(ParseObject parseObject, ParseException e) {
+                        if (e == null) {
+                            ParseObject payment = new ParseObject("payments");
+                            payment.put("buildingCode", currentBuilding);
+                            payment.put("description", paymentName);
+                            payment.put("amount", paymentPrice);
+                            payment.put("paymentType", paymentType);
+                            payment.put("houses", payment.getString("houses"));
+                            payment.put("paymentApproved", false);
+                            payment.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (e == null) {
+                                        refreshPage();
+                                        loader.setVisibility(View.GONE);
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+
+
     }
 
     private void addPaymentDialog() {
@@ -402,7 +400,6 @@ public class GeneralPayments extends Fragment {
                 .show();
 
 
-
     }
 
     private void paymentDialog() {
@@ -413,8 +410,9 @@ public class GeneralPayments extends Fragment {
         payBtn = (Button) dialogLayout.findViewById(R.id.payBtn);
         String paymentName = payment.getString("description");
         String paymentPriceString = payment.getString("amount");
+        int numOfHouses = Integer.parseInt(payment.getString("houses"));
         paymentTitle.setText(paymentName);
-        amountToPay = Math.round((Double.parseDouble(paymentPriceString) / numOfhouses)*100.0)/100.0;
+        amountToPay = Math.round((Double.parseDouble(paymentPriceString) / numOfHouses) * 100.0) / 100.0;
         paymentPrice.setText(getResources().getString(R.string.shekel) + " " + amountToPay);
         payBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -424,27 +422,28 @@ public class GeneralPayments extends Fragment {
         });
     }
 
-    private void payAllDialog(){
+    private void payAllDialog() {
         // inflate list of all existing payments
         LinearLayout myView = new LinearLayout(getActivity());
         myView.setOrientation(LinearLayout.VERTICAL);
-        total=0.0;
-        for (int i=0; i < paymentsAdapter.getCount(); i++){
+        total = 0.0;
+        for (int i = 0; i < paymentsAdapter.getCount(); i++) {
             View inflation = View.inflate(getActivity(), R.layout.pay_all_item, null);
-            TextView pName = (TextView)inflation.findViewById(R.id.list_item_paymentName);
-            TextView pAmount = (TextView)inflation.findViewById(R.id.list_item_paymentAmount);
+            TextView pName = (TextView) inflation.findViewById(R.id.list_item_paymentName);
+            TextView pAmount = (TextView) inflation.findViewById(R.id.list_item_paymentAmount);
             pName.setText(((paymentsAdapter.getItem(i)).getString("description")));
-            double calc = Math.round((Double.parseDouble((paymentsAdapter.getItem(i)).getString("amount")) / numOfhouses)*100.0)/100.0;
-            pAmount.setText(getResources().getString(R.string.shekel) + " "+calc);
+            int numOfHouses = Integer.parseInt(((paymentsAdapter.getItem(i)).getString("houses")));
+            double calc = Math.round((Double.parseDouble((paymentsAdapter.getItem(i)).getString("amount")) / numOfHouses) * 100.0) / 100.0;
+            pAmount.setText(getResources().getString(R.string.shekel) + " " + calc);
             myView.addView(inflation);
-            total+=calc;
+            total += calc;
             objectIds.add((paymentsAdapter.getItem(i)).getObjectId());
         }
-        total = Math.round(total*100.0)/100.0;
+        total = Math.round(total * 100.0) / 100.0;
         //add total sum line
         View inflation = View.inflate(getActivity(), R.layout.pay_all_item, null);
-        TextView pName = (TextView)inflation.findViewById(R.id.list_item_paymentName);
-        TextView pAmount = (TextView)inflation.findViewById(R.id.list_item_paymentAmount);
+        TextView pName = (TextView) inflation.findViewById(R.id.list_item_paymentName);
+        TextView pAmount = (TextView) inflation.findViewById(R.id.list_item_paymentAmount);
         pName.setTypeface(Typeface.DEFAULT_BOLD);
         pName.setText(getResources().getString(R.string.total));
         pAmount.setTypeface(Typeface.DEFAULT_BOLD);
@@ -487,11 +486,11 @@ public class GeneralPayments extends Fragment {
                     if (parseObject.getString("paypal") != null) {
                         vaadPayPalAccount = parseObject.getString("paypal");
                         // check if click came from floating action button or from list view
-                        if (fabClicked){
+                        if (fabClicked) {
                             // pay all, clicked from floating button
                             loader.setVisibility(View.GONE);
                             payAllDialog();
-                        }else{
+                        } else {
                             // single payment, clicked from payments list
                             loader.setVisibility(View.GONE);
                             paymentDialog();
@@ -518,7 +517,7 @@ public class GeneralPayments extends Fragment {
 
     public void pay() {
         Intent i = new Intent(getActivity(), PayPalActivity.class);
-        i.putExtra("amount", amountToPay+"");
+        i.putExtra("amount", amountToPay + "");
         i.putExtra("paymentName", payment.getString("description"));
         i.putExtra("paymentObjectId", payment.getObjectId());
         i.putExtra("userObjectId", db.getCurrentUserObjectId());
@@ -529,7 +528,7 @@ public class GeneralPayments extends Fragment {
 
     public void pay(double total, ArrayList<String> objectIds) {
         Intent i = new Intent(getActivity(), PayPalActivity.class);
-        i.putExtra("amount", total+"");
+        i.putExtra("amount", total + "");
         i.putExtra("paymentName", getResources().getString(R.string.total_pay));
         i.putStringArrayListExtra("objectIds", objectIds);
         i.putExtra("userObjectId", db.getCurrentUserObjectId());
