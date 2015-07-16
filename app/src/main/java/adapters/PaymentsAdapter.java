@@ -79,7 +79,7 @@ public class PaymentsAdapter extends BaseAdapter {
 		if (isAdmin){
 			holder.amount.setText("\u20AA "+payment.getString("amount"));
 		}else{
-			int houses = Integer.parseInt(payment.getString("houses"));
+			int houses = payment.getInt("houses");
 			double mAmount = Math.round(Double.parseDouble(payment.getString("amount")) / houses * 100.0)/100.0;
 			NumberFormat nf = new DecimalFormat("#");
 			holder.amount.setText("\u20AA "+ nf.format(mAmount));
