@@ -25,21 +25,11 @@
             android:textStyle="bold" />
 
         <ImageView
-            android:id="@+id/multiChoice"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:contentDescription="@string/multiple_choice"
-            android:padding="10dp"
-            android:src="@drawable/list_icon100" />
-
-        <ImageView
             android:id="@+id/trashToolBar"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:layout_toEndOf="@id/multiChoice"
-            android:layout_toRightOf="@id/multiChoice"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
             android:contentDescription="@string/delete_all_payments"
             android:padding="10dp"
             android:src="@drawable/trash100" />
