@@ -69,7 +69,7 @@ public class BuildingPayments extends Fragment {
     private Button okDialog, saveBtn, markAllBtn, cancelBtn, yearButton, payBtn;
     private String yearValue, monthlyValue, currentClickedUserObjectId, currentClickedUserFamilyName, buildingCode, vaadPayPalAccount;
     private CheckedTextView cb1, cb2, cb3, cb4, cb5, cb6, cb7, cb8, cb9, cb10, cb11, cb12;
-    private RelativeLayout monthsCb;
+    private RelativeLayout monthsCb, topToolBar;
     private List<ParseObject> months;
     private TextView familyNameTextView, paymentTitle, paymentPrice, paymentYear;
     private boolean markAllBtnPressed = false;
@@ -278,16 +278,22 @@ public class BuildingPayments extends Fragment {
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> payments, ParseException e) {
+                topToolBar = (RelativeLayout)getActivity().findViewById(R.id.vaadBaitTopBar);
                 if (payments.isEmpty()) {
                     // turn off loader
                     loader.setVisibility(View.GONE);
                     // show no payments view
                     noPaymentsTextView.setVisibility(View.VISIBLE);
+
+                    topToolBar.setVisibility(View.GONE);
+                    addPaymentBtn.setVisibility(View.GONE);
                 } else {
                     noPaymentsTextView.setVisibility(View.GONE);
                     paymentsUserVaadBaitAdapter = new PaymentsUserVaadBaitAdapter(getActivity(), payments);
                     userListView.setAdapter(paymentsUserVaadBaitAdapter);
                     loader.setVisibility(View.GONE);
+                    topToolBar.setVisibility(View.VISIBLE);
+                    addPaymentBtn.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -764,6 +770,11 @@ public class BuildingPayments extends Fragment {
         Log.v("******PARSE*******", msg);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+    }
 }
 
 
