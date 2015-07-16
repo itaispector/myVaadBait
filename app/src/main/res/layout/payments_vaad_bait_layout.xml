@@ -10,7 +10,8 @@
         android:id="@+id/vaadBaitTopBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark">
+        android:background="@color/colorPrimaryDark"
+        android:animateLayoutChanges="true">
 
         <Button
             android:id="@+id/currentDisplayedYear"
@@ -18,7 +19,7 @@
             android:layout_height="45dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:background="@drawable/default_button"
+            android:background="@drawable/year_button"
             android:text=""
             android:textColor="@android:color/white"
             android:textSize="20sp"
@@ -87,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:text="@string/no_payments"
+                android:text="@string/no_vaad_bait_payments"
                 android:visibility="gone" />
 
         </RelativeLayout>
