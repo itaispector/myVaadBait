@@ -19,7 +19,6 @@ import java.util.Date;
 
 public class UserExpensesAdapter extends ParseQueryAdapter<ParseObject> {
     Context context;
-    public  int housesInBuilding =10;
 
     public UserExpensesAdapter(Context context, final String buildingCode, final String currentUserObjectId) {
 
@@ -89,7 +88,7 @@ public class UserExpensesAdapter extends ParseQueryAdapter<ParseObject> {
         if(paymentType.equals("extra")){
             descriptionView.setText(object.getString("description"));
 
-            amountView.setText(context.getString(R.string.shekel) + Integer.parseInt(thisExpense)/housesInBuilding);
+            amountView.setText(context.getString(R.string.shekel) + Integer.parseInt(thisExpense)/object.getInt("houses"));
 
         }else{
             descriptionView.setText(object.getString("description")+ " " +object.getString("period") + "-" + object.getString("year") );
