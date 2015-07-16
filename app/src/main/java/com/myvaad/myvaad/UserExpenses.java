@@ -232,9 +232,9 @@ public class UserExpenses extends Fragment implements DatePickerDialog.OnDateSet
                             listView.setAdapter(customParseAdapter);
 
                         } else {
-                            Log.d("***compere dates***", "end before start");
+
                             showFilterNotice();
-                            myToast("בחר תאריך התחלה קודם לתאריך סיום");
+                            myToast(getActivity().getString(R.string.choose_start_date_before_end));
 
                         }
 
