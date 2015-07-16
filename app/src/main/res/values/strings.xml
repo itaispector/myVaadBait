@@ -214,6 +214,7 @@
     <string name="buildingExpenses">הוצאות בניין</string>
     <string name="shekel">₪</string>
     <string name="total">סך הכל</string>
+    <string name="choose_start_date_before_end">בחר תאריך התחלה קודם לתאריך סיום</string>
 
     <!-- failures dialogs -->
     <string name="dialogTitle">ערוך הצעת מחיר</string>
@@ -225,7 +226,8 @@
     <string name="usernameTaken">שם המשתמש קיים במערכת</string>
     <string name="emailTaken">דואר אלקטרוני קיים במערכת</string>
     <string name="InvalidEmail">איימיל לא חוקי</string>
-    <string name="invalidLogInParameters">שם המשתמש או הסיסמא שגואים</string>
+    <string name="invalidLogInParameters">שם המשתמש או הסיסמא שגויים</string>
+
     <string name="error">שגיאה! אנא נסה/י שנית</string>
     <!--Layout Titles-->
     <string name="SignUpScreenTitle">הרשמה</string>
