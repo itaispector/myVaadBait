@@ -432,7 +432,7 @@ public class GeneralPayments extends Fragment {
             TextView pName = (TextView) inflation.findViewById(R.id.list_item_paymentName);
             TextView pAmount = (TextView) inflation.findViewById(R.id.list_item_paymentAmount);
             pName.setText(((paymentsAdapter.getItem(i)).getString("description")));
-            int numOfHouses = Integer.parseInt(payment.getString("houses"));
+            int numOfHouses = Integer.parseInt(((paymentsAdapter.getItem(i)).getString("houses")));
             double calc = Math.round((Double.parseDouble((paymentsAdapter.getItem(i)).getString("amount")) / numOfHouses) * 100.0) / 100.0;
             pAmount.setText(getResources().getString(R.string.shekel) + " " + calc);
             myView.addView(inflation);
