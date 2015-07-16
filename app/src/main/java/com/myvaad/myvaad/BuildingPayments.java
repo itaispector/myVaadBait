@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
@@ -70,11 +72,11 @@ public class BuildingPayments extends Fragment {
     private RelativeLayout monthsCb;
     private List<ParseObject> months;
     private TextView familyNameTextView, paymentTitle, paymentPrice, paymentYear;
-    private boolean markAllBtnPressed = false, buttonMoved = false;
+    private boolean markAllBtnPressed = false;
     private int year, selectedYear;
     private String[] years;
     private ProgressView loader;
-    private ImageView multiChoiceBtn, trashBtn, notiBtn;
+    private ImageView trashBtn, notiBtn;
     private ParseObject payment;
     private int total;
     private ArrayList objectIds = new ArrayList<String>();
@@ -254,35 +256,6 @@ public class BuildingPayments extends Fragment {
                             }
                         })
                         .show();
-
-            }
-        });
-
-        multiChoiceBtn = (ImageView) rootView.findViewById(R.id.multiChoice);
-        // if is admin, hide multi choice btn
-        if (db.isCurrentUserAdmin()) {
-            multiChoiceBtn.setVisibility(View.GONE);
-        }
-
-        final float startPoint = addPaymentBtn.getX();
-        multiChoiceBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                WindowManager wm = (WindowManager) getActivity().getSystemService(getActivity().WINDOW_SERVICE);
-                Point size = new Point();
-                Display display = wm.getDefaultDisplay();
-                display.getSize(size);
-                int width = size.x;
-                int buttonWidth = addPaymentBtn.getWidth();
-
-                if (!buttonMoved){
-                    ObjectAnimator.ofFloat(addPaymentBtn, "translationX", addPaymentBtn.getX(), width/2-(buttonWidth)).setDuration(350).start();
-                    buttonMoved=true;
-                }else{
-                    ObjectAnimator.ofFloat(addPaymentBtn, "translationX", addPaymentBtn.getX(), startPoint).setDuration(350).start();
-                    buttonMoved=false;
-                }
-
 
             }
         });
