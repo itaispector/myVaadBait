@@ -120,8 +120,7 @@ public class PayPalActivity extends Activity {
 						  });
 					  }
 				  });
-		      }		      
-		      Toast.makeText(getApplicationContext(), "התשלום בוצע בהצלחה", Toast.LENGTH_LONG).show();      
+		      }
 		      finish();
 		      goBacktoScreen();		      
 		    }
