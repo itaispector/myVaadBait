@@ -336,7 +336,7 @@ public class GeneralPayments extends Fragment {
                             payment.put("description", paymentName);
                             payment.put("amount", paymentPrice);
                             payment.put("paymentType", paymentType);
-                            payment.put("houses", payment.getString("houses"));
+                            payment.put("houses", payment.getInt("houses"));
                             payment.put("paymentApproved", false);
                             payment.saveInBackground(new SaveCallback() {
                                 @Override
@@ -410,7 +410,7 @@ public class GeneralPayments extends Fragment {
         payBtn = (Button) dialogLayout.findViewById(R.id.payBtn);
         String paymentName = payment.getString("description");
         String paymentPriceString = payment.getString("amount");
-        int numOfHouses = Integer.parseInt(payment.getString("houses"));
+        int numOfHouses = payment.getInt("houses");
         paymentTitle.setText(paymentName);
         amountToPay = Math.round((Double.parseDouble(paymentPriceString) / numOfHouses) * 100.0) / 100.0;
         paymentPrice.setText(getResources().getString(R.string.shekel) + " " + amountToPay);

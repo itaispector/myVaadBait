@@ -1396,21 +1396,31 @@ protected List getCurrentUserFailuresBoard() {
 
     //*********************Itai new 17/6/15
     //create payment from failure
-    protected void createPaymentFromFailure(String failureObjectId) {
-        String currentBuilding = getCurrentUserBuildingCode();
-        ParseObject failure = getFailure(failureObjectId);
-        ParseObject payment;
-        String paymentName = "", paymentPrice = "";
-        paymentName = failure.getString("title");
-        paymentPrice = failure.getString("bid");
+    protected void createPaymentFromFailure(final String failureObjectId) {
+        ParseQuery.getQuery("buildings")
+                .whereEqualTo("buildingCode", getCurrentUserBuildingCode())
+                .getFirstInBackground(new GetCallback<ParseObject>() {
+                    @Override
+                    public void done(ParseObject parseObject, ParseException e) {
+                        int houses = parseObject.getInt("houses");
+                        String currentBuilding = getCurrentUserBuildingCode();
+                        ParseObject failure = getFailure(failureObjectId);
+                        ParseObject payment;
+                        String paymentName = "", paymentPrice = "";
+                        paymentName = failure.getString("title");
+                        paymentPrice = failure.getString("bid");
 
-        payment = new ParseObject("payments");
-        payment.put("buildingCode", currentBuilding);
-        payment.put("amount", paymentPrice);
-        payment.put("description", paymentName);
-        payment.put("paymentType", "regular");
-        payment.put("paymentApproved", false);
-        payment.saveInBackground();
+                        payment = new ParseObject("payments");
+                        payment.put("buildingCode", currentBuilding);
+                        payment.put("amount", paymentPrice);
+                        payment.put("description", paymentName);
+                        payment.put("paymentType", "regular");
+                        payment.put("houses", houses);
+                        payment.put("paymentApproved", false);
+                        payment.saveInBackground();
+                    }
+                });
+
     }
 
     protected boolean isVaadBaitPaymentsExists() {
