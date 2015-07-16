@@ -103,6 +103,8 @@ public class UserExpensesAdapter extends ParseQueryAdapter<ParseObject> {
         return v;
 
     }
+
+    /*
     // Next page clicked view to load more rows
     @Override
     public View getNextPageView(View v, ViewGroup parent) {
@@ -116,5 +118,5 @@ public class UserExpensesAdapter extends ParseQueryAdapter<ParseObject> {
         return v;
     }
 
-
+*/
 }
