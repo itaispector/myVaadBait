@@ -30,6 +30,7 @@ public class UserExpensesAdapter extends ParseQueryAdapter<ParseObject> {
                 ParseQuery query = new ParseQuery("payments");
                 query.whereEqualTo("buildingCode", buildingCode);
                 query.whereEqualTo("paidBy", currentUserObjectId);
+                query.whereNotEqualTo("paymentType", "regular");
                 query.orderByDescending("createdAt");
 
                 return query;
@@ -53,6 +54,7 @@ public class UserExpensesAdapter extends ParseQueryAdapter<ParseObject> {
                 ParseQuery query = new ParseQuery("payments");
                 query.whereEqualTo("buildingCode", buildingCode);
                 query.whereEqualTo("paidBy", currentUserObjectId);
+                query.whereNotEqualTo("paymentType", "regular");
                 query.whereGreaterThanOrEqualTo("createdAt", startDate);
                 query.whereLessThanOrEqualTo("createdAt", endDate);
                 query.orderByDescending("createdAt");
