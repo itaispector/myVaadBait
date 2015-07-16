@@ -167,7 +167,6 @@ public class UserExpenses extends Fragment implements DatePickerDialog.OnDateSet
 
     public void calcExpenses(List<ParseObject> expenses){
         totalExpensesAmount = 0;
-        int housesInBuilding = customParseAdapter.housesInBuilding;
 
         for (ParseObject expensesRow : expenses) {
             //get specific data from each row
@@ -176,7 +175,7 @@ public class UserExpenses extends Fragment implements DatePickerDialog.OnDateSet
             String paymentType = expensesRow.getString("paymentType");
 
             if(paymentType.equals("extra")){
-                totalExpensesAmount += Integer.parseInt(amount)/housesInBuilding;
+                totalExpensesAmount += Integer.parseInt(amount)/expensesRow.getInt("houses");
 
             }else{
                 totalExpensesAmount += Integer.parseInt(amount);
