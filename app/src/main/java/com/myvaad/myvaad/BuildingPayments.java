@@ -1,24 +1,16 @@
 package com.myvaad.myvaad;
 
-import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckedTextView;
@@ -36,8 +28,10 @@ import com.melnykov.fab.FloatingActionButton;
 import com.parse.CountCallback;
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
+import com.parse.FunctionCallback;
 import com.parse.GetCallback;
 import com.parse.Parse;
+import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -49,15 +43,17 @@ import net.simonvt.numberpicker.NumberPicker;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import adapters.PaymentsAdminVaadBaitAdapter;
 import adapters.PaymentsUserVaadBaitAdapter;
+import dialogs.RingProgressDialog;
 
 public class BuildingPayments extends Fragment {
 
     private ParseDB db;
-    private TextView noPaymentsTextView;
+    private TextView noPaymentsTextView, noPaymentsAdminTextView;
     private ViewFlipper viewFlipper;
     private ListView userListView, adminListView;
     private PaymentsAdminVaadBaitAdapter adminVaadBaitAdapter;
@@ -69,7 +65,7 @@ public class BuildingPayments extends Fragment {
     private Button okDialog, saveBtn, markAllBtn, cancelBtn, yearButton, payBtn;
     private String yearValue, monthlyValue, currentClickedUserObjectId, currentClickedUserFamilyName, buildingCode, vaadPayPalAccount;
     private CheckedTextView cb1, cb2, cb3, cb4, cb5, cb6, cb7, cb8, cb9, cb10, cb11, cb12;
-    private RelativeLayout monthsCb, topToolBar;
+    private RelativeLayout monthsCb;
     private List<ParseObject> months;
     private TextView familyNameTextView, paymentTitle, paymentPrice, paymentYear;
     private boolean markAllBtnPressed = false;
@@ -79,7 +75,8 @@ public class BuildingPayments extends Fragment {
     private ImageView trashBtn, notiBtn;
     private ParseObject payment;
     private int total;
-    private ArrayList objectIds = new ArrayList<String>();
+    private ArrayList objectIds = new ArrayList<>();
+    private boolean currentClickedUserPaidAll = false;
 
 
     @Override
@@ -92,7 +89,6 @@ public class BuildingPayments extends Fragment {
             getActivity().getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
         loader = (ProgressView) rootView.findViewById(R.id.progress_loader);
-        loader.setVisibility(View.VISIBLE);
 
         buildingCode = db.getCurrentUserBuildingCode();
         viewFlipper = (ViewFlipper) rootView.findViewById(R.id.paymentsVaadBaitViewFlipper);
@@ -101,6 +97,8 @@ public class BuildingPayments extends Fragment {
         getCurrentYear();
 
         noPaymentsTextView = (TextView) rootView.findViewById(R.id.no_payments_text);
+        noPaymentsAdminTextView = (TextView) rootView.findViewById(R.id.no_payments_text_admin);
+
         //if is not admin, show all vaad bait open payments for dayar
         if (!db.isCurrentUserAdmin()) {
             userListView = (ListView) rootView.findViewById(R.id.paymentsDayarVaadBaitListView);
@@ -117,11 +115,12 @@ public class BuildingPayments extends Fragment {
                     ParseObject user = adminVaadBaitAdapter.getItem(i);
                     currentClickedUserObjectId = user.getObjectId();
                     currentClickedUserFamilyName = user.getString("familyName");
+                    currentClickedUserPaidAll = adminVaadBaitAdapter.getPaid(i);
                     getMonthsFromParse();
                 }
             });
         }
-        if (!db.isCurrentUserAdmin()){
+        if (!db.isCurrentUserAdmin()) {
             userListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -133,9 +132,9 @@ public class BuildingPayments extends Fragment {
 
 
         addPaymentBtn = (FloatingActionButton) rootView.findViewById(R.id.add_payment_btn);
-        if (db.isCurrentUserAdmin()){
+        if (db.isCurrentUserAdmin()) {
             addPaymentBtn.attachToListView(adminListView);
-        }else{
+        } else {
             addPaymentBtn.attachToListView(userListView);
         }
         addPaymentBtn.setOnClickListener(new View.OnClickListener() {
@@ -173,20 +172,35 @@ public class BuildingPayments extends Fragment {
                             }
                             years = new String[tmp.size()];
                             tmp.toArray(years);
-                            new MaterialDialog.Builder(getActivity())
-                                    .title(R.string.choose_year)
-                                    .titleGravity(GravityEnum.END)
-                                    .items(years)
-                                    .itemsGravity(GravityEnum.END)
-                                    .itemsCallback(new MaterialDialog.ListCallback() {
-                                        @Override
-                                        public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                                            yearButton.setText(years[which] + "");
-                                            selectedYear = Integer.parseInt(years[which]);
-                                        }
-                                    })
-                                    .show();
                             loader.setVisibility(View.GONE);
+                            // found results open dialog with years
+                            if (!tmp.isEmpty()) {
+                                new MaterialDialog.Builder(getActivity())
+                                        .title(R.string.choose_year)
+                                        .titleGravity(GravityEnum.END)
+                                        .items(years)
+                                        .itemsGravity(GravityEnum.END)
+                                        .itemsCallback(new MaterialDialog.ListCallback() {
+                                            @Override
+                                            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                                                yearButton.setText(years[which] + "");
+                                                selectedYear = Integer.parseInt(years[which]);
+                                                // if is admin, call list view of users for selected year
+                                                if (db.isCurrentUserAdmin()) {
+                                                    loadUserListViewForAdmin();
+                                                } else {
+                                                    // call user's list view of payments for selected year
+                                                    loadUserListView();
+                                                }
+
+                                            }
+                                        })
+                                        .show();
+                            } else {
+                                noResultsDialog();
+                            }
+
+
                         } else {
                             Log.v("*****PARSE ERROR*****", e.getMessage());
                         }
@@ -201,7 +215,52 @@ public class BuildingPayments extends Fragment {
         notiBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // send notification to all users who have open payments for this year
+                if (noPaymentsAdminTextView.isShown()) {
+                    noResultsDialog();
+                } else {
+                    new MaterialDialog.Builder(getActivity())
+                            .content(getResources().getString(R.string.send_notification_vaad) + " " + selectedYear + "?")
+                            .contentGravity(GravityEnum.END)
+                            .positiveText(R.string.yes)
+                            .positiveColorRes(R.color.colorPrimary)
+                            .negativeText(R.string.no)
+                            .negativeColorRes(R.color.colorPrimary)
+                            .buttonsGravity(GravityEnum.END)
+                            .callback(new MaterialDialog.ButtonCallback() {
+                                @Override
+                                public void onPositive(MaterialDialog dialog) {
+                                    super.onPositive(dialog);
+                                    HashMap<String, Object> params = new HashMap<String, Object>();
+                                    List usersObjectId = new ArrayList<>();
+                                    List familyNames = new ArrayList<>();
+                                    for (int i = 0; i < adminVaadBaitAdapter.getCount(); i++) {
+                                        // if user didn't pay yet, add him to list of users who didn't pay,
+                                        // and notify them
+                                        if (!adminVaadBaitAdapter.getPaid(i)) {
+                                            String userObjectId = (adminVaadBaitAdapter.getItem(i)).getObjectId();
+                                            String familyName = (adminVaadBaitAdapter.getItem(i)).getString("familyName");
+                                            usersObjectId.add(userObjectId);
+                                            familyNames.add(familyName);
+                                        }
+                                    }
+                                    params.put("usersObjectIds", usersObjectId);
+                                    params.put("familyNames", familyNames);
+                                    params.put("selectedYear", selectedYear + "");
+                                    ParseCloud.callFunctionInBackground("sendNotificationToUnPaidUsersVaad", params, new FunctionCallback<String>() {
+                                        public void done(String result, ParseException e) {
+                                            if (e == null) {
+                                                mToast(getString(R.string.noti_success));
+                                            } else {
+                                                mToast(getString(R.string.noti_failure));
+                                                mToast(e.getMessage());
+                                            }
+                                        }
+                                    });
+
+                                }
+                            })
+                            .show();
+                }
             }
         });
 
@@ -214,48 +273,51 @@ public class BuildingPayments extends Fragment {
         trashBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // delete all payments for this year
-                new MaterialDialog.Builder(getActivity())
-                        .content(getResources().getString(R.string.delete_vaad_bait_payments) + " " + selectedYear + "?")
-                        .contentGravity(GravityEnum.END)
-                        .positiveText(R.string.yes)
-                        .positiveColorRes(R.color.colorPrimary)
-                        .negativeText(R.string.no)
-                        .negativeColorRes(R.color.colorPrimary)
-                        .buttonsGravity(GravityEnum.END)
-                        .callback(new MaterialDialog.ButtonCallback() {
-                            @Override
-                            public void onPositive(MaterialDialog dialog) {
-                                super.onPositive(dialog);
-                                ParseQuery.getQuery("payments")
-                                        .whereEqualTo("year", selectedYear+"")
-                                        .findInBackground(new FindCallback<ParseObject>() {
-                                            @Override
-                                            public void done(List<ParseObject> list, ParseException e) {
-                                                if (e == null) {
-                                                    mToast(list + "");
-
-                                                    ParseObject.deleteAllInBackground(list, new DeleteCallback() {
-                                                        @Override
-                                                        public void done(ParseException e) {
-                                                            if (e == null) {
-                                                                mToast("success");
-                                                            } else {
-                                                                mToast("failure");
+                if (noPaymentsAdminTextView.isShown()) {
+                    noResultsDialog();
+                } else {
+                    // delete all payments for this year
+                    new MaterialDialog.Builder(getActivity())
+                            .content(getResources().getString(R.string.delete_vaad_bait_payments) + " " + selectedYear + "?")
+                            .contentGravity(GravityEnum.END)
+                            .positiveText(R.string.yes)
+                            .positiveColorRes(R.color.colorPrimary)
+                            .negativeText(R.string.no)
+                            .negativeColorRes(R.color.colorPrimary)
+                            .buttonsGravity(GravityEnum.END)
+                            .callback(new MaterialDialog.ButtonCallback() {
+                                @Override
+                                public void onPositive(MaterialDialog dialog) {
+                                    super.onPositive(dialog);
+                                    ParseQuery.getQuery("payments")
+                                            .whereEqualTo("year", selectedYear + "")
+                                            .findInBackground(new FindCallback<ParseObject>() {
+                                                @Override
+                                                public void done(List<ParseObject> list, ParseException e) {
+                                                    if (e == null) {
+                                                        ParseObject.deleteAllInBackground(list, new DeleteCallback() {
+                                                            @Override
+                                                            public void done(ParseException e) {
+                                                                if (e == null) {
+                                                                    loadUserListViewForAdmin();
+                                                                } else {
+                                                                    addLog(e.getMessage());
+                                                                }
                                                             }
-                                                        }
-                                                    });
+                                                        });
 
-                                                } else {
-                                                    mToast(e.getMessage());
+                                                    } else {
+                                                        mToast(e.getMessage());
+                                                    }
+
                                                 }
+                                            });
 
-                                            }
-                                        });
+                                }
+                            })
+                            .show();
+                }
 
-                            }
-                        })
-                        .show();
 
             }
         });
@@ -278,21 +340,18 @@ public class BuildingPayments extends Fragment {
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> payments, ParseException e) {
-                topToolBar = (RelativeLayout)getActivity().findViewById(R.id.vaadBaitTopBar);
                 if (payments.isEmpty()) {
                     // turn off loader
                     loader.setVisibility(View.GONE);
                     // show no payments view
+                    noPaymentsTextView.setText(getString(R.string.no_vaad_bait_payments) + " " + selectedYear);
                     noPaymentsTextView.setVisibility(View.VISIBLE);
-
-                    topToolBar.setVisibility(View.GONE);
                     addPaymentBtn.setVisibility(View.GONE);
                 } else {
                     noPaymentsTextView.setVisibility(View.GONE);
                     paymentsUserVaadBaitAdapter = new PaymentsUserVaadBaitAdapter(getActivity(), payments);
                     userListView.setAdapter(paymentsUserVaadBaitAdapter);
                     loader.setVisibility(View.GONE);
-                    topToolBar.setVisibility(View.VISIBLE);
                     addPaymentBtn.setVisibility(View.VISIBLE);
                 }
 
@@ -301,27 +360,45 @@ public class BuildingPayments extends Fragment {
     }
 
     public void loadUserListViewForAdmin() {
+        loader.setVisibility(View.VISIBLE);
+        // first get users list for current building
         final String buildingCode = db.getCurrentUserBuildingCode();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
         query.whereEqualTo("buildingCode", buildingCode);
+        query.orderByAscending("familyName");
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
-            public void done(List<ParseObject> users, ParseException e) {
-                loader.setVisibility(View.GONE);
-                adminVaadBaitAdapter = new PaymentsAdminVaadBaitAdapter(getActivity(), users);
-                adminListView.setAdapter(adminVaadBaitAdapter);
-                ParseQuery<ParseObject> queryB = ParseQuery.getQuery("payments");
-                queryB.whereEqualTo("buildingCode", buildingCode);
-                queryB.whereEqualTo("paymentType", "vaad");
-                queryB.findInBackground(new FindCallback<ParseObject>() {
-                    @Override
-                    public void done(List<ParseObject> users, ParseException e) {
-                        if (e == null) {
-
+            public void done(final List<ParseObject> usersList, ParseException e) {
+                if (e == null) {
+                    // second, get paid all data for each user in building,
+                    // also finds out if there's no payments for that year
+                    ParseQuery<ParseObject> queryB = ParseQuery.getQuery("payments");
+                    queryB.whereEqualTo("buildingCode", buildingCode);
+                    queryB.whereEqualTo("year", selectedYear + "");
+                    queryB.whereEqualTo("period", "01");
+                    queryB.getFirstInBackground(new GetCallback<ParseObject>() {
+                        @Override
+                        public void done(ParseObject paidAllList, ParseException e) {
+                            if (e == null) {
+                                List paidAll = null;
+                                loader.setVisibility(View.GONE);
+                                noPaymentsAdminTextView.setVisibility(View.GONE);
+                                if (paidAllList.getList("paidAll") != null) {
+                                    paidAll = paidAllList.getList("paidAll");
+                                }
+                                adminVaadBaitAdapter = new PaymentsAdminVaadBaitAdapter(getActivity(), usersList, paidAll);
+                                adminListView.setVisibility(View.VISIBLE);
+                                adminListView.setAdapter(adminVaadBaitAdapter);
+                            } else {
+                                loader.setVisibility(View.GONE);
+                                adminListView.setVisibility(View.GONE);
+                                // show no payments view
+                                noPaymentsAdminTextView.setText(getString(R.string.no_vaad_bait_payments) + " " + selectedYear);
+                                noPaymentsAdminTextView.setVisibility(View.VISIBLE);
+                            }
                         }
-                    }
-                });
-
+                    });
+                }
             }
         });
 
@@ -394,26 +471,12 @@ public class BuildingPayments extends Fragment {
         });
 
         markAllBtn = (Button) dialogLayout.findViewById(R.id.monthsMarkAllBtn);
+        // sets mark all button state
+        markAllBtn.setText(currentClickedUserPaidAll ? getString(R.string.clean) : getString(R.string.mark_all));
         markAllBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!markAllBtnPressed) {
-                    //mark all
-                    for (int i = 0; i < monthsCb.getChildCount(); i++) {
-                        ((CheckedTextView) monthsCb.getChildAt(i)).setChecked(true);
-                        ((CheckedTextView) monthsCb.getChildAt(i)).setTypeface(Typeface.DEFAULT_BOLD);
-                    }
-                    markAllBtn.setText(getResources().getString(R.string.clean));
-                    markAllBtnPressed = true;
-                } else {
-                    //clear all
-                    for (int i = 0; i < monthsCb.getChildCount(); i++) {
-                        ((CheckedTextView) monthsCb.getChildAt(i)).setChecked(false);
-                        ((CheckedTextView) monthsCb.getChildAt(i)).setTypeface(Typeface.DEFAULT_BOLD);
-                    }
-                    markAllBtn.setText(getResources().getString(R.string.mark_all));
-                    markAllBtnPressed = false;
-                }
+                btnState();
             }
         });
 
@@ -421,21 +484,38 @@ public class BuildingPayments extends Fragment {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                paymentsDialog.dismiss();
+                loader.setVisibility(View.VISIBLE);
                 List users = new ArrayList();
+                // counter to check if all months paid, then mark user as paid all
+                int counter = 0;
                 for (int i = 0; i < monthsCb.getChildCount(); i++) {
                     ParseObject user = months.get(i);
                     if (((CheckedTextView) monthsCb.getChildAt(i)).isChecked()) {
                         user.addUnique("paidBy", currentClickedUserObjectId);
+                        counter++;
                     } else {
                         user.removeAll("paidBy", Arrays.asList(currentClickedUserObjectId));
                     }
                     users.add(user);
                 }
+                // if paid all saves information in period 01 of selected year
+                if (counter == 12) {
+                    ParseObject user = months.get(0);
+                    user.addUnique("paidBy", currentClickedUserObjectId);
+                    user.addUnique("paidAll", currentClickedUserObjectId);
+                    users.set(0, user);
+                } else {
+                    ParseObject user = months.get(0);
+                    user.removeAll("paidAll", Arrays.asList(currentClickedUserObjectId));
+                    users.set(0, user);
+                }
                 ParseObject.saveAllInBackground(users, new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
                         if (e == null) {
-                            paymentsDialog.dismiss();
+                            //paymentsDialog.dismiss();
+                            loadUserListViewForAdmin();
                         } else {
                             Log.v("****PPPPARRRRSEEEE****", e.getLocalizedMessage());
                         }
@@ -444,6 +524,27 @@ public class BuildingPayments extends Fragment {
             }
         });
 
+    }
+
+    // sets mark all button state according to the data and events
+    public void btnState() {
+        if (!markAllBtnPressed) {
+            //mark all
+            for (int i = 0; i < monthsCb.getChildCount(); i++) {
+                ((CheckedTextView) monthsCb.getChildAt(i)).setChecked(true);
+                ((CheckedTextView) monthsCb.getChildAt(i)).setTypeface(Typeface.DEFAULT_BOLD);
+            }
+            markAllBtn.setText(getResources().getString(R.string.clean));
+            markAllBtnPressed = true;
+        } else {
+            //clear all
+            for (int i = 0; i < monthsCb.getChildCount(); i++) {
+                ((CheckedTextView) monthsCb.getChildAt(i)).setChecked(false);
+                ((CheckedTextView) monthsCb.getChildAt(i)).setTypeface(Typeface.DEFAULT);
+            }
+            markAllBtn.setText(getResources().getString(R.string.mark_all));
+            markAllBtnPressed = false;
+        }
     }
 
     public View.OnClickListener checkListener = new View.OnClickListener() {
@@ -455,6 +556,7 @@ public class BuildingPayments extends Fragment {
     };
 
     public void getMonthsFromParse() {
+        loader.setVisibility(View.VISIBLE);
         ParseQuery<ParseObject> query = ParseQuery.getQuery("payments");
         query.whereEqualTo("buildingCode", buildingCode);
         query.whereEqualTo("paymentType", "vaad");
@@ -466,6 +568,7 @@ public class BuildingPayments extends Fragment {
                 if (e == null) {
                     months = monthsServer;
                     checkMonthsDialog();
+                    loader.setVisibility(View.GONE);
                 } else {
                     Log.v("********Parse**********", e.getLocalizedMessage());
                 }
@@ -485,11 +588,11 @@ public class BuildingPayments extends Fragment {
         yearValue = currentYear[0];
 
         //set max value for np
-        final String[] years = new String[2101-year];
+        final String[] years = new String[2101 - year];
 
         // set numbers of picker
-        for (int i=0; i<years.length;i++){
-            years[i]=""+(year+i);
+        for (int i = 0; i < years.length; i++) {
+            years[i] = "" + (year + i);
         }
 
         npYear.setDisplayedValues(years);
@@ -576,6 +679,8 @@ public class BuildingPayments extends Fragment {
      * next dialog of month
      */
     public void isExistPaymentForYear(final String yearValue) {
+        paymentsDialog.dismiss();
+        final RingProgressDialog ringLoader = new RingProgressDialog(getActivity());
         String currentBuilding = db.getCurrentUserBuildingCode();
         ParseQuery query = ParseQuery.getQuery("payments");
         query.whereEqualTo("buildingCode", currentBuilding);
@@ -587,12 +692,13 @@ public class BuildingPayments extends Fragment {
                 if (e == null) {
                     //there's already payment for selected year
                     if (i != 0) {
+                        ringLoader.dismiss();
                         Toast toast = Toast.makeText(getActivity(), R.string.vaad_bait_exists, Toast.LENGTH_SHORT);
                         toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();
+                        setPaymentDialogYear();
                     } else {
-                        //close current dialog
-                        paymentsDialog.dismiss();
+                        ringLoader.dismiss();
                         //open next dialog
                         setPaymentDialogMonth();
                     }
@@ -625,6 +731,7 @@ public class BuildingPayments extends Fragment {
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
                     paymentsDialog.dismiss();
+                    loadUserListViewForAdmin();
                 } else {
                     Toast toast = Toast.makeText(getActivity(), R.string.problem_text, Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.CENTER, 0, 0);
@@ -728,6 +835,17 @@ public class BuildingPayments extends Fragment {
 
     }
 
+    public void noResultsDialog() {
+        new MaterialDialog.Builder(getActivity())
+                .content(R.string.no_year_found)
+                .contentGravity(GravityEnum.END)
+                .positiveText(R.string.close)
+                .positiveColorRes(R.color.colorPrimary)
+                .btnStackedGravity(GravityEnum.START)
+                .forceStacking(true)
+                .show();
+    }
+
     public void pay() {
         Intent i = new Intent(getActivity(), PayPalActivity.class);
         i.putExtra("amount", payment.getString("amount"));
@@ -744,7 +862,7 @@ public class BuildingPayments extends Fragment {
 
     public void pay(double total, ArrayList<String> objectIds) {
         Intent i = new Intent(getActivity(), PayPalActivity.class);
-        i.putExtra("amount", total+"");
+        i.putExtra("amount", total + "");
         i.putExtra("paymentName", getResources().getString(R.string.total_pay));
         i.putStringArrayListExtra("objectIds", objectIds);
         i.putExtra("userObjectId", db.getCurrentUserObjectId());
