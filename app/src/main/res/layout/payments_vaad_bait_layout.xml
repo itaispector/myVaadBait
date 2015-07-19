@@ -33,6 +33,7 @@
             android:layout_alignParentLeft="true"
             android:contentDescription="@string/delete_all_payments"
             android:padding="10dp"
+            android:background="@drawable/year_button"
             android:src="@drawable/trash100" />
 
         <ImageView
@@ -43,6 +44,7 @@
             android:layout_toRightOf="@id/trashToolBar"
             android:contentDescription="@string/send_notice"
             android:padding="10dp"
+            android:background="@drawable/year_button"
             android:src="@drawable/notification_icon" />
 
     </RelativeLayout>
@@ -64,7 +66,16 @@
                 android:layout_height="match_parent"
                 android:divider="#00000000"
                 android:dividerHeight="4dp"
+                android:listSelector="@drawable/transparent_button"
                 android:padding="6dp" />
+            <TextView
+                android:id="@+id/no_payments_text_admin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text=""
+                android:visibility="gone" />
 
 
         </RelativeLayout>
