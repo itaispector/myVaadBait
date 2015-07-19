@@ -1,27 +1,4 @@
-<!--
-  Copyright 2013 The Android Open Source Project
-
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
-  -->
-
 <resources>
-    <string-array name="planets_array">
-        <item>לוח מודעות</item>
-        <item>מסך תקלות</item>
-        <item>דף פירוט הוצאות</item>
-        <item>דף תשלומים</item>
-        <item>התנתק</item>
-    </string-array>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="action_websearch">Web search</string>
@@ -118,7 +95,7 @@
     <string name="vaad_bait_payments">תשלומי ועד</string>
     <string name="general_payments">כללי</string>
     <string name="year">שנה</string>
-    <string name="no_vaad_bait_payments">אין תשלומי ועד בית</string>
+    <string name="no_vaad_bait_payments">אין תשלומים לשנת</string>
     <string name="_no_payments">אין תשלומים</string>
     <string name="month">תשלום &#xA; חודשי (&#x20AA;)</string>
     <string name="no_payments">אין הוצאות</string>
@@ -156,6 +133,10 @@
         <item>regular</item>
         <item>extra</item>
     </string-array>
+    <string name="no_year_found">לא נמצאו תשלומים לשנה זו</string>
+    <string name="send_notification_vaad">שלח התראה לכל מי שלא שילם את כל התשלומים לשנת</string>
+    <string name="noti_success">התראה נשלחה בהצלחה</string>
+    <string name="noti_failure">שליחת התראה נכשלה, אנא נסה שנית</string>
     <string-array name="login_page_array">
         <item>תפריט</item>
         <item>של</item>
