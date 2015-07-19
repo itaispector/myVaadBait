@@ -28,6 +28,8 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -506,6 +508,13 @@ public class ParseDB {
         ParseUser currentUser = getcurrentUser();
         currentUser.put("buildingCode", buildingCode);
         currentUser.put("apartmentNumber", userApartmentNumber);
+        currentUser.saveInBackground();
+    }
+
+    protected void userLeaveBuildingCode() {
+        ParseUser currentUser = getcurrentUser();
+        currentUser.put("buildingCode", JSONObject.NULL);
+        currentUser.put("apartmentNumber", JSONObject.NULL);
         currentUser.saveInBackground();
     }
 
@@ -1674,7 +1683,6 @@ protected List getCurrentUserFailuresBoard() {
                     ParseInstallation.getCurrentInstallation().put("userNamePush", object.get("username"));
                     ParseInstallation.getCurrentInstallation().put("userObjectId", object.getObjectId());
                     ParseInstallation.getCurrentInstallation().put("buildingCode", object.get("buildingCode"));
-                    ParseInstallation.getCurrentInstallation().put("active", true);
                     ParseInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {

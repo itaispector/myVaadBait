@@ -204,20 +204,27 @@ public class SignUp extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == getActivity().RESULT_OK && null != data) {
-            Uri selectedImage = data.getData();
-            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-            Cursor cursor = getActivity().getContentResolver().query(selectedImage,
-                    filePathColumn, null, null, null);
-            cursor.moveToFirst();
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            picturePath = cursor.getString(columnIndex);
-            cursor.close();
-            bm = BitmapFactory.decodeFile(picturePath);
-            int nh = (int) (bm.getHeight() * (222.0 / bm.getWidth()));
-            bm = Bitmap.createScaledBitmap(bm, 222, nh, true);
-            imageView.setImageBitmap(getCircularBitmap(222, bm));
+        try{
+            if (requestCode == RESULT_LOAD_IMAGE && resultCode == getActivity().RESULT_OK && null != data) {
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                Cursor cursor = getActivity().getContentResolver().query(selectedImage,
+                        filePathColumn, null, null, null);
+                cursor.moveToFirst();
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                picturePath = cursor.getString(columnIndex);
+                cursor.close();
+                bm = BitmapFactory.decodeFile(picturePath);
+                int nh = (int) (bm.getHeight() * (222.0 / bm.getWidth()));
+                bm = Bitmap.createScaledBitmap(bm, 222, nh, true);
+                imageView.setImageBitmap(getCircularBitmap(222, bm));
+            }
+        }catch (Exception e){
+            Toast.makeText(getActivity(), "משהו השתבש אנא נסה/י שנית!", Toast.LENGTH_LONG)
+                    .show();
+            Log.v("***Image Pick Error***",e.getMessage());
         }
+
     }
 
     public void signup() {
