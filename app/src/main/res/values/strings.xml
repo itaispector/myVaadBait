@@ -119,7 +119,7 @@
     <string name="no_paypal_message">טרם הוזנו פרטי חשבון ועד בית לתשלום</string>
     <string name="close">סגור</string>
     <string name="pay_all">שלם הכל?</string>
-    <string name="total_pay">תשלום כולל</string>
+    <string name="total_pay">ועד בית - תשלום כולל</string>
     <string name="choose_year">בחר שנה</string>
     <string name="delete_vaad_bait_payments">מחק תשלומי ועד לשנת</string>
     <string name="_month">חודש</string>
