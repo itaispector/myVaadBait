@@ -1674,6 +1674,7 @@ protected List getCurrentUserFailuresBoard() {
                     ParseInstallation.getCurrentInstallation().put("userNamePush", object.get("username"));
                     ParseInstallation.getCurrentInstallation().put("userObjectId", object.getObjectId());
                     ParseInstallation.getCurrentInstallation().put("buildingCode", object.get("buildingCode"));
+                    ParseInstallation.getCurrentInstallation().put("active", true);
                     ParseInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
@@ -1691,6 +1692,34 @@ protected List getCurrentUserFailuresBoard() {
         });
     }
 
+    /**
+     * daniel new 19/7/15
+     */
+    //when starting application this method saves user data in installation table,
+    //this is needed to perform the push notification on users device
+    //works in background
+    protected void saveUserInstallationPushActive(final boolean yesOrNo) {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
+        query.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<ParseObject>() {
+            public void done(ParseObject object, ParseException e) {
+                if (e == null) {
+                    ParseInstallation.getCurrentInstallation().put("active", yesOrNo);
+                    ParseInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null) {
+                                //Toast.makeText(context, "successfully saved and installed", Toast.LENGTH_LONG).show();
+                            } else {
+                                //Toast.makeText(context, "" + e, Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+                } else {
+                    //Toast.makeText(context, "" + e, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
 
     /**
      * ******************************* NEW BY DANIEL ********************************
