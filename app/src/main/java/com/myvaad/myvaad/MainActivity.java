@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (currentTime >= 20 || currentTime < 6) {
             navHeaderBackground.setImageDrawable(getResources().getDrawable(R.drawable.img_drawer_header));
         } else {
-            navHeaderBackground.setImageDrawable(getResources().getDrawable(R.drawable.app_bg));
+            navHeaderBackground.setImageDrawable(getResources().getDrawable(R.drawable.city_day_1));
         }
     }
 
@@ -169,9 +170,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 break;
             case R.id.navigation_userPrifile:
+                mDrawerLayout.closeDrawer(GravityCompat.START);
                 Intent i = new Intent(this, UserProfile.class);
                 startActivity(i);
-                mDrawerLayout.closeDrawer(GravityCompat.START);
                 break;
         }
 
