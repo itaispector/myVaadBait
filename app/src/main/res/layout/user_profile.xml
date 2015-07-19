@@ -1,5 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layoutDirection="ltr">
@@ -28,6 +28,23 @@
                     android:layout_weight="5.5"
                     android:layout_marginTop="25dp"
                     android:layout_height="0dp">
+                    <com.rey.material.widget.ProgressView
+                        android:id="@+id/progress_loader"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:pv_autostart="true"
+                        android:layout_gravity="center_horizontal"
+                        app:pv_circular="true"
+                        android:layout_marginTop="6dp"
+                        android:visibility="gone"
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_centerVertical="true"
+                        android:layout_centerHorizontal="true"
+                        app:pv_progressStyle="@style/Material.Drawable.CircularProgress"
+                        app:pv_progressMode="indeterminate"/>
+
                     <ImageView
                         android:id="@+id/user_profile_img"
                         android:layout_width="match_parent"
@@ -56,14 +73,16 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
                         android:text="מחק תמונה"
-                        android:textColor="#fff" />
+                        android:textColor="#fff"
+                        android:onClick="deleteImage"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
                         android:text="שנה תמונה"
-                        android:textColor="#fff" />
+                        android:textColor="#fff"
+                        android:onClick="changeImage"/>
                 </LinearLayout>
             </LinearLayout>
             <RelativeLayout
