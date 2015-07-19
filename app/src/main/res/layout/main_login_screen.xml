@@ -77,7 +77,7 @@
         android:layout_weight="1"
         android:text="@string/login"
         android:textColor="#fff"
-        android:background="@drawable/button_shape" />
+        android:background="@drawable/blue_buttons_style" />
 
     <Button
         android:id="@+id/MainLoginScreenSignUpBtn"
@@ -90,6 +90,6 @@
         android:layout_marginBottom="70dp"
         android:text="@string/signup_btn"
         android:textColor="#fff"
-        android:background="@drawable/button_shape" />
+        android:background="@drawable/blue_buttons_style" />
 
 </LinearLayout>
