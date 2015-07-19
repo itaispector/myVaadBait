@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -202,6 +203,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragTransaction.attach(currentFragment);
             fragTransaction.commit();
         }
+        familyName.setText("משפחת " + db.getcurrentUserFamilyName());
+        userEmail.setText(db.getcurrentUserEmail());
+        userImage.setImageBitmap(db.getcurrentUserPicture());
     }
-
 }
