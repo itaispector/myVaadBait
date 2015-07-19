@@ -233,6 +233,7 @@ public class UserProfile extends AppCompatActivity {
                             db.updateUserFamilyName(text);
                             db.updateUserFamilyNameInNotices(db.getcurrentUser(), text);
                             updatePage();
+                            MainActivity mm = new MainActivity();
                         }
                         hideKeyboard(dialog.getInputEditText());
                     }
@@ -398,9 +399,10 @@ public class UserProfile extends AppCompatActivity {
                     public void done(ParseException e) {
                         loader.stop();
                         userProfileImg.setImageBitmap(bbb);
-                        Toast.makeText(getApplicationContext(), "סיים", Toast.LENGTH_LONG).show();
                     }
                 });
+            }else{
+                loader.stop();
             }
         }catch (Exception e){
             loader.stop();
@@ -436,8 +438,9 @@ public class UserProfile extends AppCompatActivity {
                         loader.setVisibility(View.VISIBLE);
                         loader.start();
                         bm = BitmapFactory.decodeResource(getResources(), R.drawable.no_image);
+                        final Bitmap bbb =getCircularBitmap(222, bm);
 
-                        byte[] image = convertImageToByteArray(bm);
+                        byte[] image = convertImageToByteArray(bbb);
                         final ParseFile file = new ParseFile("userImage" + ".png", image);
 
                         ParseUser object = db.getcurrentUser();
