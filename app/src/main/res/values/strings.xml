@@ -198,6 +198,7 @@
     <string name="shekel">₪</string>
     <string name="total">סך הכל</string>
     <string name="choose_start_date_before_end">בחר תאריך התחלה קודם לתאריך סיום</string>
+    <string name="noExpenses">אין הוצאות בתקופה הנבחרת</string>
 
     <!-- failures dialogs -->
     <string name="dialogTitle">ערוך הצעת מחיר</string>

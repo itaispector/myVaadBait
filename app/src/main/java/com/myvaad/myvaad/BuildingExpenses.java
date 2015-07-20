@@ -41,6 +41,7 @@ public class BuildingExpenses extends Fragment implements DatePickerDialog.OnDat
     FloatingActionButton addFilterBtn;
     FragmentActivity myContext;
     ProgressView bar;
+    private  TextView noExpensesText;
 
     private int startYear;
     private int startMonthOfYear;
@@ -60,6 +61,8 @@ public class BuildingExpenses extends Fragment implements DatePickerDialog.OnDat
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.building_expenses_layout, container, false);
+
+        noExpensesText = (TextView) rootView.findViewById(R.id.no_expenses_text);
 
         Calendar calendar = Calendar.getInstance();
 
@@ -191,11 +194,18 @@ public class BuildingExpenses extends Fragment implements DatePickerDialog.OnDat
 
     public void calcExpenses(List<ParseObject> expenses){
         totalExpensesAmount = 0;
-        for (ParseObject expensesRow : expenses) {
-            //get specific data from each row
-            String amount = expensesRow.getString("amount");
-            totalExpensesAmount += Integer.parseInt(amount);
+        if(!expenses.isEmpty()){
+            noExpensesText.setVisibility(View.GONE);
+
+            for (ParseObject expensesRow : expenses) {
+                //get specific data from each row
+                String amount = expensesRow.getString("amount");
+                totalExpensesAmount += Integer.parseInt(amount);
+            }
+        }else{
+            noExpensesText.setVisibility(View.VISIBLE);
         }
+
         buildingTotalExpensesTextView.setText(getActivity().getString(R.string.total) + " " + getActivity().getString(R.string.shekel) + totalExpensesAmount);
     }
 
