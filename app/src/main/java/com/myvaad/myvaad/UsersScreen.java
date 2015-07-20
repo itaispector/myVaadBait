@@ -54,7 +54,7 @@ public class UsersScreen extends Fragment {
     View dialogLayout;
     Dialog usersDialog;
     EditText famName, apartNum, msgEditText;
-    Button ok, cancel, msgOkBtn;
+    Button ok, msgOkBtn;
     List usersList = new ArrayList();
     /**
      * ProgressBarCircularIndeterminate bar;*
@@ -140,8 +140,6 @@ public class UsersScreen extends Fragment {
         });
     }
 
-
-
     public void sendMessageDialog(final String userObjectId) {
         // inflate message layout
         myDialog(R.layout.send_message_dialog);
@@ -224,13 +222,7 @@ public class UsersScreen extends Fragment {
                 }
             }
         });
-        cancel = (Button) dialogLayout.findViewById(R.id.usersAddDialogCancelBtn);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                usersDialog.dismiss();
-            }
-        });
+
     }
 
     private void addUser(final String familyName, final String apartmentNumber) {
