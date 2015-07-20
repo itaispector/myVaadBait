@@ -19,15 +19,12 @@ public class PaymentsAdminUsersListAdapter extends BaseAdapter {
 	private Context context;
 	ViewHolder holder;
 	List<ParseObject> users;
-	int position;
-	PaymentsScreen pScreen;
-	String objectId;
+	List paidBy;
 
-	public PaymentsAdminUsersListAdapter(Context context, List<ParseObject> users, String objectId, PaymentsScreen pScreen){
+	public PaymentsAdminUsersListAdapter(Context context, List<ParseObject> users, List paidBy){
 		this.context = context;
 		this.users = users;
-		this.objectId = objectId;
-		this.pScreen = pScreen;
+		this.paidBy = paidBy;
 	}
 	
 	@Override
@@ -37,8 +34,18 @@ public class PaymentsAdminUsersListAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public List getItem(int idx) {
-		return (List)users.get(idx);
+	public ParseObject getItem(int idx) {
+		return users.get(idx);
+	}
+
+	public boolean getPaid(int idx) {
+		boolean state = false;
+		ParseObject user = getItem(idx);
+		String userObjectId = user.getObjectId();
+		if (paidBy != null) {
+			state = paidBy.contains(userObjectId);
+		}
+		return state;
 	}
 
 	@Override
@@ -68,11 +75,15 @@ public class PaymentsAdminUsersListAdapter extends BaseAdapter {
             holder = (ViewHolder)convertView.getTag();
 		
 		//setting the data of the row
-		List user = getItem(idx);
-		String famName = (String)user.get(0);
-		boolean state = (boolean)user.get(2);
+		ParseObject user = getItem(idx);
+		String famName = user.getString("familyName");
+
+
+
+
+
 		holder.name.setText(context.getString(R.string.family) + " " + famName);
-		holder.checkBox.setChecked(state);
+		holder.checkBox.setChecked(getPaid(idx));
 		return convertView;
 	}
 }

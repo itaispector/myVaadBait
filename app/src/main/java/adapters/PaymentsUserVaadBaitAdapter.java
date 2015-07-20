@@ -25,7 +25,6 @@ public class PaymentsUserVaadBaitAdapter extends BaseAdapter {
 	public PaymentsUserVaadBaitAdapter(Context context, List<ParseObject> payments){
 		this.context=context;
 		this.payments=payments;
-		this.uObjectId=uObjectId;
 	}
 
 	@Override
