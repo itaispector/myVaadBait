@@ -2,66 +2,73 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:background="@drawable/list_item_background">
+    android:background="@drawable/dialog_margin">
 
     <TextView
         android:id="@+id/usersAddDialogTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:paddingRight="24dp"
+        android:paddingTop="24dp"
         android:text="@string/userDialogTitle"
+        android:textColor="@android:color/black"
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <EditText
+    <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/usersAddDialogFamName"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/usersAddDialogTitle"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/edit_text_style"
         android:hint="@string/fullname"
-        android:paddingBottom="5dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingTop="5dp"
-        android:marqueeRepeatLimit="marquee_forever"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="10dp"
+        android:singleLine="true"
         />
 
-    <EditText
+    <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/usersAddDialogApartNum"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/usersAddDialogFamName"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/edit_text_style"
         android:hint="@string/apartment_number_text"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="10dp"
         android:inputType="number"
-        android:paddingBottom="5dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingTop="5dp" />
+        android:singleLine="true" />
 
     <Button
         android:id="@+id/usersAddDialogOkBtn"
-        android:layout_width="130dp"
-        android:layout_height="40dp"
-        android:layout_below="@id/usersAddDialogApartNum"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp"
-        android:text="@string/ok"/>
-
-    <Button
-        android:id="@+id/usersAddDialogCancelBtn"
-        android:layout_width="130dp"
-        android:layout_height="40dp"
-        android:layout_below="@id/usersAddDialogApartNum"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp"
-        android:text="@string/cancel"/>
+        android:layout_below="@id/usersAddDialogApartNum"
+        android:background="@drawable/default_button"
+        android:textColor="@color/button_text_color"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:enabled="false"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center_vertical|left"
+        android:paddingLeft="24dp"
+        android:paddingStart="24dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:text="@string/add"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@id/usersAddDialogOkBtn"
+        android:background="@color/transparent"/>
+
 
 
 </RelativeLayout>
