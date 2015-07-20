@@ -140,6 +140,8 @@
     <string name="payment_move_to_expenses">תשלום הועבר בהצלחה להוצאות</string>
     <string name="payment_not_deleted">התשלום לא נמחק, אנא נסה שנית</string>
     <string name="payment_successfully_deleted">תשלום נמחק בהצלחה</string>
+    <string name="notification_msg_extra_payments">, נא לשלם את ה</string>
+    <string name="notification_msg_vaad_bait">, נא לשלם את התשלומים הנותרים לשנת</string>
     <string-array name="login_page_array">
         <item>תפריט</item>
         <item>של</item>
