@@ -142,7 +142,7 @@
     <string name="payment_successfully_deleted">תשלום נמחק בהצלחה</string>
     <string name="notification_msg_extra_payments">, נא לשלם את ה</string>
     <string name="notification_msg_vaad_bait">, נא לשלם את התשלומים הנותרים לשנת</string>
-    <string name="message_send">שליחת מודעה</string>
+    <string name="message_send">שליחת הודעה</string>
     <string name="send">שלח</string>
     <string name="write_message">כתוב מודעה</string>
     <string-array name="login_page_array">
