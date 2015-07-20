@@ -38,6 +38,8 @@ public class UserExpenses extends Fragment implements DatePickerDialog.OnDateSet
     FloatingActionButton addFilterBtn;
     FragmentActivity myContext;
 
+    private  TextView noExpensesText;
+
     private int startYear;
     private int startMonthOfYear;
     private int startDayOfMonth;
@@ -55,6 +57,8 @@ public class UserExpenses extends Fragment implements DatePickerDialog.OnDateSet
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.user_expenses_layout, container, false);
+
+        noExpensesText = (TextView) rootView.findViewById(R.id.no_expenses_text);
 
         Calendar calendar = Calendar.getInstance();
 
@@ -168,19 +172,26 @@ public class UserExpenses extends Fragment implements DatePickerDialog.OnDateSet
     public void calcExpenses(List<ParseObject> expenses){
         totalExpensesAmount = 0;
 
-        for (ParseObject expensesRow : expenses) {
-            //get specific data from each row
-            String amount = expensesRow.getString("amount");
+        if(!expenses.isEmpty()){
+            noExpensesText.setVisibility(View.GONE);
 
-            String paymentType = expensesRow.getString("paymentType");
+            for (ParseObject expensesRow : expenses) {
+                //get specific data from each row
+                String amount = expensesRow.getString("amount");
 
-            if(paymentType.equals("extra")){
-                totalExpensesAmount += Integer.parseInt(amount)/expensesRow.getInt("houses");
+                String paymentType = expensesRow.getString("paymentType");
 
-            }else{
-                totalExpensesAmount += Integer.parseInt(amount);
+                if(paymentType.equals("extra")){
+                    totalExpensesAmount += Integer.parseInt(amount)/expensesRow.getInt("houses");
+
+                }else{
+                    totalExpensesAmount += Integer.parseInt(amount);
+                }
             }
+        }else{
+            noExpensesText.setVisibility(View.VISIBLE);
         }
+
         userTotalExpensesTextView.setText(getActivity().getString(R.string.total) + " " + getActivity().getString(R.string.shekel) + totalExpensesAmount);
     }
 
