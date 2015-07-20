@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -246,8 +247,8 @@ public class BuildingPayments extends Fragment {
                                     }
                                     params.put("usersObjectIds", usersObjectId);
                                     params.put("familyNames", familyNames);
-                                    params.put("selectedYear", selectedYear + "");
-                                    ParseCloud.callFunctionInBackground("sendNotificationToUnPaidUsersVaad", params, new FunctionCallback<String>() {
+                                    params.put("msg", getString(R.string.notification_msg_vaad_bait)+ " " +selectedYear);
+                                    ParseCloud.callFunctionInBackground("sendNotificationToUnPaidUsers", params, new FunctionCallback<String>() {
                                         public void done(String result, ParseException e) {
                                             if (e == null) {
                                                 mToast(getString(R.string.noti_success));

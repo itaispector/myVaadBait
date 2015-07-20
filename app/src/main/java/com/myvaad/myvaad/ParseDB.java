@@ -1725,6 +1725,7 @@ protected List getCurrentUserFailuresBoard() {
             }
         });
     }
+
     /**
      * ******************************* NEW BY DANIEL ********************************
      */
@@ -1753,7 +1754,8 @@ protected List getCurrentUserFailuresBoard() {
 
     }
 
-    /*********************Itai new 9/7/15
+    /**
+     * ******************Itai new 9/7/15
      *
      * @param objectId
      */
@@ -1779,20 +1781,32 @@ protected List getCurrentUserFailuresBoard() {
         ;
     }
 
-    protected boolean deletePaymentBoolean(String objectId){
+    protected boolean deletePaymentBoolean(String objectId) {
         boolean isPaymentDeleted = false;
         ParseQuery<ParseObject> query = ParseQuery.getQuery("payments");
         try {
             ParseObject result = query.get(objectId);
             result.delete();
-            isPaymentDeleted=true;
+            isPaymentDeleted = true;
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return isPaymentDeleted;
     }
 
-    private void mToast(String s){
+    protected void savePaidUsers(String paymentObjectId, List userObjectIds) {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("payments");
+        try {
+            ParseObject result = query.get(paymentObjectId);
+            result.remove("paidBy");
+            result.addAllUnique("paidBy", userObjectIds);
+            result.save();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void mToast(String s) {
         Toast.makeText(context, s, Toast.LENGTH_LONG).show();
     }
 
