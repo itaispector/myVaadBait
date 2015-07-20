@@ -1,5 +1,6 @@
 package com.myvaad.myvaad;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -329,6 +330,7 @@ public class BuildingPayments extends Fragment {
     }
 
     public void loadUserListView() {
+        loader.setVisibility(View.VISIBLE);
         String buildingCode = db.getCurrentUserBuildingCode();
         String userObjectId = db.getCurrentUserObjectId();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("payments");
@@ -344,12 +346,14 @@ public class BuildingPayments extends Fragment {
                     // turn off loader
                     loader.setVisibility(View.GONE);
                     // show no payments view
+                    userListView.setVisibility(View.GONE);
                     noPaymentsTextView.setText(getString(R.string.no_vaad_bait_payments) + " " + selectedYear);
                     noPaymentsTextView.setVisibility(View.VISIBLE);
                     addPaymentBtn.setVisibility(View.GONE);
                 } else {
                     noPaymentsTextView.setVisibility(View.GONE);
                     paymentsUserVaadBaitAdapter = new PaymentsUserVaadBaitAdapter(getActivity(), payments);
+                    userListView.setVisibility(View.VISIBLE);
                     userListView.setAdapter(paymentsUserVaadBaitAdapter);
                     loader.setVisibility(View.GONE);
                     addPaymentBtn.setVisibility(View.VISIBLE);
@@ -856,6 +860,8 @@ public class BuildingPayments extends Fragment {
         i.putExtra("paymentObjectId", payment.getObjectId());
         i.putExtra("userObjectId", db.getCurrentUserObjectId());
         i.putExtra("email", vaadPayPalAccount);
+        i.putExtra("selectedYear", selectedYear+"");
+        i.putExtra("buildingCode", db.getCurrentUserBuildingCode());
         this.startActivity(i);
         paymentsDialog.dismiss();
     }
@@ -867,6 +873,8 @@ public class BuildingPayments extends Fragment {
         i.putStringArrayListExtra("objectIds", objectIds);
         i.putExtra("userObjectId", db.getCurrentUserObjectId());
         i.putExtra("email", vaadPayPalAccount);
+        i.putExtra("selectedYear", selectedYear+"");
+        i.putExtra("buildingCode", db.getCurrentUserBuildingCode());
         this.startActivity(i);
     }
 
@@ -889,9 +897,11 @@ public class BuildingPayments extends Fragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
+    public void onResume() {
+        super.onResume();
+        if (!db.isCurrentUserAdmin()){
+            loadUserListView();
+        }
     }
 }
 

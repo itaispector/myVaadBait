@@ -1768,7 +1768,7 @@ protected List getCurrentUserFailuresBoard() {
                     @Override
                     public void done(ParseException e) {
                         if (e == null) {
-                            mToast("save succesfull");
+                            mToast(context.getString(R.string.payment_move_to_expenses));
                         } else {
                             Log.v("******P Error********", e.getMessage());
                         }
@@ -1779,25 +1779,17 @@ protected List getCurrentUserFailuresBoard() {
         ;
     }
 
-    protected void deletePayment(String objectId){
+    protected boolean deletePaymentBoolean(String objectId){
+        boolean isPaymentDeleted = false;
         ParseQuery<ParseObject> query = ParseQuery.getQuery("payments");
-        query.getInBackground(objectId, new GetCallback<ParseObject>() {
-            @Override
-            public void done(ParseObject payment, ParseException e) {
-                if (e==null){
-                    payment.deleteInBackground(new DeleteCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                            if (e!=null){
-                                mToast(""+e);
-                            }
-                        }
-                    });
-                }else {
-                    mToast(""+e);
-                }
-            }
-        });
+        try {
+            ParseObject result = query.get(objectId);
+            result.delete();
+            isPaymentDeleted=true;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return isPaymentDeleted;
     }
 
     private void mToast(String s){
