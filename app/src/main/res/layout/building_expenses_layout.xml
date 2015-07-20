@@ -31,7 +31,13 @@
     <ListView
         android:id="@+id/buildingExpensesListview"
         android:layout_width="match_parent"
-        android:layout_height="400dp">
+        android:layout_height="400dp"
+        android:divider="#00000000"
+        android:dividerHeight="4dp"
+        android:listSelector="@drawable/transparent_button"
+        android:padding="6dp"
+        android:scrollingCache="false"
+        android:smoothScrollbar="true">
 
     </ListView>
 
