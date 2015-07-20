@@ -487,6 +487,7 @@ public class GeneralPayments extends Fragment {
     }
 
     private void addPaymentDialog() {
+        // opens dialog to choose extra or regular payment
         new MaterialDialog.Builder(getActivity())
                 .title(R.string.add_expense)
                 .titleGravity(GravityEnum.END)
@@ -497,7 +498,9 @@ public class GeneralPayments extends Fragment {
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
                     public void onSelection(MaterialDialog materialDialog, View view, int i, CharSequence charSequence) {
+                        // array of payment types
                         paymentType = getResources().getStringArray(R.array.payment_types)[i];
+                        // open dialog for add payment
                         myDialog(R.layout.add_payment_dialog);
 
                         loader.setVisibility(View.GONE);
