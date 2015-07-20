@@ -137,6 +137,9 @@
     <string name="send_notification_vaad">שלח התראה לכל מי שלא שילם את כל התשלומים לשנת</string>
     <string name="noti_success">התראה נשלחה בהצלחה</string>
     <string name="noti_failure">שליחת התראה נכשלה, אנא נסה שנית</string>
+    <string name="payment_move_to_expenses">תשלום הועבר בהצלחה להוצאות</string>
+    <string name="payment_not_deleted">התשלום לא נמחק, אנא נסה שנית</string>
+    <string name="payment_successfully_deleted">תשלום נמחק בהצלחה</string>
     <string-array name="login_page_array">
         <item>תפריט</item>
         <item>של</item>
