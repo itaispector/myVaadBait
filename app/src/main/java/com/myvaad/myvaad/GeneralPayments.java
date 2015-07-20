@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.DataSetObserver;
 import android.graphics.Typeface;
 import android.media.Image;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -69,7 +70,7 @@ public class GeneralPayments extends Fragment {
     private Button dialogPaymentOkBtn, payBtn;
     private ProgressView loader;
     private ImageView backBtn, sendNotifications, moveToExpensesBtn, deletePaymentBtn;
-    private TextView paymentTitle, paymentPrice;
+    private TextView paymentTitle, paymentPrice, noPaymentsText;
     private List usersList;
     private String paymentObjectId, vaadPayPalAccount, paymentType;
     private ParseObject payment;
@@ -98,6 +99,9 @@ public class GeneralPayments extends Fragment {
         loader = (ProgressView) rootView.findViewById(R.id.my_progress_loader);
         loader.setVisibility(View.VISIBLE);
 
+        // no payments text
+        noPaymentsText = (TextView) rootView.findViewById(R.id.no_payments_text);
+
         //list view pointer
         generalPaymentsListView = (ListView) rootView.findViewById(R.id.PaymentsFamilyListView);
 
@@ -116,6 +120,13 @@ public class GeneralPayments extends Fragment {
                     // move to next view, and populate list view of users for payment in background
                     loaderDialog = new RingProgressDialog(getActivity());
                     adminPaymentsList = (ListView) rootView.findViewById(R.id.paymentsDayarimListView);
+                    adminPaymentsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            CheckBox check =  (CheckBox)view.findViewById(R.id.usersListCB);
+                            check.setChecked(!check.isChecked());
+                        }
+                    });
                     loadListViewOfUsers(paymentObjectId, buildingCode);
                 } else {
                     // clicked by user
@@ -124,6 +135,8 @@ public class GeneralPayments extends Fragment {
                 }
             }
         });
+
+
 
         addPaymentBtn = (FloatingActionButton) rootView.findViewById(R.id.add_payment_btn);
         addPaymentBtn.attachToListView(generalPaymentsListView);
@@ -193,8 +206,7 @@ public class GeneralPayments extends Fragment {
                         .callback(new MaterialDialog.ButtonCallback() {
                             @Override
                             public void onPositive(MaterialDialog dialog) {
-                                db.movePaymentToExpenses(paymentObjectId);
-                                vfSetLayout(R.id.payments_general_layout);
+                                new MovePaymentTask().execute();
                             }
 
                             @Override
@@ -221,8 +233,7 @@ public class GeneralPayments extends Fragment {
                         .callback(new MaterialDialog.ButtonCallback() {
                             @Override
                             public void onPositive(MaterialDialog dialog) {
-                                db.deletePayment(paymentObjectId);
-                                vfSetLayout(R.id.payments_general_layout);
+                                new DeletePaymentTask().execute();
                             }
 
                             @Override
@@ -240,7 +251,56 @@ public class GeneralPayments extends Fragment {
         return rootView;
     }
 
+    class MovePaymentTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            loaderDialog = new RingProgressDialog(getActivity());
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            db.movePaymentToExpenses(paymentObjectId);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            listViewQueryInBackground();
+            vfSetLayout(R.id.payments_general_layout);
+            loaderDialog.dismiss();
+        }
+    }
+
+    class DeletePaymentTask extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+            loaderDialog = new RingProgressDialog(getActivity());
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            return db.deletePaymentBoolean(paymentObjectId);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean isDeleted) {
+            if (isDeleted) {
+                listViewQueryInBackground();
+                vfSetLayout(R.id.payments_general_layout);
+                loaderDialog.dismiss();
+                mToast(getString(R.string.payment_successfully_deleted));
+            } else {
+                mToast(getString(R.string.payment_not_deleted));
+            }
+
+        }
+    }
+
+
     private void listViewQueryInBackground() {
+        noPaymentsText.setVisibility(isVisible() ? View.GONE : View.VISIBLE);
         ParseQuery<ParseObject> query = ParseQuery.getQuery("payments");
         query.whereContains("buildingCode", db.getCurrentUserBuildingCode());
         query.whereContains("paymentType", "extra");
@@ -257,11 +317,16 @@ public class GeneralPayments extends Fragment {
                 if (e == null) {
                     paymentsAdapter = new PaymentsAdapter(getActivity(), payments, db.isCurrentUserAdmin());
                     generalPaymentsListView.setAdapter(paymentsAdapter);
-                    if (payments.size() == 0) {
+                    if (payments.isEmpty()) {
                         // show no payments
-
+                        noPaymentsText.setVisibility(View.VISIBLE);
                         // if current its current user, hide pay all button
-                        addPaymentBtn.setVisibility(View.GONE);
+                        if (!db.isCurrentUserAdmin()) {
+                            addPaymentBtn.setVisibility(View.GONE);
+                        }
+                    } else {
+                        addPaymentBtn.setVisibility(View.VISIBLE);
+                        noPaymentsText.setVisibility(View.GONE);
                     }
                     loader.setVisibility(View.GONE);
                 } else {
@@ -342,8 +407,7 @@ public class GeneralPayments extends Fragment {
                                 @Override
                                 public void done(ParseException e) {
                                     if (e == null) {
-                                        refreshPage();
-                                        loader.setVisibility(View.GONE);
+                                        listViewQueryInBackground();
                                     }
                                 }
                             });
@@ -423,55 +487,54 @@ public class GeneralPayments extends Fragment {
     }
 
     private void payAllDialog() {
-        // inflate list of all existing payments
-        LinearLayout myView = new LinearLayout(getActivity());
-        myView.setOrientation(LinearLayout.VERTICAL);
-        total = 0.0;
-        for (int i = 0; i < paymentsAdapter.getCount(); i++) {
+            // inflate list of all existing payments
+            LinearLayout myView = new LinearLayout(getActivity());
+            myView.setOrientation(LinearLayout.VERTICAL);
+            total = 0.0;
+            for (int i = 0; i < paymentsAdapter.getCount(); i++) {
+                View inflation = View.inflate(getActivity(), R.layout.pay_all_item, null);
+                TextView pName = (TextView) inflation.findViewById(R.id.list_item_paymentName);
+                TextView pAmount = (TextView) inflation.findViewById(R.id.list_item_paymentAmount);
+                pName.setText(((paymentsAdapter.getItem(i)).getString("description")));
+                int numOfHouses = Integer.parseInt(((paymentsAdapter.getItem(i)).getString("houses")));
+                double calc = Math.round((Double.parseDouble((paymentsAdapter.getItem(i)).getString("amount")) / numOfHouses) * 100.0) / 100.0;
+                pAmount.setText(getResources().getString(R.string.shekel) + " " + calc);
+                myView.addView(inflation);
+                total += calc;
+                objectIds.add((paymentsAdapter.getItem(i)).getObjectId());
+            }
+            total = Math.round(total * 100.0) / 100.0;
+            //add total sum line
             View inflation = View.inflate(getActivity(), R.layout.pay_all_item, null);
             TextView pName = (TextView) inflation.findViewById(R.id.list_item_paymentName);
             TextView pAmount = (TextView) inflation.findViewById(R.id.list_item_paymentAmount);
-            pName.setText(((paymentsAdapter.getItem(i)).getString("description")));
-            int numOfHouses = Integer.parseInt(((paymentsAdapter.getItem(i)).getString("houses")));
-            double calc = Math.round((Double.parseDouble((paymentsAdapter.getItem(i)).getString("amount")) / numOfHouses) * 100.0) / 100.0;
-            pAmount.setText(getResources().getString(R.string.shekel) + " " + calc);
+            pName.setTypeface(Typeface.DEFAULT_BOLD);
+            pName.setText(getResources().getString(R.string.total));
+            pAmount.setTypeface(Typeface.DEFAULT_BOLD);
+            pAmount.setText(getResources().getString(R.string.shekel) + " " + total);
             myView.addView(inflation);
-            total += calc;
-            objectIds.add((paymentsAdapter.getItem(i)).getObjectId());
-        }
-        total = Math.round(total * 100.0) / 100.0;
-        //add total sum line
-        View inflation = View.inflate(getActivity(), R.layout.pay_all_item, null);
-        TextView pName = (TextView) inflation.findViewById(R.id.list_item_paymentName);
-        TextView pAmount = (TextView) inflation.findViewById(R.id.list_item_paymentAmount);
-        pName.setTypeface(Typeface.DEFAULT_BOLD);
-        pName.setText(getResources().getString(R.string.total));
-        pAmount.setTypeface(Typeface.DEFAULT_BOLD);
-        pAmount.setText(getResources().getString(R.string.shekel) + " " + total);
-        myView.addView(inflation);
 
-        new MaterialDialog.Builder(getActivity())
-                .title(R.string.pay_all)
-                .titleGravity(GravityEnum.END)
-                .customView(myView, true)
-                .positiveText(R.string.yes)
-                .positiveColorRes(R.color.colorPrimary)
-                .buttonsGravity(GravityEnum.END)
-                .negativeText(R.string.no)
-                .negativeColorRes(R.color.colorPrimary)
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        pay(total, objectIds);
-                    }
+            new MaterialDialog.Builder(getActivity())
+                    .title(R.string.pay_all)
+                    .titleGravity(GravityEnum.END)
+                    .customView(myView, true)
+                    .positiveText(R.string.yes)
+                    .positiveColorRes(R.color.colorPrimary)
+                    .buttonsGravity(GravityEnum.END)
+                    .negativeText(R.string.no)
+                    .negativeColorRes(R.color.colorPrimary)
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override
+                        public void onPositive(MaterialDialog dialog) {
+                            pay(total, objectIds);
+                        }
 
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
-                        super.onNegative(dialog);
-                    }
-                })
-                .show();
-
+                        @Override
+                        public void onNegative(MaterialDialog dialog) {
+                            super.onNegative(dialog);
+                        }
+                    })
+                    .show();
     }
 
     public void isExistPaypalAccount(final boolean fabClicked) {
