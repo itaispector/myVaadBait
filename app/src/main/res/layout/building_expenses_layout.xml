@@ -18,6 +18,15 @@
         app:pv_progressStyle="@style/Material.Drawable.CircularProgress"
         app:pv_progressMode="indeterminate"/>
 
+    <TextView
+        android:id="@+id/no_expenses_text"
+        android:layout_width="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:text="@string/noExpenses"/>
+
 
     <ListView
         android:id="@+id/buildingExpensesListview"
