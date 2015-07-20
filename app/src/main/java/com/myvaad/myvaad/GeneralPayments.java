@@ -469,7 +469,7 @@ public class GeneralPayments extends Fragment {
                             payment.put("description", paymentName);
                             payment.put("amount", paymentPrice);
                             payment.put("paymentType", paymentType);
-                            payment.put("houses", payment.getInt("houses"));
+                            payment.put("houses", parseObject.getInt("houses"));
                             payment.put("paymentApproved", false);
                             payment.saveInBackground(new SaveCallback() {
                                 @Override
