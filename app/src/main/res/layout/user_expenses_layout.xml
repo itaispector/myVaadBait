@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e5e5e5">
+    android:background="#e5e5e5"
+    android:layoutDirection="ltr">
 
     <com.rey.material.widget.ProgressView
         android:id="@+id/progress_loader"
@@ -26,30 +27,48 @@
         android:visibility="gone"
         android:layout_height="wrap_content"
         android:text="@string/noExpenses"/>
+    
 
-    <ListView
-        android:id="@+id/userExpensesListview"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:divider="#00000000"
-        android:dividerHeight="4dp"
-        android:listSelector="@drawable/transparent_button"
-        android:padding="6dp"
-        android:scrollingCache="false"
-        android:smoothScrollbar="true">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="20">
 
-    </ListView>
+        <ListView
+            android:id="@+id/userExpensesListview"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_weight="17"
+            android:divider="#00000000"
+            android:dividerHeight="4dp"
+            android:listSelector="@drawable/transparent_button"
+            android:padding="6dp"
+            android:scrollingCache="false"
+            android:smoothScrollbar="true">
 
-    <TextView
-        android:id="@+id/userTotalExpensesAmount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="10dp"
-        android:background="#e5e5e5"
-        android:text="textView"
-        android:textDirection="rtl"
-        android:textSize="26sp" />
+        </ListView>
+
+        <TextView
+            android:id="@+id/userTotalExpensesAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:layout_alignParentBottom="true"
+            android:background="#e5e5e5"
+            android:textColor="@color/colorPrimaryText"
+            android:text="textView"
+            android:textDirection="rtl"
+            android:textSize="26sp"
+            android:paddingBottom="8dp"
+            android:paddingTop="2dp"
+            android:paddingRight="8dp"
+            android:paddingEnd="8dp"
+            />
+
+    </LinearLayout>
+
+
 
 
     <com.melnykov.fab.FloatingActionButton
