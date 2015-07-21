@@ -2,30 +2,22 @@ package com.myvaad.myvaad;
 
 import android.app.Dialog;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
-
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.melnykov.fab.FloatingActionButton;
@@ -57,7 +49,6 @@ public class UsersScreen extends Fragment {
     Dialog usersDialog;
     EditText famName, apartNum, msgEditText;
     Button ok, msgOkBtn;
-    List usersList = new ArrayList();
     ProgressView loader;
     TextView noUsersText;
 
@@ -98,7 +89,9 @@ public class UsersScreen extends Fragment {
         return rootView;
     }
 
+    // load user's list view
     public void findUsersForCurrentBuilding() {
+        // toggle loader (if gone - visible and opposite)
         mLoader();
         String buildingCode = db.getCurrentUserBuildingCode();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
@@ -138,21 +131,12 @@ public class UsersScreen extends Fragment {
                             }
                         });
                         usersListView.setAdapter(adapter);
-
                     }
-
                 }
-
             }
 
         });
 
-        usersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-            }
-        });
     }
 
     public void deleteDialog(final String userObjectId, final String familyName) {
@@ -326,14 +310,17 @@ public class UsersScreen extends Fragment {
         usersDialog.show();
     }
 
+    // toggle visibility of loader
     public void mLoader() {
         loader.setVisibility(loader.isShown() ? View.GONE : View.VISIBLE);
     }
 
+    // show toast on bottom of screen
     private void mToast(String msg) {
         Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
     }
 
+    // show toast on center of screen (overloaded)
     private void mToast(String msg, boolean middle) {
         Toast toast = Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 0);
