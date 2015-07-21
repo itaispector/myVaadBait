@@ -47,23 +47,23 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
-            android:screenOrientation="locked"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme"/>
         <activity
             android:name=".MainLoginScreen"
             android:label="@string/app_name"
-            android:screenOrientation="locked"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity
             android:name=".NotInBuilding"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
-            android:screenOrientation="locked"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity
             android:name=".UserProfile"
             android:label="@string/app_name"
-            android:screenOrientation="locked"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity
             android:name=".PayPalActivity"
