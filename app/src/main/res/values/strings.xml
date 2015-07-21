@@ -63,7 +63,7 @@
     <string name="login_password_input_verify">אנא הכנס/י סיסמא</string>
     <string name="building_code_exists_error">אופס! קרתה שגיאה אנא נסה/י שנית</string>
     <string name="not_in_b_msg1">הודעה: אינך שייך לבניין</string>
-    <string name="not_in_b_msg2">אנא בחר באחת מהאפשרויות</string>
+    <string name="not_in_b_msg2">אנא בחר באחת מהאפשרויות:</string>
     <string name="forgot_password">שכחת את הסיסמה? לחץ/י כאן</string>
     <string name="b_code_input_hint">הכנס/י קוד בניין</string>
     <string name="b_code_less_nums">קוד בניין חייב להכיל 6 ספרות בלבד!</string>
