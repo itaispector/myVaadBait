@@ -213,6 +213,9 @@
     <string name="filter">סינון</string>
     <string name="from_date">מתאריך</string>
     <string name="to_date">עד תאריך</string>
+    <string name="delete_expense">מחיקת הוצאה</string>
+    <string name="delete">מחק</string>
+    <string name="setFilter">סנן</string>
 
     <!-- failures dialogs -->
     <string name="dialogTitle">ערוך הצעת מחיר</string>
