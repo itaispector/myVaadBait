@@ -3,7 +3,9 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:animateLayoutChanges="true"
-    android:descendantFocusability="blocksDescendants">
+    android:background="@android:color/white"
+    android:descendantFocusability="blocksDescendants"
+    android:layoutDirection="ltr">
 
     <ImageView
         android:id="@+id/usersRowUserImage"
@@ -58,23 +60,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:gravity="end"
-        android:orientation="vertical"
+        android:gravity="center"
+        android:orientation="horizontal"
         android:paddingBottom="10dp"
         android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:paddingTop="10dp"
-        android:weightSum="2">
+        android:weightSum="2"
+        >
 
-        <Button
-            android:id="@+id/usersRowSendBtn"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:text="שלח הודעה" />
-
-        <Button
+        <ImageView
             android:id="@+id/usersRowDelBtn"
-            android:layout_width="80dp"
+            android:layout_width="35dp"
             android:layout_height="wrap_content"
-            android:text="מחק" />
+            android:contentDescription="מחק"
+            android:padding="4dp"
+            android:src="@drawable/remove_user"
+            android:background="@drawable/default_button"/>
+
+        <ImageView
+            android:id="@+id/usersRowSendBtn"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:contentDescription="שלח הודעה"
+            android:src="@drawable/send_msg"
+            android:background="@drawable/default_button"/>
+
+
     </LinearLayout>
 </RelativeLayout>

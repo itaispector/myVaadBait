@@ -3,69 +3,73 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    android:background="@drawable/list_item_background">
+    android:background="@drawable/dialog_margin"
+    android:layoutDirection="ltr">
 
     <TextView
-        android:id="@+id/noticesDialogTitle"
+        android:id="@+id/buildingDialogTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="@string/noticesDialogTitle"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:paddingRight="24dp"
+        android:paddingTop="24dp"
+        android:text="@string/join_building_text"
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
 
-    <EditText
+    <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/JoinBuildingEnterBuildingCode"
-        android:layout_width="260dp"
-        android:layout_height="50dp"
-        android:layout_below="@id/noticesDialogTitle"
-        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buildingDialogTitle"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/edit_text_dialog_style"
-        android:gravity="center"
         android:hint="@string/b_code_input_hint"
         android:inputType="number"
         android:maxLength="6"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp" />
+        android:singleLine="true" />
 
-    <EditText
+    <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/add_apartment_number"
-        android:layout_width="260dp"
-        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/JoinBuildingEnterBuildingCode"
-        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/edit_text_style"
-        android:gravity="center"
         android:hint="@string/apartment_number_text"
         android:inputType="number"
         android:maxLength="3"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:textSize="17sp" />
+        android:singleLine="true" />
 
     <Button
         android:id="@+id/joinBuildingDialogOkBtn"
-        android:layout_width="130dp"
-        android:layout_height="40dp"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/add_apartment_number"
-        android:layout_marginTop="15dp"
-        android:text="@string/join_building_text"
-
-        />
-
-    <Button
-        android:id="@+id/joinBuildingDialogCancelBtn"
-        android:layout_width="130dp"
-        android:layout_height="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@id/add_apartment_number"
-        android:layout_marginTop="15dp"
-        android:text="ביטול"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/default_button"
+        android:enabled="false"
+        android:gravity="center_vertical|left"
+        android:paddingBottom="8dp"
+        android:paddingLeft="24dp"
+        android:paddingStart="24dp"
+        android:paddingTop="8dp"
+        android:text="@string/join"
+        android:textColor="@color/button_text_color"
+        android:textSize="14sp" />
 
-        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@id/joinBuildingDialogOkBtn"
+        android:background="@color/transparent" />
 
 
 </RelativeLayout>

@@ -41,7 +41,7 @@ public class UsersAdapter extends BaseAdapter {
     private Context context;
     ViewHolder holder;
     List<ParseObject> users;
-    View.OnClickListener sendBtnListener = null;
+    View.OnClickListener deleteBtnListener = null, sendBtnListener = null;
 
     public UsersAdapter(Context context, List<ParseObject> users) {
         this.context = context;
@@ -63,15 +63,19 @@ public class UsersAdapter extends BaseAdapter {
         return 0;
     }
 
-    public void setSendBtnListener(View.OnClickListener lis){
+    public void setSendBtnListener(View.OnClickListener lis) {
         this.sendBtnListener = lis;
+    }
+
+    public void setDeleteBtnListener(View.OnClickListener lis){
+        this.deleteBtnListener = lis;
     }
 
     //helper class for holding the views in the listview, better for performance
     public class ViewHolder {
         TextView familyName, apartmentNumber;
         ImageView userImg;
-        Button sendMsg, delUser;
+        ImageView sendMsg, delUser;
 
     }
 
@@ -87,8 +91,8 @@ public class UsersAdapter extends BaseAdapter {
             holder.familyName = (TextView) convertView.findViewById(R.id.usersRowFullName);
             holder.apartmentNumber = (TextView) convertView.findViewById(R.id.usersApartmentNumber);
             holder.userImg = (ImageView) convertView.findViewById(R.id.usersRowUserImage);
-            holder.sendMsg = (Button) convertView.findViewById(R.id.usersRowSendBtn);
-            holder.delUser = (Button) convertView.findViewById(R.id.usersRowDelBtn);
+            holder.sendMsg = (ImageView) convertView.findViewById(R.id.usersRowSendBtn);
+            holder.delUser = (ImageView) convertView.findViewById(R.id.usersRowDelBtn);
 
             convertView.setTag(holder);
 
@@ -108,50 +112,15 @@ public class UsersAdapter extends BaseAdapter {
         holder.userImg.setImageBitmap(userPic);
         holder.sendMsg.setVisibility(hasApplication ? View.VISIBLE : View.GONE);
 
-        if (sendBtnListener!=null){
+        if (sendBtnListener != null) {
             holder.sendMsg.setOnClickListener(sendBtnListener);
         }
 
-        holder.delUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteUser(userObjectId, familyName);
-            }
-        });
-
+        if (deleteBtnListener != null){
+            holder.delUser.setOnClickListener(deleteBtnListener);
+        }
 
         return convertView;
-    }
-
-    protected void deleteUser(final String userObjectId, String familyName) {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-        String delete = context.getString(R.string.delete_user);
-        String areYouSure = context.getString(R.string.are_you_sure);
-        String family = context.getString(R.string.family);
-        dialog.setMessage(delete + " " + family + " " + familyName + "\n" + areYouSure);
-        dialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                HashMap<String, Object> params = new HashMap<String, Object>();
-                params.put("userObjectId", userObjectId);
-                ParseCloud.callFunctionInBackground("deleteUser", params, new FunctionCallback<Object>() {
-                    public void done(Object result, ParseException e) {
-                        if (e == null) {
-                            //Toast.makeText(context, ""+result, Toast.LENGTH_SHORT).show();
-                        } else {
-                            //Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-
-            }
-        });
-        dialog.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
     }
 
     // method from parseDB file
