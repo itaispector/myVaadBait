@@ -23,7 +23,7 @@
         android:layout_below="@id/about_desc"
         android:text="@string/about_dialog_divider"/>
     <TextView
-        android:id="@+id/content"
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="start"
@@ -32,7 +32,7 @@
         android:text="@string/about_dialog_content"/>
     <TextView
         android:id="@+id/copy"
-        android:layout_below="@id/content"
+        android:layout_below="@id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="start"
