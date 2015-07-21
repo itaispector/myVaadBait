@@ -170,7 +170,6 @@ public class UsersScreen extends Fragment {
                                 if (e == null) {
                                     findUsersForCurrentBuilding();
                                 } else {
-                                    //Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
                                 }
                             }
                         });
