@@ -5,17 +5,20 @@
     <!-- the color here is just an example.
     I think the building code should come in a box design -->
     <RelativeLayout
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true">
 
-        <ImageView
+        <TextView
             android:id="@+id/CreateBuildingScreenTitle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/create_building_title" />
+            android:layout_marginTop="20dp"
+            android:textSize="30sp"
+            android:layout_height="wrap_content"
+            android:text="@string/CreateBuildingTitle"/>
 
         <TextView
             android:id="@+id/redAsterisk5"
@@ -27,7 +30,7 @@
             android:layout_marginTop="15dp"
             android:gravity="center"
             android:text="*"
-            android:textColor="#ff0000"
+            android:textColor="#DB504A"
             android:textSize="20sp"
             android:textStyle="bold"
             android:visibility="invisible" />
@@ -71,7 +74,7 @@
             android:layout_marginTop="15dp"
             android:gravity="center"
             android:text="*"
-            android:textColor="#ff0000"
+            android:textColor="#DB504A"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -82,11 +85,14 @@
             android:layout_below="@id/CreateBuildingScreenBuildingCodeView"
             android:layout_marginTop="15dp"
             android:layout_toLeftOf="@id/redAsterisk"
-            android:background="@drawable/edit_text_style"
+            android:background="@drawable/login_screen_edit_text_style"
             android:gravity="right|center_vertical"
             android:paddingLeft="8dp"
+            android:textColor="#006888"
+            android:textColorHint="#87006888"
+            android:textSize="15sp"
+            android:hint="בחר עיר"
             android:paddingRight="8dp" />
-
         <TextView
             android:id="@+id/redAsterisk2"
             android:layout_width="wrap_content"
@@ -97,18 +103,20 @@
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="*"
-            android:textColor="#ff0000"
+            android:textColor="#DB504A"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <EditText
             android:id="@+id/CreateBuildingScreenBuildingStreet"
-            android:layout_width="200dp"
+            android:layout_width="230dp"
             android:layout_height="40dp"
             android:layout_below="@+id/citys_text_view"
             android:layout_marginTop="10dp"
             android:layout_toLeftOf="@id/redAsterisk2"
-            android:background="@drawable/edit_text_style"
+            android:background="@drawable/login_screen_edit_text_style"
+            android:textColor="#006888"
+            android:textColorHint="#87006888"
             android:hint="@string/street"
             android:inputType="textPersonName"
             android:paddingLeft="8dp"
@@ -124,7 +132,9 @@
             android:layout_marginRight="3dp"
             android:layout_marginTop="10dp"
             android:layout_toLeftOf="@+id/CreateBuildingScreenBuildingStreet"
-            android:background="@drawable/edit_text_style"
+            android:background="@drawable/login_screen_edit_text_style"
+            android:textColor="#006888"
+            android:textColorHint="#87006888"
             android:hint="@string/home_number"
             android:inputType="number"
             android:paddingLeft="8dp"
@@ -147,13 +157,15 @@
 
         <EditText
             android:id="@+id/CreateBuildingScreenBuildingEntrance"
-            android:layout_width="160dp"
+            android:layout_width="200dp"
             android:layout_height="40dp"
             android:layout_below="@id/CreateBuildingScreenBuildingStreet"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:layout_toLeftOf="@id/redAsterisk3"
-            android:background="@drawable/edit_text_style"
+            android:background="@drawable/login_screen_edit_text_style"
+            android:textColor="#006888"
+            android:textColorHint="#87006888"
             android:hint="@string/home_number2"
             android:inputType="textPersonName"
             android:paddingLeft="8dp"
@@ -169,7 +181,9 @@
             android:layout_marginRight="3dp"
             android:layout_marginTop="10dp"
             android:layout_toLeftOf="@id/CreateBuildingScreenBuildingEntrance"
-            android:background="@drawable/edit_text_style"
+            android:background="@drawable/login_screen_edit_text_style"
+            android:textColor="#006888"
+            android:textColorHint="#87006888"
             android:clickable="true"
             android:gravity="center"
             android:hint="@string/numberOfHouses"
@@ -199,27 +213,14 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:layout_toLeftOf="@id/redAsterisk4"
-            android:background="@drawable/edit_text_style"
+            android:background="@drawable/login_screen_edit_text_style"
+            android:textColor="#006888"
+            android:textColorHint="#87006888"
             android:hint="@string/paypal_account"
             android:inputType="textEmailAddress"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:textSize="15sp" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@id/CreateBuildingScreenBuildingEntrance"
-            android:layout_marginTop="10dp">
-
-            <ImageView
-                android:id="@+id/small_paypal_logo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/paypal_small_logo" />
-        </RelativeLayout>
 
         <TextView
             android:id="@+id/redAsterisk6"
@@ -230,17 +231,20 @@
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="@string/must_fildes"
-            android:textColor="#ff0000"
+            android:textColor="#DB504A"
             android:textSize="15sp"
             android:textStyle="bold" />
-
         <Button
             android:id="@+id/CreateBuildingScreenCreateBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="16dp"
             android:layout_below="@id/redAsterisk6"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/add_building_btn" />
+            android:background="@drawable/blue_buttons_style"
+            android:text="@string/CreateBuildingTitle"
+            android:textColor="#fff" />
+
     </RelativeLayout>
 
 </RelativeLayout>
