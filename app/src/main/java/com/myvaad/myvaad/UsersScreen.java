@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -68,7 +69,7 @@ public class UsersScreen extends Fragment {
         View rootView = inflater.inflate(R.layout.users_screen, container, false);
 
         // loader reference
-        loader = (ProgressView)rootView.findViewById(R.id.progress_loader);
+        loader = (ProgressView) rootView.findViewById(R.id.progress_loader);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             getActivity().getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
@@ -121,24 +122,19 @@ public class UsersScreen extends Fragment {
                         adapter.setSendBtnListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                for (int i = 0; i < usersListView.getChildCount(); i++) {
-                                    if (view == usersListView.getChildAt(i).findViewById(R.id.usersRowSendBtn)) {
-                                        String userObjectId = ((adapter.getItem(i)).getObjectId());
-                                        sendMessageDialog(userObjectId);
-                                    }
-                                }
+                                int idx = usersListView.getPositionForView(view);
+                                String userObjectId = ((adapter.getItem(idx)).getObjectId());
+                                sendMessageDialog(userObjectId);
+
                             }
                         });
                         adapter.setDeleteBtnListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                for (int i = 0; i < usersListView.getChildCount(); i++) {
-                                    if (view == usersListView.getChildAt(i).findViewById(R.id.usersRowDelBtn)) {
-                                        String userObjectId = ((adapter.getItem(i)).getObjectId());
-                                        String familyName = ((adapter.getItem(i)).getString("familyName"));
-                                        deleteDialog(userObjectId, familyName);
-                                    }
-                                }
+                                int idx = usersListView.getPositionForView(view);
+                                String userObjectId = ((adapter.getItem(idx)).getObjectId());
+                                String familyName = ((adapter.getItem(idx)).getString("familyName"));
+                                deleteDialog(userObjectId, familyName);
                             }
                         });
                         usersListView.setAdapter(adapter);
@@ -150,10 +146,17 @@ public class UsersScreen extends Fragment {
             }
 
         });
+
+        usersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+        });
     }
 
-    public void deleteDialog(final String userObjectId, final String familyName){
-        MaterialDialog mDialog = new MaterialDialog.Builder(getActivity())
+    public void deleteDialog(final String userObjectId, final String familyName) {
+        final MaterialDialog mDialog = new MaterialDialog.Builder(getActivity())
                 .customView(R.layout.custom_layout_content, false)
                 .positiveColorRes(R.color.colorPrimary)
                 .positiveText(R.string.yes)
@@ -165,9 +168,11 @@ public class UsersScreen extends Fragment {
                     public void onPositive(MaterialDialog dialog) {
                         HashMap<String, Object> params = new HashMap<String, Object>();
                         params.put("userObjectId", userObjectId);
+                        mLoader();
                         ParseCloud.callFunctionInBackground("deleteUser", params, new FunctionCallback<Object>() {
                             public void done(Object result, ParseException e) {
                                 if (e == null) {
+                                    mLoader();
                                     findUsersForCurrentBuilding();
                                 } else {
                                 }
@@ -177,7 +182,7 @@ public class UsersScreen extends Fragment {
                 })
                 .show();
         View cView = mDialog.getCustomView();
-        TextView content = (TextView)cView.findViewById(R.id.text);
+        TextView content = (TextView) cView.findViewById(R.id.text);
         String delete = getActivity().getString(R.string.delete_user);
         String areYouSure = getActivity().getString(R.string.are_you_sure);
         String family = getActivity().getString(R.string.family);
@@ -230,7 +235,7 @@ public class UsersScreen extends Fragment {
         }
     };
 
-    public void sendNoti(String userObjectId, String msg){
+    public void sendNoti(String userObjectId, String msg) {
         ParseQuery query = ParseInstallation.getQuery();
         query.whereEqualTo("userObjectId", userObjectId);
         ParsePush androidPush = new ParsePush();
@@ -331,7 +336,7 @@ public class UsersScreen extends Fragment {
 
     private void mToast(String msg, boolean middle) {
         Toast toast = Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.CENTER, 0, 150);
+        toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
 
     }

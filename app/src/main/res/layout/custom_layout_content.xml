@@ -8,8 +8,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/text"
-        android:padding="24dp"
-        android:textSize="14sp"
+        android:paddingTop="24dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:textSize="18sp"
         android:textColor="@color/colorPrimaryText"
         android:text="סתם הרבה טקסט לדוגמא" />
 </RelativeLayout>
