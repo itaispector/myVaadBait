@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layoutDirection="ltr"
-    android:background="@drawable/dialog_margin">
+    android:background="@drawable/dialog_margin"
+    android:layoutDirection="ltr">
 
     <TextView
         android:id="@+id/usersAddDialogTitle"
@@ -20,13 +20,13 @@
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/usersAddDialogFamName"
+        android:hint="@string/fullname"
+        android:layout_below="@id/usersAddDialogTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/usersAddDialogTitle"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginTop="10dp"
-        android:hint="@string/fullname"
         android:singleLine="true" />
 
     <com.rengwuxian.materialedittext.MaterialEditText
@@ -44,11 +44,12 @@
 
     <Button
         android:id="@+id/usersAddDialogOkBtn"
+        android:text="@string/add"
+        android:layout_below="@id/usersAddDialogApartNum"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/usersAddDialogApartNum"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/default_button"
@@ -58,7 +59,6 @@
         android:paddingLeft="24dp"
         android:paddingStart="24dp"
         android:paddingTop="8dp"
-        android:text="@string/add"
         android:textColor="@color/button_text_color"
         android:textSize="14sp" />
 
