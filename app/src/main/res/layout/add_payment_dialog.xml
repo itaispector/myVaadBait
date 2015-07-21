@@ -1,7 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/dialog_margin">
+    android:background="@drawable/dialog_margin"
+    android:layoutDirection="ltr">
 
     <TextView
         android:id="@+id/addPaymentDialogTitle"
@@ -9,7 +10,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
         android:paddingRight="24dp"
         android:paddingTop="24dp"
         android:text="הוספת תשלום"
