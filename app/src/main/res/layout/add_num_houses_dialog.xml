@@ -8,12 +8,16 @@
         android:id="@+id/housesDialogTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:paddingRight="24dp"
+        android:paddingTop="24dp"
         android:text="@string/numberOfHouses"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textColor="@android:color/black"
+        android:textSize="20sp"  />
 
-    <NumberPicker
+    <net.simonvt.numberpicker.NumberPicker
         android:id="@+id/housesDialogNumberPicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/dialog_margin"
-    android:layoutDirection="ltr">
+    android:layoutDirection="ltr"
+    android:background="@drawable/dialog_margin">
 
     <TextView
-        android:id="@+id/failuresApprovalDialogTitle"
+        android:id="@+id/failuresAddDialogTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -15,66 +14,66 @@
         android:layout_alignParentTop="true"
         android:paddingRight="24dp"
         android:paddingTop="24dp"
-        android:text="@string/failuresApprovalDialogTitle"
+        android:text="@string/dialogTitle"
         android:textColor="@android:color/black"
         android:textSize="20sp" />
 
-    <com.myvaad.myvaad.ScrollViewWithMaxHeight
-        android:id="@+id/failuresApprovalDialogPriceSV"
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/failuresAddDialogBusinessName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/failuresAddDialogTitle"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="10dp"
+        android:hint="@string/failuresAddDialogName"
+        android:singleLine="true" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/failuresAddDialogPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/failuresAddDialogBusinessName"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:layout_below="@id/failuresApprovalDialogTitle"
-        app:maxHeight="250">
-
-        <TextView
-            android:id="@+id/failuresApprovalDialogList"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_marginTop="10dp"
-            android:paddingLeft="24dp"
-            android:paddingRight="24dp"
-            android:text="משפחת חצרוני"
-            android:textColor="@color/colorSecondaryText"
-            android:textSize="16sp" />
-    </com.myvaad.myvaad.ScrollViewWithMaxHeight>
-
+        android:hint="הכנס סכום"
+        android:inputType="number"
+        android:singleLine="true" />
 
     <Button
-        android:id="@+id/failuresApprovalDialogFailureCancelBtn"
+        android:id="@+id/failuresAddDialogFailureOkBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/failuresApprovalDialogPriceSV"
+        android:layout_below="@+id/failuresAddDialogPrice"
         android:layout_marginLeft="16dp"
         android:background="@drawable/default_button"
         android:minHeight="40dp"
         android:minWidth="60dp"
-        android:text="@string/close"
+        android:text="@string/ok"
         android:textColor="@color/colorPrimary"
-        android:textSize="14sp" />
-
-
+        android:textSize="14sp"
+        android:enabled="false"/>
     <Button
-        android:id="@+id/failuresApprovalDialogFailureMoveToPaymentsBtn"
+        android:id="@+id/failuresAddDialogFailureCancelBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/failuresApprovalDialogPriceSV"
+        android:layout_toRightOf="@id/failuresAddDialogFailureOkBtn"
+        android:layout_toEndOf="@id/failuresAddDialogFailureOkBtn"
+        android:layout_below="@+id/failuresAddDialogPrice"
         android:layout_marginLeft="16dp"
-        android:layout_toRightOf="@id/failuresApprovalDialogFailureCancelBtn"
         android:background="@drawable/default_button"
         android:minHeight="40dp"
         android:minWidth="60dp"
-        android:text="@string/close_and_move"
+        android:text="@string/cancel"
         android:textColor="@color/colorPrimary"
         android:textSize="14sp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="16dp"
-        android:layout_below="@id/failuresApprovalDialogFailureCancelBtn"
-        android:background="@color/transparent" />
-
+        android:layout_below="@id/failuresAddDialogFailureOkBtn" />
 </RelativeLayout>

@@ -2,61 +2,69 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:background="@drawable/list_item_background">
+    android:layoutDirection="ltr"
+    android:background="@drawable/dialog_margin">
 
     <TextView
         android:id="@+id/failuresDialogTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:paddingRight="24dp"
+        android:paddingTop="24dp"
         android:text="@string/failuresDialogTitle"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
 
-    <EditText
+    <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/failuresDialogFailureName"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/failuresDialogTitle"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/edit_text_style"
         android:hint="@string/failuresDialogName"
-        android:paddingBottom="5dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingTop="5dp" />
+        android:singleLine="true" />
 
-    <EditText
+    <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/failuresDialogFailureData"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/failuresDialogFailureName"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/edit_text_dialog_style"
         android:hint="@string/failuresDialogData"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp" />
+        android:singleLine="true" />
 
     <Button
         android:id="@+id/failuresDialogFailureOkBtn"
-        android:layout_width="130dp"
-        android:layout_height="40dp"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/failuresDialogFailureData"
-        android:layout_marginTop="10dp"
-        android:onClick="DialogOk"
-        android:text="אישור" />
-
-    <Button
-        android:id="@+id/failuresDialogFailureCancelBtn"
-        android:layout_width="130dp"
-        android:layout_height="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@id/failuresDialogFailureData"
-        android:layout_marginTop="10dp"
-        android:onClick="DialogOk"
-        android:text="ביטול" />
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/default_button"
+        android:enabled="false"
+        android:gravity="center_vertical|left"
+        android:paddingBottom="8dp"
+        android:paddingLeft="24dp"
+        android:paddingStart="24dp"
+        android:paddingTop="8dp"
+        android:text="@string/add"
+        android:textColor="@color/button_text_color"
+        android:textSize="14sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@id/failuresDialogFailureOkBtn"
+        android:background="@color/transparent" />
 
 
 </RelativeLayout>

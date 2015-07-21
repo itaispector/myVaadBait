@@ -146,6 +146,7 @@
     <string name="send">שלח</string>
     <string name="write_message">כתוב הודעה</string>
     <string name="join">הצטרף</string>
+    <string name="close_and_move">סגור תקלה והעבר לתשלומים</string>
     <string-array name="login_page_array">
         <item>תפריט</item>
         <item>של</item>
@@ -166,7 +167,7 @@
     <string name="failuresDialogName">שם תקלה</string>
     <string name="failuresDialogData">פירוט תקלה</string>
     <string name="failures_none">אין</string>
-    <string name="failuresAddDialogTitle">הכנס הצעת מחיר</string>
+    <string name="failuresAddDialogTitle">הוסף הצעת מחיר</string>
     <string name="failuresAddDialogName">שם בעל מקצוע</string>
     <string name="failuresAddDialogData">מחיר</string>
     <string name="failuresApprovalDialogTitle">דיירים מאשרים</string>

@@ -222,8 +222,7 @@
         android:minWidth="60dp"
         android:text="@string/save"
         android:textColor="@color/colorPrimary"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        android:textSize="14sp" />
 
     <Button
         android:id="@+id/monthsMarkAllBtn"
@@ -238,8 +237,7 @@
         android:minWidth="74dp"
         android:text="@string/mark_all"
         android:textColor="@color/colorPrimary"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        android:textSize="14sp" />
 
     <View
         android:id="@+id/empty"
@@ -261,8 +259,7 @@
         android:minWidth="64dp"
         android:text="@string/cancel"
         android:textColor="@color/colorPrimary"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        android:textSize="14sp" />
 
 
     <View

@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layoutDirection="ltr"
     android:background="@drawable/dialog_margin">
 
     <TextView
@@ -15,8 +16,7 @@
         android:paddingTop="24dp"
         android:text="@string/failuresAddDialogTitle"
         android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textSize="20sp" />
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/failuresAddDialogBusinessName"
@@ -26,6 +26,7 @@
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginTop="10dp"
+        android:singleLine="true"
         android:hint="@string/failuresAddDialogName" />
 
     <com.rengwuxian.materialedittext.MaterialEditText
@@ -36,43 +37,32 @@
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginTop="10dp"
+        android:singleLine="true"
+        android:inputType="number"
         android:hint="הכנס סכום" />
 
     <Button
         android:id="@+id/failuresAddDialogFailureOkBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_below="@+id/failuresAddDialogPrice"
+        android:text="@string/add"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/failuresAddDialogPrice"
-        android:height="36dp"
-        android:background="@android:color/transparent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/default_button"
         android:enabled="false"
-        android:minWidth="64dp"
+        android:gravity="center_vertical|left"
         android:paddingBottom="8dp"
-        android:paddingLeft="16dp"
-        android:paddingStart="16dp"
-        android:text="אישור"
-        android:textColor="@color/colorPrimary"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:paddingLeft="24dp"
+        android:paddingStart="24dp"
+        android:paddingTop="8dp"
+        android:textColor="@color/button_text_color"
+        android:textSize="14sp"/>
 
-    <Button
-        android:id="@+id/failuresAddDialogFailureCancelBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/failuresAddDialogPrice"
-        android:height="36dp"
-        android:background="@android:color/transparent"
-        android:enabled="false"
-        android:minWidth="64dp"
-        android:layout_toRightOf="@id/failuresAddDialogFailureOkBtn"
-        android:paddingBottom="8dp"
-        android:paddingLeft="8dp"
-        android:text="@string/cancel"
-        android:textColor="@color/colorPrimary"
-        android:textSize="20sp"
-        android:textStyle="bold"/>
-
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@id/failuresAddDialogFailureOkBtn" />
 </RelativeLayout>

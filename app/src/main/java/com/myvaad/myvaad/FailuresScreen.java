@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import com.afollestad.materialdialogs.GravityEnum;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.melnykov.fab.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.Parse;
@@ -26,6 +28,8 @@ import android.content.DialogInterface.OnDismissListener;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -49,7 +53,7 @@ public class FailuresScreen extends Fragment {
     TextView content, dialogTitle, noFailuresTextView;
     EditText titleEdit, contentEdit, prof, amount;
     View dialogLayout;
-    Dialog failuresDialog, failuresAddDialog, failuresPriceDialog;
+    Dialog failuresDialog, failuresPriceDialog;
     Button addfailure, dialogFailureOkBtn, dialogFailureCancelBtn, add, edit, approval, delete, moveToPaymentsBtn, approveOkBtn, approveCancelBtn;
     FloatingActionButton addFailureBtn;
     ProgressView bar;
@@ -60,7 +64,6 @@ public class FailuresScreen extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
 
 
         db = ParseDB.getInstance(getActivity());
@@ -119,9 +122,6 @@ public class FailuresScreen extends Fragment {
                         if (failuresRow.getList("approvedBy") != null) {
                             approvedByList = failuresRow.getList("approvedBy");
                         } else approvedByList.add("no one approve");
-                        //ParseUser user=failuresRow.getParseUser("user");
-                        //Bitmap userPicture=getUserPicture(user);
-                        //String familyName=getUserFamilyName(user);
 
                         rowFailureList.add(ObjectId);
                         rowFailureList.add(title);
@@ -156,10 +156,10 @@ public class FailuresScreen extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View item, int idx, long id) {
                 position = idx;
-                //toggles between open & closed box                
+                // toggles between open & closed box
                 adapter.setState(adapter.getState(idx) ? false : true, idx);
 
-                //add button listener
+                // add button listener
                 add = (Button) item.findViewById(R.id.FailuresRowAddBtn);
                 add.setOnClickListener(new View.OnClickListener() {
 
@@ -168,7 +168,7 @@ public class FailuresScreen extends Fragment {
                         addBidPrice();
                     }
                 });
-                //edit button listener
+                // edit button listener
                 edit = (Button) item.findViewById(R.id.FailuresRowEditBtn);
                 edit.setOnClickListener(new View.OnClickListener() {
 
@@ -178,7 +178,7 @@ public class FailuresScreen extends Fragment {
 
                     }
                 });
-                //approval button listener
+                // approval button listener
                 approval = (Button) item.findViewById(R.id.FailuresRowStatusBtn);
                 approval.setOnClickListener(new View.OnClickListener() {
 
@@ -188,7 +188,7 @@ public class FailuresScreen extends Fragment {
 
                     }
                 });
-                //delete button listener
+                // delete button listener
                 delete = (Button) item.findViewById(R.id.FailuresRowDeleteBtn);
                 delete.setOnClickListener(new View.OnClickListener() {
 
@@ -198,7 +198,7 @@ public class FailuresScreen extends Fragment {
 
                     }
                 });
-                //approveOk button listener
+                // approveOk button listener
                 approveOkBtn = (Button) item.findViewById(R.id.FailuresRowApproveBtn);
                 approveOkBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -208,7 +208,7 @@ public class FailuresScreen extends Fragment {
                         refreshFailures();
                     }
                 });
-                //approveCancel button listener
+                // approveCancel button listener
                 approveCancelBtn = (Button) item.findViewById(R.id.FailuresRowCancelBtn);
                 approveCancelBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -223,7 +223,7 @@ public class FailuresScreen extends Fragment {
             }
         });
 
-        //add failure button pointer and listener
+        // add failure button pointer and listener
         addFailureBtn = (FloatingActionButton) rootView.findViewById(R.id.add_f_btnn);
         addFailureBtn.attachToListView(failuresList);
         addFailureBtn.setOnClickListener(new View.OnClickListener() {
@@ -235,16 +235,13 @@ public class FailuresScreen extends Fragment {
         return rootView;
     }
 
-    //opens add failure dialog
+    // opens add failure dialog
     public void addFailure() {
-        dialogLayout = View.inflate(getActivity(), R.layout.failures_dialog_layout, null);
-        failuresDialog = new Dialog(getActivity());
-        failuresDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        failuresDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        failuresDialog.setContentView(dialogLayout);
-        failuresDialog.show();
-
-        dialogFailureCancelBtn = (Button) dialogLayout.findViewById(R.id.failuresDialogFailureCancelBtn);
+        mDialog(R.layout.failures_dialog_layout);
+        titleEdit = (EditText) dialogLayout.findViewById(R.id.failuresDialogFailureName);
+        titleEdit.addTextChangedListener(textWatcherListener);
+        contentEdit = (EditText) dialogLayout.findViewById(R.id.failuresDialogFailureData);
+        contentEdit.addTextChangedListener(textWatcherListener);
         dialogFailureOkBtn = (Button) dialogLayout.findViewById(R.id.failuresDialogFailureOkBtn);
 
         dialogFailureOkBtn.setOnClickListener(new View.OnClickListener() {
@@ -253,93 +250,90 @@ public class FailuresScreen extends Fragment {
                 DialogButtonsResult(v);
             }
         });
-        dialogFailureCancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogButtonsResult(v);
-            }
-        });
+
     }
+
+    // listener to watch if fields are empty or not, if empty add button is disabled
+    private TextWatcher textWatcherListener = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            boolean check = false;
+            check = (titleEdit.getText().toString().isEmpty() || contentEdit.getText().toString().isEmpty());
+            dialogFailureOkBtn.setEnabled(!check);
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
 
     public void DialogButtonsResult(View v) {
-        titleEdit = (EditText) dialogLayout.findViewById(R.id.failuresDialogFailureName);
-        contentEdit = (EditText) dialogLayout.findViewById(R.id.failuresDialogFailureData);
+
         title = titleEdit.getText().toString();
         failureContent = contentEdit.getText().toString();
-        if (v.getId() == R.id.failuresDialogFailureCancelBtn) {
-            failuresDialog.dismiss();
+
+        if (title.matches("\\s+") || failureContent.matches("\\s+")) {
+            mToast(getString(R.string.empty_notice));
         } else {
-            if (title.matches("") || failureContent.matches("")) {
-                Toast toast = Toast.makeText(getActivity(), R.string.empty_notice, Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-            } else {
-                db.updateNewfailure(title, failureContent);
-                refreshFailures();
-                failuresDialog.dismiss();
-            }
+            db.updateNewfailure(title, failureContent);
+            refreshFailures();
+            failuresDialog.dismiss();
         }
+
     }
 
+
     public void addBidPrice() {
-        dialogLayout = View.inflate(getActivity(), R.layout.failures_add_dialog_layout, null);
-        failuresAddDialog = new Dialog(getActivity());
-        failuresAddDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        failuresAddDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        failuresAddDialog.setContentView(dialogLayout);
-        failuresAddDialog.show();
+        mDialog(R.layout.failures_add_dialog_layout);
 
-        dialogFailureOkBtn = (Button) failuresAddDialog.findViewById(R.id.failuresAddDialogFailureOkBtn);
-        dialogFailureCancelBtn = (Button) failuresAddDialog.findViewById(R.id.failuresAddDialogFailureCancelBtn);
-        dialogFailureCancelBtn.setVisibility(View.GONE);
+        dialogFailureOkBtn = (Button) failuresDialog.findViewById(R.id.failuresAddDialogFailureOkBtn);
 
+        titleEdit = (EditText) failuresDialog.findViewById(R.id.failuresAddDialogBusinessName);
+        titleEdit.addTextChangedListener(textWatcherListener);
+        contentEdit = (EditText) failuresDialog.findViewById(R.id.failuresAddDialogPrice);
+        contentEdit.addTextChangedListener(textWatcherListener);
         dialogFailureOkBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
-                prof = (EditText) failuresAddDialog.findViewById(R.id.failuresAddDialogBusinessName);
-                amount = (EditText) failuresAddDialog.findViewById(R.id.failuresAddDialogPrice);
-                title = prof.getText().toString();
-                failureContent = amount.getText().toString();
-                if (title.matches("") || failureContent.matches("")) {
-                    Toast toast = Toast.makeText(getActivity(), R.string.empty_notice, Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.CENTER, 0, 0);
-                    toast.show();
+                title = titleEdit.getText().toString();
+                failureContent = contentEdit.getText().toString();
+                if (title.matches("\\s+") || failureContent.matches("\\s+")) {
+                    mToast(getString(R.string.empty_notice));
                 } else {
-                    db.updateFailureBid(failureContent, title, adapter.getObjectId(position), true);
+                    failuresDialog.dismiss();
+                    db.updateFailureBid(failureContent, title, adapter.getObjectId(position), true); /** need to improve this!! */
                     refreshFailures();
-                    failuresAddDialog.dismiss();
                 }
             }
         });
     }
 
     public void editBidPrice() {
-        dialogLayout = View.inflate(getActivity(), R.layout.failures_add_dialog_layout, null);
-        failuresAddDialog = new Dialog(getActivity());
-        failuresAddDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        failuresAddDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        failuresAddDialog.setContentView(dialogLayout);
-        failuresAddDialog.show();
+        mDialog(R.layout.failures_edit_dialog_layout);
+        dialogFailureOkBtn = (Button) failuresDialog.findViewById(R.id.failuresAddDialogFailureOkBtn);
+        dialogFailureCancelBtn = (Button) failuresDialog.findViewById(R.id.failuresAddDialogFailureCancelBtn);
 
-        dialogTitle = (TextView) failuresAddDialog.findViewById(R.id.failuresAddDialogTitle);
-        dialogTitle.setText(R.string.dialogTitle);
+        titleEdit = (EditText) failuresDialog.findViewById(R.id.failuresAddDialogBusinessName);
+        titleEdit.addTextChangedListener(textWatcherListener);
+        contentEdit = (EditText) failuresDialog.findViewById(R.id.failuresAddDialogPrice);
+        contentEdit.addTextChangedListener(textWatcherListener);
+        titleEdit.setText("" + ((List) adapter.getItem(position)).get(4));
+        contentEdit.setText("" + ((List) adapter.getItem(position)).get(3));
 
-        prof = (EditText) failuresAddDialog.findViewById(R.id.failuresAddDialogBusinessName);
-        amount = (EditText) failuresAddDialog.findViewById(R.id.failuresAddDialogPrice);
-        prof.setText("" + ((List) adapter.getItem(position)).get(4));
-        amount.setText("" + ((List) adapter.getItem(position)).get(3));
-
-        dialogFailureOkBtn = (Button) failuresAddDialog.findViewById(R.id.failuresAddDialogFailureOkBtn);
-        dialogFailureCancelBtn = (Button) failuresAddDialog.findViewById(R.id.failuresAddDialogFailureCancelBtn);
 
         dialogFailureCancelBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                failuresAddDialog.dismiss();
-
+                failuresDialog.dismiss();
             }
         });
 
@@ -348,39 +342,30 @@ public class FailuresScreen extends Fragment {
             @Override
             public void onClick(View v) {
 
-                prof = (EditText) failuresAddDialog.findViewById(R.id.failuresAddDialogBusinessName);
-                amount = (EditText) failuresAddDialog.findViewById(R.id.failuresAddDialogPrice);
-                title = prof.getText().toString();
-                failureContent = amount.getText().toString();
-                if (title.matches("") || failureContent.matches("")) {
-                    Toast toast = Toast.makeText(getActivity(), R.string.empty_notice, Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.CENTER, 0, 0);
-                    toast.show();
+                title = titleEdit.getText().toString();
+                failureContent = contentEdit.getText().toString();
+                if (title.matches("\\s+") || failureContent.matches("\\s+")) {
+                    mToast(getString(R.string.empty_notice));
                 } else {
+                    failuresDialog.dismiss();
                     db.updateFailureBid(failureContent, title, adapter.getObjectId(position), false);
                     refreshFailures();
-                    failuresAddDialog.dismiss();
                 }
             }
         });
     }
 
     public void showApprovals() {
-        dialogLayout = View.inflate(getActivity(), R.layout.failures_approval_dialog_layout, null);
-        failuresAddDialog = new Dialog(getActivity());
-        failuresAddDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        failuresAddDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        failuresAddDialog.setContentView(dialogLayout);
-        failuresAddDialog.show();
+        mDialog(R.layout.failures_approval_dialog_layout);
 
-        content = (TextView) failuresAddDialog.findViewById(R.id.failuresApprovalDialogList);
-
+        content = (TextView) failuresDialog.findViewById(R.id.failuresApprovalDialogList);
+        String family = getString(R.string.family);
         for (int i = 0; i < adapter.getApprovers(position).size(); i++) {
-            myList += ("משפחת " + adapter.getApprovers(position).get(i) + "\n");
+            myList += (" - " + family + " " + adapter.getApprovers(position).get(i) + "\n");
         }
         content.setText(myList);
-        dialogFailureCancelBtn = (Button) failuresAddDialog.findViewById(R.id.failuresApprovalDialogFailureCancelBtn);
-        moveToPaymentsBtn = (Button) failuresAddDialog.findViewById(R.id.failuresApprovalDialogFailureMoveToPaymentsBtn);
+        dialogFailureCancelBtn = (Button) failuresDialog.findViewById(R.id.failuresApprovalDialogFailureCancelBtn);
+        moveToPaymentsBtn = (Button) failuresDialog.findViewById(R.id.failuresApprovalDialogFailureMoveToPaymentsBtn);
         //check who is the user and set view
         if (!db.isCurrentUserAdmin()) {
             moveToPaymentsBtn.setVisibility(View.GONE);
@@ -394,7 +379,7 @@ public class FailuresScreen extends Fragment {
         dialogFailureCancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                failuresAddDialog.dismiss();
+                failuresDialog.dismiss();
             }
         });
         //adds a listener to close & move to payments button
@@ -406,12 +391,12 @@ public class FailuresScreen extends Fragment {
                 failureObjectId = adapter.getObjectId(position);
                 db.setFailureInactive(failureObjectId);
                 db.createPaymentFromFailure(failureObjectId);
-                failuresAddDialog.dismiss();
+                failuresDialog.dismiss();
                 refreshFailures();
             }
         });
         //add a listener for dismiss (close) this dialog
-        failuresAddDialog.setOnDismissListener(new OnDismissListener() {
+        failuresDialog.setOnDismissListener(new OnDismissListener() {
 
             public void onDismiss(DialogInterface dialog) {
                 myList = "";
@@ -421,24 +406,33 @@ public class FailuresScreen extends Fragment {
     }
 
     public void deleteFailure() {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-        dialog.setMessage(R.string.deleteFailure);
+        MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+                .customView(R.layout.custom_layout_content, false)
+                .buttonsGravity(GravityEnum.END)
+                .positiveColorRes(R.color.colorPrimary)
+                .positiveText(R.string.yes)
+                .negativeColorRes(R.color.colorPrimary)
+                .negativeText(R.string.no)
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        db.deleteFailure(adapter.getObjectId(position));
+                        refreshFailures();
+                    }
+                })
+                .show();
+        View cView = dialog.getCustomView();
+        TextView content = (TextView) cView.findViewById(R.id.text);
+        content.setText(getString(R.string.deleteFailure));
+    }
 
-        dialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                db.deleteFailure(adapter.getObjectId(position));
-                refreshFailures();
-            }
-        });
-
-        dialog.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-
-        dialog.show();
+    public void mDialog(int layout) {
+        dialogLayout = View.inflate(getActivity(), layout, null);
+        failuresDialog = new Dialog(getActivity());
+        failuresDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        failuresDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        failuresDialog.setContentView(dialogLayout);
+        failuresDialog.show();
     }
 
     //refresh loading the failures in the adapter
@@ -448,8 +442,10 @@ public class FailuresScreen extends Fragment {
         fragmentManager.beginTransaction().replace(R.id.main_content, fragment1).commit();
     }
 
-    public void myToast(String s) {
-        Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
+    public void mToast(String s) {
+        Toast toast = Toast.makeText(getActivity(), s, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
 
