@@ -129,7 +129,7 @@ public class FailuresAdapter extends BaseAdapter {
             holder = (ViewHolder)convertView.getTag();
 		}
 		//setting the data of the row
-		holder.fullname.setText(""+((List)failures.get(idx)).get(7));
+		holder.fullname.setText(context.getString(R.string.family)+" "+((List)failures.get(idx)).get(7));
 		holder.failure.setText(""+((List)failures.get(idx)).get(1));
 		holder.failureContent.setText(""+((List)failures.get(idx)).get(2));
 		if(!(""+((List)failures.get(idx)).get(3)).matches("")){ 

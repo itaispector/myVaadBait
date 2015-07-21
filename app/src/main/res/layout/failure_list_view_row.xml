@@ -1,178 +1,247 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:animateLayoutChanges="true"
-    android:background="@drawable/list_item_background"
-    android:descendantFocusability="blocksDescendants">
+    android:layout_margin="2dp"
+    android:descendantFocusability="blocksDescendants"
+    android:layoutDirection="ltr">
 
-    <ImageView
-        android:id="@+id/failuresRowUserImage"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:paddingLeft="10dp"
-        android:src="@drawable/no_image" />
-
-    <ImageView
-        android:id="@+id/failuresRowMinimizeButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerInParent="true"
-        android:src="@drawable/close"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/failuresRowFullName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/failuresRowUserImage"
-        android:layout_alignParentRight="true"
-        android:paddingRight="10dp"
-        android:text="שם מלא"
-        android:textColor="#4F4F4F"
-        android:textSize="15dp" />
-
-    <SurfaceView
-        android:id="@+id/failuresRowDivider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/failuresRowFullName"
-        android:background="#007ea6"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp" />
-
-    <TextView
-        android:id="@+id/failuresRowfailureName"
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/failuresRowDivider"
-        android:gravity="center"
-        android:text="שם תקלה"
-        android:textSize="20dp"
-        android:textStyle="bold" />
+        android:layout_gravity="center"
+        card_view:cardCornerRadius="2dp">
 
-    <TextView
-        android:id="@+id/failuresRowFailureContent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/failuresRowfailureName"
-        android:textSize="15dp"
-        android:visibility="gone" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:background="@drawable/list_button">
 
-    <TextView
-        android:id="@+id/failuresRowDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/failuresRowFailureContent"
-        android:layout_marginTop="3dp"
-        android:text="10/9/85"
-        android:textColor="#4F4F4F"
-        android:textSize="10dp" />
+            <ImageView
+                android:id="@+id/failuresRowUserImage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="8dp"
+                android:src="@drawable/no_image" />
 
-    <SurfaceView
-        android:id="@+id/failuresRowDivider4"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/failuresRowDate"
-        android:background="#007ea6"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp"
-        android:visibility="gone" />
+            <ImageView
+                android:id="@+id/failuresRowMinimizeButton"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:src="@drawable/close"
+                android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/failuresRowfailureBidText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/failuresRowDivider4"
-        android:text="הצעת מחיר"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:visibility="gone" />
+            <TextView
+                android:id="@+id/failuresRowFullName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/failuresRowUserImage"
+                android:layout_alignParentRight="true"
+                android:paddingRight="8dp"
+                android:text="משפחת אבולעפיה"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="16dp" />
 
-    <TextView
-        android:id="@+id/failuresRowfailureBidPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/failuresRowfailureBidText"
-        android:text="אין"
-        android:textSize="20dp"
-        android:visibility="gone" />
+            <SurfaceView
+                android:id="@+id/failuresRowDivider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/failuresRowFullName"
+                android:background="@color/button_material_light"
+                android:layout_margin="8dp" />
 
-    <TextView
-        android:id="@+id/failuresRowfailureBidBusinessName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/failuresRowfailureBidText"
-        android:textSize="20dp"
-        android:visibility="gone" />
+            <TextView
+                android:id="@+id/failuresRowfailureName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/failuresRowDivider"
+                android:paddingRight="8dp"
+                android:textColor="@color/colorPrimaryText"
+                android:gravity="right"
+                android:text="שם תקלה"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/FailuresRowAddBtn"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/failuresRowfailureBidPrice"
-        android:layout_centerInParent="true"
-        android:text="הוסף"
-        android:visibility="gone" />
+            <TextView
+                android:id="@+id/failuresRowFailureContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/failuresRowfailureName"
+                android:textSize="16dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:visibility="gone" />
 
-    <Button
-        android:id="@+id/FailuresRowEditBtn"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/failuresRowfailureBidPrice"
-        android:layout_centerInParent="true"
-        android:text="ערוך"
-        android:visibility="gone" />
+            <TextView
+                android:id="@+id/failuresRowDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/failuresRowFailureContent"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"
+                android:text="10/9/85"
+                android:textColor="#4F4F4F"
+                android:textSize="10dp" />
 
-    <Button
-        android:id="@+id/FailuresRowApproveBtn"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/failuresRowfailureBidPrice"
-        android:layout_centerInParent="true"
-        android:text="אישור"
-        android:visibility="gone" />
+            <SurfaceView
+                android:id="@+id/failuresRowDivider4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/failuresRowDate"
+                android:background="@color/button_material_light"
+                android:layout_margin="8dp"
+                android:visibility="gone" />
 
-    <Button
-        android:id="@+id/FailuresRowCancelBtn"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/failuresRowfailureBidPrice"
-        android:layout_centerInParent="true"
-        android:text="ביטול"
-        android:visibility="gone" />
+            <TextView
+                android:id="@+id/failuresRowfailureBidText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/failuresRowDivider4"
+                android:text="הצעת מחיר"
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="8dp"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/FailuresRowStatusView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/failuresRowFailureContent"
-        android:layout_marginTop="3dp"
-        android:textColor="#4F4F4F"
-        android:textSize="10dp" />
+            <TextView
+                android:id="@+id/failuresRowfailureBidPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/failuresRowfailureBidText"
+                android:text="אין"
+                android:textSize="20dp"
 
-    <Button
-        android:id="@+id/FailuresRowStatusBtn"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/failuresRowfailureBidPrice"
-        android:visibility="gone" />
+                android:layout_marginLeft="8dp"
+                android:visibility="gone" />
 
-    <Button
-        android:id="@+id/FailuresRowDeleteBtn"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/failuresRowfailureBidPrice"
-        android:text="מחק"
-        android:visibility="gone" />
+            <TextView
+                android:id="@+id/failuresRowfailureBidBusinessName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/failuresRowfailureBidText"
+      
+                android:layout_marginRight="8dp"
+                android:textSize="20dp"
+                android:text="דויד שיפוצים"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/FailuresRowAddBtn"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/failuresRowfailureBidPrice"
+                android:layout_centerInParent="true"
+                android:text="@string/add"
+                android:layout_marginBottom="8dp"
+                android:layout_width="wrap_content"
+                android:background="@drawable/default_button"
+                android:minHeight="40dp"
+                android:minWidth="60dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/FailuresRowEditBtn"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/failuresRowfailureBidPrice"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="8dp"
+                android:text="@string/edit"
+                android:layout_width="wrap_content"
+                android:background="@drawable/default_button"
+                android:minHeight="40dp"
+                android:minWidth="60dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/FailuresRowApproveBtn"
+
+                android:layout_height="wrap_content"
+                android:layout_below="@id/failuresRowfailureBidPrice"
+                android:layout_centerInParent="true"
+                android:text="@string/ok"
+                android:layout_width="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/default_button"
+                android:minHeight="40dp"
+                android:minWidth="60dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/FailuresRowCancelBtn"
+
+                android:layout_below="@id/failuresRowfailureBidPrice"
+                android:layout_centerInParent="true"
+                android:text="@string/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+
+                android:background="@drawable/default_button"
+                android:minHeight="40dp"
+                android:minWidth="60dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/FailuresRowStatusView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/failuresRowFailureContent"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:textColor="#4F4F4F"
+                android:textSize="10dp" />
+
+            <Button
+                android:id="@+id/FailuresRowStatusBtn"
+                android:layout_margin="8dp"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/failuresRowfailureBidPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/default_button"
+                android:minHeight="40dp"
+                android:minWidth="60dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/FailuresRowDeleteBtn"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/failuresRowfailureBidPrice"
+                android:text="@string/delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/default_button"
+                android:layout_marginBottom="8dp"
+                android:minHeight="40dp"
+                android:minWidth="60dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
 </RelativeLayout>

@@ -173,6 +173,7 @@
     <string name="failuresApprovalDialogTitle">דיירים מאשרים</string>
     <string name="offerExists">קיימת הצעה כבר</string>
     <string name="deleteFailure">פעולה זו תגרום למחיקת התקלה. האם אתה בטוח?</string>
+    <string name="edit">ערוך</string>
 
     <!-- Notices Screen Strings -->
     <string name="noticesDialogTitle">הוספת מודעה</string>
