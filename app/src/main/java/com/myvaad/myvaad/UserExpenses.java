@@ -198,9 +198,6 @@ public class UserExpenses extends Fragment implements DatePickerDialog.OnDateSet
     public void showFilterNotice() {
 
         final MaterialDialog dialogM = new MaterialDialog.Builder(getActivity())
-                .title("סינון")
-                .titleGravity(GravityEnum.START)
-                .contentGravity(GravityEnum.START)
                 .positiveColorRes(R.color.colorPrimary)
                 .negativeColorRes(R.color.colorPrimary)
                 .widgetColorRes(R.color.colorPrimary)

@@ -8,7 +8,11 @@ import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +23,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.GravityEnum;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.melnykov.fab.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.FunctionCallback;
@@ -26,7 +34,9 @@ import com.parse.Parse;
 import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
@@ -43,10 +53,12 @@ public class UsersScreen extends Fragment {
     FloatingActionButton addUserBtn;
     View dialogLayout;
     Dialog usersDialog;
-    EditText famName, apartNum;
-    Button ok, cancel;
+    EditText famName, apartNum, msgEditText;
+    Button ok, msgOkBtn;
     List usersList = new ArrayList();
-   /** ProgressBarCircularIndeterminate bar;**/
+    /**
+     * ProgressBarCircularIndeterminate bar;*
+     */
     TextView noUsersText;
 
 
@@ -56,14 +68,14 @@ public class UsersScreen extends Fragment {
         db = ParseDB.getInstance(getActivity());
         View rootView = inflater.inflate(R.layout.users_screen, container, false);
 /**
-        bar = (ProgressBarCircularIndeterminate) rootView.findViewById(R.id.progressBarCircularIndeterminate);
-        bar.setVisibility(View.VISIBLE);**/
+ bar = (ProgressBarCircularIndeterminate) rootView.findViewById(R.id.progressBarCircularIndeterminate);
+ bar.setVisibility(View.VISIBLE);**/
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             getActivity().getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
 
-        noUsersText = (TextView)rootView.findViewById(R.id.no_users_text);
+        noUsersText = (TextView) rootView.findViewById(R.id.no_users_text);
         //calls the list view and its adapter
         usersListView = (ListView) rootView.findViewById(R.id.UsersListView);
 
@@ -80,55 +92,108 @@ public class UsersScreen extends Fragment {
                 addUserDialog();
             }
         });
+
         getActivity().setTitle(R.string.UsersScreenTitle);
         setHasOptionsMenu(true);
         return rootView;
     }
 
-    public void findUsersForCurrentBuilding(){
+    public void findUsersForCurrentBuilding() {
         String buildingCode = db.getCurrentUserBuildingCode();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
         //Query Constraints-->all users from specific building
         query.whereContains("buildingCode", buildingCode);
         query.whereNotEqualTo("username", db.getcurrentUserName());
-        query.addAscendingOrder("familyName");
+        query.orderByAscending("familyName");
 
         //finding all users for current user building
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> users, ParseException e) {
                 if (e == null) {
-                    for (ParseObject usersRow : users) {
-                        List rowUserList = new ArrayList();
-                        //get specific data from each row
-                        String familyName = usersRow.getString("familyName");
-                        String userObjectId = usersRow.getObjectId().toString();
-                        ParseFile userPicture = usersRow.getParseFile("picture");
-                        Bitmap userPic = db.parseFileToBitmap(userPicture);
-                        boolean hasApplication = usersRow.getBoolean("hasApplication");
-                        String apartmentNumber = usersRow.getString("apartmentNumber");
-                        rowUserList.add(familyName); //0
-                        rowUserList.add(userPic);     //1
-                        rowUserList.add(userObjectId); //2
-                        rowUserList.add(hasApplication); //3
-                        rowUserList.add(apartmentNumber); //4
-                        usersList.add(rowUserList);
-                        adapter = new UsersAdapter(getActivity(), usersList, UsersScreen.this);
-                        usersListView.setAdapter(adapter);
-                      /**  bar.setVisibility(View.GONE);**/
-                    }
-                    if (usersList.isEmpty()){
-                     /**   bar.setVisibility(View.GONE);**/
+                    if (users.isEmpty()) {
+                        /**   bar.setVisibility(View.GONE);**/
                         noUsersText.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         noUsersText.setVisibility(View.GONE);
+                        adapter = new UsersAdapter(getActivity(), users);
+                        adapter.setSendBtnListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                for (int i = 0; i < usersListView.getChildCount(); i++) {
+                                    if (view == usersListView.getChildAt(i).findViewById(R.id.usersRowSendBtn)) {
+                                        String userObjectId = ((adapter.getItem(i)).getObjectId());
+                                        sendMessageDialog(userObjectId);
+                                    }
+                                }
+                            }
+                        });
+                        usersListView.setAdapter(adapter);
+                        /**  bar.setVisibility(View.GONE);**/
+
                     }
-                } else {
-                    Log.e("**PARSE ERROR**", "Error: " + e.getMessage());
+
                 }
 
             }
+
         });
+    }
+
+    public void sendMessageDialog(final String userObjectId) {
+        // inflate message layout
+        myDialog(R.layout.send_message_dialog);
+
+        // reference for edit text field and ok button
+        msgEditText = (EditText) dialogLayout.findViewById(R.id.sendMessageDialogName);
+        msgOkBtn = (Button) dialogLayout.findViewById(R.id.sendMessageDialogConfirmBtn);
+        // add watcher listener for changes in edit text, enables/disables ok button
+        msgEditText.addTextChangedListener(textWatcherListener);
+        // msgOkBtn listener, when clicked, sends message
+        msgOkBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String msg = msgEditText.getText().toString();
+                if ((msg.matches("\\s+"))) {
+                    Toast toast = Toast.makeText(getActivity(), getResources().getString(R.string.empty_edittext_msg), Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                } else {
+                    usersDialog.dismiss();
+                    sendNoti(userObjectId, msg);
+                }
+            }
+        });
+
+    }
+
+    //listener to watch if fields are empty or not, if empty add button is disabled
+    private TextWatcher textWatcherListener = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            boolean check = false;
+            check = (msgEditText.getText().toString().isEmpty());
+            msgOkBtn.setEnabled(!check);
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+
+    public void sendNoti(String userObjectId, String msg){
+        ParseQuery query = ParseInstallation.getQuery();
+        query.whereEqualTo("userObjectId", userObjectId);
+        ParsePush androidPush = new ParsePush();
+        androidPush.setMessage(msg);
+        androidPush.setQuery(query);
+        androidPush.sendInBackground();
     }
 
     public void addUserDialog() {
@@ -148,25 +213,19 @@ public class UsersScreen extends Fragment {
                 String apartmentNumber = apartNum.getText().toString();
 
                 if (familyName.matches("") || (apartmentNumber.matches(""))) {
-              /**      bar.setVisibility(View.GONE);**/
+                    /**      bar.setVisibility(View.GONE);**/
                     Toast.makeText(getActivity(), getResources().getString(R.string.empty_edittext_msg), Toast.LENGTH_SHORT).show();
                 } else {
-                /**    bar.setVisibility(View.VISIBLE);**/
+                    /**    bar.setVisibility(View.VISIBLE);**/
                     addUser(familyName, apartmentNumber);
                     usersDialog.dismiss();
                 }
             }
         });
-        cancel = (Button) dialogLayout.findViewById(R.id.usersAddDialogCancelBtn);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                usersDialog.dismiss();
-            }
-        });
+
     }
 
-    private void addUser(final String familyName, final String apartmentNumber){
+    private void addUser(final String familyName, final String apartmentNumber) {
         final String currentBuilding = db.getCurrentUserBuildingCode();
         final HashMap<String, Object> params = new HashMap<String, Object>();
         Bitmap bitmap = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.nouser);
@@ -189,7 +248,7 @@ public class UsersScreen extends Fragment {
                         public void done(String result, ParseException e) {
                             if (e == null) {
                                 refreshUsers();
-                              /** bar.setVisibility(View.GONE);**/
+                                /** bar.setVisibility(View.GONE);**/
                                 //Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
                             } else {
                                 //Toast.makeText(getActivity(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
@@ -203,16 +262,28 @@ public class UsersScreen extends Fragment {
         });
     }
 
+    private void myDialog(int layout) {
+        dialogLayout = View.inflate(getActivity(), layout, null);
+        usersDialog = new Dialog(getActivity());
+        usersDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        usersDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        usersDialog.setContentView(dialogLayout);
+        usersDialog.show();
+    }
+
     public void refreshUsers() {
         Fragment fragment1 = new UsersScreen();
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment1).commit();
     }
 
-    public void showLoader(){
-       /** bar.setVisibility(View.VISIBLE);**/
+    public void showLoader() {
+        /** bar.setVisibility(View.VISIBLE);**/
     }
 
+    private void mToast(String msg) {
+        Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
+    }
 
 }
 

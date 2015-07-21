@@ -140,6 +140,11 @@
     <string name="payment_move_to_expenses">תשלום הועבר בהצלחה להוצאות</string>
     <string name="payment_not_deleted">התשלום לא נמחק, אנא נסה שנית</string>
     <string name="payment_successfully_deleted">תשלום נמחק בהצלחה</string>
+    <string name="notification_msg_extra_payments">, נא לשלם את ה</string>
+    <string name="notification_msg_vaad_bait">, נא לשלם את התשלומים הנותרים לשנת</string>
+    <string name="message_send">שליחת הודעה</string>
+    <string name="send">שלח</string>
+    <string name="write_message">כתוב מודעה</string>
     <string-array name="login_page_array">
         <item>תפריט</item>
         <item>של</item>
@@ -202,6 +207,12 @@
     <string name="total">סך הכל</string>
     <string name="choose_start_date_before_end">בחר תאריך התחלה קודם לתאריך סיום</string>
     <string name="noExpenses">אין הוצאות בתקופה הנבחרת</string>
+
+    <!--Expenses filter dialog -->
+
+    <string name="filter">סינון</string>
+    <string name="from_date">מתאריך</string>
+    <string name="to_date">עד תאריך</string>
 
     <!-- failures dialogs -->
     <string name="dialogTitle">ערוך הצעת מחיר</string>

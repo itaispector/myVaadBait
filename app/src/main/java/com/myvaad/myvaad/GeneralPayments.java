@@ -159,7 +159,7 @@ public class GeneralPayments extends Fragment {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                vfSetLayout(R.id.payments_general_layout);
+                new GoBackPaymentTask().execute();
             }
         });
 
@@ -251,6 +251,36 @@ public class GeneralPayments extends Fragment {
         return rootView;
     }
 
+    class GoBackPaymentTask extends AsyncTask<Void, Void, Void>{
+
+        @Override
+        protected void onPreExecute() {
+            loaderDialog = new RingProgressDialog(getActivity());
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            List usersObjectIds = new ArrayList();
+            for (int i = 0; i < paymentsUserAdapter.getCount(); i++) {
+                // if user didn't pay yet, add him to list of users who didn't pay,
+                // and notify them
+                CheckBox v = (CheckBox)(adminPaymentsList.getChildAt(i)).findViewById(R.id.usersListCB);
+                if (v.isChecked()) {
+                    String userObjectId = (paymentsUserAdapter.getItem(i)).getObjectId();
+                    usersObjectIds.add(userObjectId);
+                }
+            }
+            db.savePaidUsers(paymentObjectId, usersObjectIds);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            vfSetLayout(R.id.payments_general_layout);
+            loaderDialog.dismiss();
+        }
+    }
+
     class MovePaymentTask extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -337,7 +367,7 @@ public class GeneralPayments extends Fragment {
         });
 
     }
-
+    /*
     private void loadListViewOfUsers(final String paymentObjectId, String buildingCode) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
         query.whereEqualTo("buildingCode", buildingCode);
@@ -387,6 +417,44 @@ public class GeneralPayments extends Fragment {
             }
         });
     }
+    */
+
+    private void loadListViewOfUsers(final String paymentObjectId, String buildingCode) {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
+        query.whereEqualTo("buildingCode", buildingCode);
+        query.whereNotEqualTo("isAdmin", true);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(final List<ParseObject> users, ParseException e) {
+                if (e == null) {
+                    ParseQuery<ParseObject> queryB = ParseQuery.getQuery("payments");
+                    queryB.getInBackground(paymentObjectId, new GetCallback<ParseObject>() {
+                        @Override
+                        public void done(ParseObject paidByList, ParseException e) {
+                            if (e == null) {
+                                List paidBy = null;
+                                if (paidByList.getList("paidBy") != null) {
+                                    paidBy = paidByList.getList("paidBy");
+                                }
+                                paymentsUserAdapter = new PaymentsAdminUsersListAdapter(getActivity(), users, paidBy);
+                                adminPaymentsList.setAdapter(paymentsUserAdapter);
+                                loaderDialog.dismiss();
+                                vfSetLayout(R.id.paymentsAdminLayout);
+                            } else {
+                                Log.v("***PARSE ERROR***", e.getMessage());
+                                //mToast(e.getMessage());
+                            }
+                        }
+                    });
+
+                } else {
+                    Log.v("***PARSE ERROR***", e.getMessage());
+                    mToast(e.getMessage());
+                }
+
+            }
+        });
+    }
 
     private void createPayment(final String paymentName, final String paymentPrice, final String paymentType) {
         final String currentBuilding = db.getCurrentUserBuildingCode();
@@ -401,7 +469,7 @@ public class GeneralPayments extends Fragment {
                             payment.put("description", paymentName);
                             payment.put("amount", paymentPrice);
                             payment.put("paymentType", paymentType);
-                            payment.put("houses", payment.getInt("houses"));
+                            payment.put("houses", parseObject.getInt("houses"));
                             payment.put("paymentApproved", false);
                             payment.saveInBackground(new SaveCallback() {
                                 @Override
@@ -419,6 +487,7 @@ public class GeneralPayments extends Fragment {
     }
 
     private void addPaymentDialog() {
+        // opens dialog to choose extra or regular payment
         new MaterialDialog.Builder(getActivity())
                 .title(R.string.add_expense)
                 .titleGravity(GravityEnum.END)
@@ -429,7 +498,9 @@ public class GeneralPayments extends Fragment {
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
                     public void onSelection(MaterialDialog materialDialog, View view, int i, CharSequence charSequence) {
+                        // array of payment types
                         paymentType = getResources().getStringArray(R.array.payment_types)[i];
+                        // open dialog for add payment
                         myDialog(R.layout.add_payment_dialog);
 
                         loader.setVisibility(View.GONE);
@@ -621,22 +692,28 @@ public class GeneralPayments extends Fragment {
 
     private void sendNotification() {
         HashMap<String, Object> params = new HashMap<String, Object>();
-        List<String> usersObjectId = new ArrayList<String>();
+        List usersObjectIds = new ArrayList<>();
+        List familyNames = new ArrayList<>();
         for (int i = 0; i < paymentsUserAdapter.getCount(); i++) {
-            List user = paymentsUserAdapter.getItem(i);
-            if (!(boolean) user.get(2)) {
-                usersObjectId.add((String) user.get(1));
+            // if user didn't pay yet, add him to list of users who didn't pay,
+            // and notify them
+            CheckBox v = (CheckBox)(adminPaymentsList.getChildAt(i)).findViewById(R.id.usersListCB);
+            if (!v.isChecked()) {
+            String userObjectId = (paymentsUserAdapter.getItem(i)).getObjectId();
+            String familyName = (paymentsUserAdapter.getItem(i)).getString("familyName");
+            usersObjectIds.add(userObjectId);
+            familyNames.add(familyName);
             }
         }
-        params.put("usersObjectIds", usersObjectId);
-        params.put("paymentObjectId", paymentObjectId);
-        params.put("buildingCode", db.getCurrentUserBuildingCode());
+        params.put("usersObjectIds", usersObjectIds);
+        params.put("familyNames", familyNames);
+        params.put("msg", getString(R.string.notification_msg_extra_payments) + payment.getString("description"));
         ParseCloud.callFunctionInBackground("sendNotificationToUnPaidUsers", params, new FunctionCallback<String>() {
             public void done(String result, ParseException e) {
                 if (e == null) {
-                    mToast(result);
+                    mToast(getString(R.string.noti_success));
                 } else {
-                    Toast.makeText(getActivity(), "" + e, Toast.LENGTH_LONG).show();
+                    mToast(getString(R.string.noti_failure));
                 }
             }
         });

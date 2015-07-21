@@ -212,9 +212,7 @@ public class BuildingExpenses extends Fragment implements DatePickerDialog.OnDat
     public void showNotice() {
 
         final MaterialDialog dialogM = new MaterialDialog.Builder(getActivity())
-                .title("סינון")
-                .titleGravity(GravityEnum.START)
-                .contentGravity(GravityEnum.START)
+
                 .positiveColorRes(R.color.colorPrimary)
                 .negativeColorRes(R.color.colorPrimary)
                 .widgetColorRes(R.color.colorPrimary)
