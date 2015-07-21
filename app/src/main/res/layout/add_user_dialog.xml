@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layoutDirection="ltr"
     android:background="@drawable/dialog_margin">
 
     <TextView
@@ -15,31 +16,29 @@
         android:paddingTop="24dp"
         android:text="@string/userDialogTitle"
         android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textSize="20sp" />
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/usersAddDialogFamName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/usersAddDialogTitle"
-        android:hint="@string/fullname"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginTop="10dp"
-        android:singleLine="true"
-        />
+        android:hint="@string/fullname"
+        android:singleLine="true" />
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/usersAddDialogApartNum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/usersAddDialogFamName"
-        android:hint="@string/apartment_number_text"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginTop="10dp"
+        android:hint="@string/apartment_number_text"
         android:inputType="number"
         android:singleLine="true" />
 
@@ -50,25 +49,24 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@id/usersAddDialogApartNum"
-        android:background="@drawable/default_button"
-        android:textColor="@color/button_text_color"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:enabled="false"
-        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/default_button"
+        android:enabled="false"
         android:gravity="center_vertical|left"
+        android:paddingBottom="8dp"
         android:paddingLeft="24dp"
         android:paddingStart="24dp"
         android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:text="@string/add"/>
+        android:text="@string/add"
+        android:textColor="@color/button_text_color"
+        android:textSize="14sp" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_below="@id/usersAddDialogOkBtn"
-        android:background="@color/transparent"/>
-
+        android:background="@color/transparent" />
 
 
 </RelativeLayout>
