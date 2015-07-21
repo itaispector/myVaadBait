@@ -76,19 +76,6 @@ public class CreateBuilding extends Fragment {
             }
         });
 
-        final ImageView paypalLogo = (ImageView) rootView.findViewById(R.id.small_paypal_logo);
-
-        paypal.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if (b) {
-                    paypalLogo.setVisibility(View.GONE);
-                } else {
-                    paypalLogo.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-
         numberOfHouses = (EditText) rootView.findViewById(R.id.CreateBuildingScreenBuildingHouseNumbers);
         numberOfHouses.setOnClickListener(new View.OnClickListener() {
             @Override
