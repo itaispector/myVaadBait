@@ -217,8 +217,8 @@ public class BuildingExpenses extends Fragment implements DatePickerDialog.OnDat
                 .negativeColorRes(R.color.colorPrimary)
                 .widgetColorRes(R.color.colorPrimary)
                 .customView(R.layout.custom_filter_dialog, false) //false = can't scroll
-                .negativeText("ביטול")
-                .positiveText("סנן")
+                .negativeText(getActivity().getString(R.string.cancel))
+                .positiveText(getActivity().getString(R.string.setFilter))
                 .buttonsGravity(GravityEnum.END)
                 .forceStacking(false)
                 .btnStackedGravity(GravityEnum.END)
@@ -285,15 +285,16 @@ public class BuildingExpenses extends Fragment implements DatePickerDialog.OnDat
         String description = expenseObject.getString("description")+"  "+expenseObject.getString("amount")+" "+getActivity().getString(R.string.shekel);
 
          MaterialDialog dialogM = new MaterialDialog.Builder(getActivity())
-                .title("מחיקת הוצאה")
-                .content(description)
+                //.title("מחיקת הוצאה")
+               // .content(description)
                 .titleGravity(GravityEnum.START)
-                .contentGravity(GravityEnum.START)
+              //  .contentGravity(GravityEnum.START)
                 .positiveColorRes(R.color.colorPrimary)
                 .negativeColorRes(R.color.colorPrimary)
+                .customView(R.layout.custom_content_with_title_dialog, false) //false = can't scroll
                 .widgetColorRes(R.color.colorPrimary)
-                .negativeText("ביטול")
-                .positiveText("מחק")
+                .negativeText(getActivity().getString(R.string.cancel))
+                .positiveText(getActivity().getString(R.string.delete))
                 .buttonsGravity(GravityEnum.END)
                 .forceStacking(false)
                 .btnStackedGravity(GravityEnum.END)
@@ -316,6 +317,12 @@ public class BuildingExpenses extends Fragment implements DatePickerDialog.OnDat
 
                 })
                 .show();
+
+        View customDialogView = dialogM.getCustomView();
+        TextView titleTextView= (TextView) customDialogView.findViewById(R.id.title);
+        titleTextView.setText(getActivity().getString(R.string.delete_expense));
+        TextView contentTextView= (TextView) customDialogView.findViewById(R.id.content);
+        contentTextView.setText(description);
     }
 
     public void reloadListView(){
