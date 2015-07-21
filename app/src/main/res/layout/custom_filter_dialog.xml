@@ -9,11 +9,12 @@
         android:layout_height="wrap_content"
         android:text="@string/filter"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold"
         android:textColor="@android:color/black"
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/textView"
         android:layout_alignEnd="@+id/textView"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="24dp"/>
 
     <TextView
         android:layout_width="wrap_content"
