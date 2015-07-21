@@ -145,6 +145,7 @@
     <string name="message_send">שליחת הודעה</string>
     <string name="send">שלח</string>
     <string name="write_message">כתוב הודעה</string>
+    <string name="join">הצטרף</string>
     <string-array name="login_page_array">
         <item>תפריט</item>
         <item>של</item>
