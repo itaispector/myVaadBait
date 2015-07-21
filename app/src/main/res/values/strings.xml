@@ -208,6 +208,12 @@
     <string name="choose_start_date_before_end">בחר תאריך התחלה קודם לתאריך סיום</string>
     <string name="noExpenses">אין הוצאות בתקופה הנבחרת</string>
 
+    <!--Expenses filter dialog -->
+
+    <string name="filter">סינון</string>
+    <string name="from_date">מתאריך</string>
+    <string name="to_date">עד תאריך</string>
+
     <!-- failures dialogs -->
     <string name="dialogTitle">ערוך הצעת מחיר</string>
     <string name="shekelSign">\₪ </string>
