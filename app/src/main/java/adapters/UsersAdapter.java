@@ -41,7 +41,7 @@ public class UsersAdapter extends BaseAdapter {
     private Context context;
     ViewHolder holder;
     List<ParseObject> users;
-    View.OnClickListener sendBtnListener = null;
+    View.OnClickListener deleteBtnListener = null, sendBtnListener = null;
 
     public UsersAdapter(Context context, List<ParseObject> users) {
         this.context = context;
@@ -63,8 +63,12 @@ public class UsersAdapter extends BaseAdapter {
         return 0;
     }
 
-    public void setSendBtnListener(View.OnClickListener lis){
+    public void setSendBtnListener(View.OnClickListener lis) {
         this.sendBtnListener = lis;
+    }
+
+    public void setDeleteBtnListener(View.OnClickListener lis){
+        this.deleteBtnListener = lis;
     }
 
     //helper class for holding the views in the listview, better for performance
@@ -108,17 +112,13 @@ public class UsersAdapter extends BaseAdapter {
         holder.userImg.setImageBitmap(userPic);
         holder.sendMsg.setVisibility(hasApplication ? View.VISIBLE : View.GONE);
 
-        if (sendBtnListener!=null){
+        if (sendBtnListener != null) {
             holder.sendMsg.setOnClickListener(sendBtnListener);
         }
 
-        holder.delUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteUser(userObjectId, familyName);
-            }
-        });
-
+        if (deleteBtnListener != null){
+            holder.delUser.setOnClickListener(deleteBtnListener);
+        }
 
         return convertView;
     }
