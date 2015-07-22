@@ -1,5 +1,6 @@
 package com.myvaad.myvaad;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -15,11 +16,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -58,6 +63,9 @@ public class UserProfile extends AppCompatActivity {
     Bitmap bm, bmp;
     ProgressView loader;
     Switch getPushes;
+    View dialogLayout;
+    Button ok;
+    Dialog usersDialog;
     TextView userEmailTxt, userFamilyTxt, userPaypalTxt, userBuildingTxt;
     String userEmailString, userFamilyString, userPaypalString, userBuildingCodeString;
 
@@ -257,6 +265,7 @@ public class UserProfile extends AppCompatActivity {
                 .title("עריכת סיסמה")
                 .positiveText("המשך")
                 .neutralText("ביטול")
+                .inputType(InputType.TYPE_TEXT_VARIATION_PASSWORD)
                 .input("סיסמה נוכחית", null, false, new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(MaterialDialog materialDialog, CharSequence charSequence) {
@@ -276,15 +285,31 @@ public class UserProfile extends AppCompatActivity {
                             public void done(Boolean result, ParseException e) {
                                 if (e == null) {
                                     if (result) {
-                                        toast("תואם!!!");
-                                        ParseUser currentUser = ParseUser.getCurrentUser();
-                                        currentUser.setPassword("123456");
-                                        currentUser.saveInBackground();
-                                        currentUser.logOut();
-                                        Intent i = new Intent(getApplicationContext(), MainLoginScreen.class);
-                                        startActivity(i);
-                                        UserProfile.this.finish();
-                                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                        myDialog(R.layout.change_password_dialog);
+                                        password = (EditText) dialogLayout.findViewById(R.id.password);
+                                        password.addTextChangedListener(textWatcherListener2);
+                                        password2 = (EditText) dialogLayout.findViewById(R.id.password2);
+                                        password2.addTextChangedListener(textWatcherListener2);
+                                        ok = (Button) dialogLayout.findViewById(R.id.usersAddDialogOkBtn);
+                                        ok.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                String pass = password.getText().toString();
+                                                String pass2 = password2.getText().toString();
+                                                if (!pass.equals(pass2)) {
+                                                    toast(getString(R.string.passwordVerifyText));
+                                                } else {
+                                                    ParseUser currentUser = ParseUser.getCurrentUser();
+                                                    currentUser.setPassword(pass);
+                                                    currentUser.saveInBackground();
+                                                    currentUser.logOut();
+                                                    Intent i = new Intent(getApplicationContext(), MainLoginScreen.class);
+                                                    startActivity(i);
+                                                    UserProfile.this.finish();
+                                                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                                }
+                                            }
+                                        });
                                     } else {
                                         toast("טעות");
                                     }
@@ -301,6 +326,35 @@ public class UserProfile extends AppCompatActivity {
                     }
                 })
                 .show();
+    }
+
+    //listener to watch if fields are empty or not, if empty add button is disabled
+    private TextWatcher textWatcherListener2 = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            boolean check = false;
+            check = (password.getText().toString().isEmpty() || password2.getText().toString().isEmpty());
+            ok.setEnabled(!check);
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+
+    private void myDialog(int layout) {
+        dialogLayout = View.inflate(this, layout, null);
+        usersDialog = new Dialog(this);
+        usersDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        usersDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        usersDialog.setContentView(dialogLayout);
+        usersDialog.show();
     }
 
     public void changeUserPaypal(View view) {
