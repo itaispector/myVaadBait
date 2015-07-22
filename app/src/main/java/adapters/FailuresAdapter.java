@@ -216,6 +216,7 @@ public class FailuresAdapter extends BaseAdapter {
                 }
         }
 
+        // set listeneres to all buttons
         if (addBtnListener != null) {
             holder.add.setOnClickListener(addBtnListener);
         }
