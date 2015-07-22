@@ -13,6 +13,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,6 +28,9 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -36,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     TextView familyName, userEmail;
     ImageView userImage, navHeaderBackground;
     ParseDB db;
-    Fragment fragment0;
+    Fragment fragment0,fragment1,fragment2,fragment3,fragment4;
     FragmentManager fragmentManager;
     private ActionBarDrawerToggle mDrawerToggle;
 
@@ -52,7 +57,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         fragmentManager = getFragmentManager();
         fragment0 = new NoticeBoardScreen();
-        fragmentManager.beginTransaction().replace(R.id.main_content, fragment0).commit();
+        fragment1 = new FailuresScreen();
+        fragment2 = new ExpensesScreen();
+        fragment3 = new PaymentsScreen();
+        fragment4 = new UsersScreen();
 
 
         mToolBar = (Toolbar) findViewById(R.id.app_bar);
@@ -96,6 +104,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+
+        switch (ParsePushCustomReceiver.pushTitle){
+            case "מודעה חדשה":
+                fragmentManager.beginTransaction().replace(R.id.main_content, fragment0).commit();
+                ParsePushCustomReceiver.pushTitle="";
+                Log.d("***push***","from new message");
+                break;
+            case "תקלה חדשה":
+                fragmentManager.beginTransaction().replace(R.id.main_content, fragment1).commit();
+                ParsePushCustomReceiver.pushTitle="";
+                Log.d("***push***","from new failure");
+                break;
+            case "הועד שלי":
+                fragmentManager.beginTransaction().replace(R.id.main_content, fragment3).commit();
+                ParsePushCustomReceiver.pushTitle="";
+                Log.d("***push***","***from payments***");
+                break;
+            default:
+                fragmentManager.beginTransaction().replace(R.id.main_content, fragment0).commit();
+                ParsePushCustomReceiver.pushTitle="";
+                Log.d("***push***","from default");
+        }
+    }
+
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
@@ -129,6 +166,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -137,10 +176,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
-        Fragment fragment1 = new FailuresScreen();
-        Fragment fragment2 = new ExpensesScreen();
-        Fragment fragment3 = new PaymentsScreen();
-        Fragment fragment4 = new UsersScreen();
+
+        fragment1 = new FailuresScreen();
+        fragment2 = new ExpensesScreen();
+        fragment3 = new PaymentsScreen();
+        fragment4 = new UsersScreen();
 
         switch (menuItem.getItemId()) {
             case R.id.notice_board:
