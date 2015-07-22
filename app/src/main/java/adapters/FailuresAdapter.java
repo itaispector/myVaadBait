@@ -90,7 +90,7 @@ public class FailuresAdapter extends BaseAdapter {
 	//helper class for holding the views in the listview, better for performance
 	public class ViewHolder{
 		TextView fullname,failure,failureContent,bidText,bidPrice,bidProf,date,status;
-		ImageView image,minimize;
+		ImageView image;
 		SurfaceView divider,divider2;
 		Button add,edit,statusBtn,deleteBtn,approveBtn,cancelBtn;	
 	}
@@ -106,7 +106,6 @@ public class FailuresAdapter extends BaseAdapter {
             holder = new ViewHolder();     
             holder.fullname=(TextView)convertView.findViewById(R.id.failuresRowFullName);
             holder.image=(ImageView)convertView.findViewById(R.id.failuresRowUserImage);
-            holder.minimize=(ImageView)convertView.findViewById(R.id.failuresRowMinimizeButton);
             holder.divider=(SurfaceView)convertView.findViewById(R.id.failuresRowDivider);
             holder.failure=(TextView)convertView.findViewById(R.id.failuresRowfailureName);
             holder.failureContent=(TextView)convertView.findViewById(R.id.failuresRowFailureContent);
@@ -191,7 +190,6 @@ public class FailuresAdapter extends BaseAdapter {
 					holder.approveBtn.setVisibility(View.GONE);
 				}
 		}
-		holder.minimize.setVisibility(this.state.get(idx)?View.VISIBLE:View.GONE);
 		
 		return convertView;
 	}
