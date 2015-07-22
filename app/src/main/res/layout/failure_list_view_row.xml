@@ -215,7 +215,6 @@
                     android:textSize="14sp"
                     android:visibility="gone" />
 
-
                 <Button
                     android:id="@+id/FailuresRowStatusBtn"
                     android:layout_width="wrap_content"
