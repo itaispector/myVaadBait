@@ -47,13 +47,14 @@
     <string name="street">רחוב</string>
     <string name="home_number">מספר בית</string>
     <string name="paypal_account">אימייל פיי-פל לקבלת תשלומים</string>
-    <string name="home_number2">כניסה (במידה ויש)</string>
+    <string name="home_number2">כניסה</string>
     <string name="home_number2text">כניסה</string>
     <string name="must_fildes">* (שדות חובה)</string>
     <string name="must_street">נא להזין רחוב</string>
     <string name="must_home_number">נא להזין מספר בית</string>
     <string name="must_city">נא לבחור עיר</string>
     <string name="must_num_houses">נא לציין מספר דיירים</string>
+    <string name="must_num_appartment">נא לרשום מספר דירה</string>
     <string name="treating">בטיפול</string>
     <string name="notTreated">לא טופל</string>
     <string name="wait">טוען… אנא המתן</string>

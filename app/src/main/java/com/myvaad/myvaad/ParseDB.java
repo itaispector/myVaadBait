@@ -508,13 +508,19 @@ public class ParseDB {
         ParseUser currentUser = getcurrentUser();
         currentUser.put("buildingCode", buildingCode);
         currentUser.put("apartmentNumber", userApartmentNumber);
-        currentUser.saveInBackground();
+        currentUser.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+
+            }
+        });
     }
 
     protected void userLeaveBuildingCode() {
         ParseUser currentUser = getcurrentUser();
         currentUser.put("buildingCode", JSONObject.NULL);
         currentUser.put("apartmentNumber", JSONObject.NULL);
+        currentUser.put("isAdmin",false);
         currentUser.saveInBackground();
     }
 
@@ -528,7 +534,8 @@ public class ParseDB {
 
     //This method sign up new building in class(table)buildings-->created by building Admin
 
-    protected void signUpBuilding(String buildingCode, String address, String paypalEmail, String numberOfHouses) {
+    protected void signUpBuilding(String buildingCode, String address, String paypalEmail, String numberOfHouses,Context context) {
+        final RingProgressDialog dialog = new RingProgressDialog(context);
         //The user that sign Up the Building is the admin
         ParseUser currentUser = getcurrentUser();
         currentUser.put("isAdmin", true);
@@ -539,11 +546,17 @@ public class ParseDB {
         building.put("address", address);
         building.put("paypal", paypalEmail);
         building.put("houses", numberOfHouses);
-        building.saveInBackground();
+        building.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                dialog.dismiss();
+            }
+        });
     }
 
     //This method sign up new building in class(table)buildings without paypal account
-    protected void signUpBuildingWithoutPaypal(String buildingCode, String address, String numberOfHouses) {
+    protected void signUpBuildingWithoutPaypal(String buildingCode, String address, String numberOfHouses,Context context) {
+        final RingProgressDialog dialog = new RingProgressDialog(context);
         //The user that sign Up the Building is the admin
         ParseUser currentUser = getcurrentUser();
         currentUser.put("isAdmin", true);
@@ -553,7 +566,12 @@ public class ParseDB {
         building.put("buildingCode", buildingCode);
         building.put("address", address);
         building.put("houses", numberOfHouses);
-        building.saveInBackground();
+        building.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                dialog.dismiss();
+            }
+        });
     }
 
     //This method updating paypal account to Building that not have one.
