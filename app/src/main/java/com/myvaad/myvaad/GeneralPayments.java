@@ -226,6 +226,7 @@ public class GeneralPayments extends Fragment {
             @Override
             public void onClick(View view) {
                 MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+                        .customView(R.layout.custom_layout_content, false)
                         .positiveText(R.string.yes)
                         .buttonsGravity(GravityEnum.END)
                         .positiveColorRes(R.color.colorPrimary)
