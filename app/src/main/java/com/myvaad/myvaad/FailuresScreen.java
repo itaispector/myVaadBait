@@ -1,25 +1,5 @@
 package com.myvaad.myvaad;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-
-import com.afollestad.materialdialogs.GravityEnum;
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.melnykov.fab.FloatingActionButton;
-import com.parse.FindCallback;
-import com.parse.Parse;
-import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.rey.material.widget.ProgressView;
-
-import adapters.FailuresAdapter;
-
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -39,11 +19,25 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.afollestad.materialdialogs.GravityEnum;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.melnykov.fab.FloatingActionButton;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.rey.material.widget.ProgressView;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import adapters.FailuresAdapter;
 
 public class FailuresScreen extends Fragment {
 
@@ -52,34 +46,29 @@ public class FailuresScreen extends Fragment {
     TextView content, noFailuresTextView;
     EditText titleEdit, contentEdit;
     View dialogLayout;
-    Dialog failuresDialog, failuresPriceDialog;
+    Dialog failuresDialog;
     Button dialogFailureOkBtn, dialogFailureCancelBtn, moveToPaymentsBtn;
     FloatingActionButton addFailureBtn;
     ProgressView bar;
     int position;
     ParseDB db;
-    String title, failureContent = "", approvals, myList = "", failureObjectId;
+    String title, failureContent = "", myList = "", failureObjectId;
     List outputFailuresList = new ArrayList();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         db = ParseDB.getInstance(getActivity());
         View rootView = inflater.inflate(R.layout.failures_screen, container, false);
-
-        //show loader
+        getActivity().setTitle(R.string.FailuresScreenTitle);
+        noFailuresTextView = (TextView) rootView.findViewById(R.id.no_failures_text);
         bar = (ProgressView) rootView.findViewById(R.id.progress_loader);
         bar.setVisibility(View.VISIBLE);
-
-        getActivity().setTitle(R.string.FailuresScreenTitle);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             getActivity().getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
 
-        noFailuresTextView = (TextView) rootView.findViewById(R.id.no_failures_text);
-
-        //calls the list view and its adapter
+        // calls the list view and its adapter
         failuresList = (ListView) rootView.findViewById(R.id.FailuresListView);
         // load data of list view from query
         String CurrentUserBuildingCode = db.getCurrentUserBuildingCode();
@@ -145,15 +134,6 @@ public class FailuresScreen extends Fragment {
                             }
                         });
 
-                        adapter.setApprovalBtnListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                // get position of click
-                                position = failuresList.getPositionForView(view);
-                                addBidPrice();
-                            }
-                        });
-
                         adapter.setDeleteBtnListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -207,7 +187,7 @@ public class FailuresScreen extends Fragment {
             }
         });
 
-        //adds a listener to item in the listview
+        // adds a listener to item in the listview
         failuresList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View item, int idx, long id) {
@@ -266,6 +246,7 @@ public class FailuresScreen extends Fragment {
         }
     };
 
+    // handles button clicks
     public void DialogButtonsResult(View v) {
 
         title = titleEdit.getText().toString();
@@ -281,7 +262,7 @@ public class FailuresScreen extends Fragment {
 
     }
 
-
+    // add bid price dialog
     public void addBidPrice() {
         mDialog(R.layout.failures_add_dialog_layout);
 
@@ -309,6 +290,7 @@ public class FailuresScreen extends Fragment {
         });
     }
 
+    // edit bid price dialog
     public void editBidPrice() {
         mDialog(R.layout.failures_edit_dialog_layout);
         dialogFailureOkBtn = (Button) failuresDialog.findViewById(R.id.failuresAddDialogFailureOkBtn);
@@ -348,6 +330,7 @@ public class FailuresScreen extends Fragment {
         });
     }
 
+    // approve families dialog
     public void showApprovals() {
         mDialog(R.layout.failures_approval_dialog_layout);
 
@@ -403,6 +386,7 @@ public class FailuresScreen extends Fragment {
 
     }
 
+    // delete failure dialog
     public void deleteFailure() {
         MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
                 .customView(R.layout.custom_layout_content, false)
@@ -424,6 +408,7 @@ public class FailuresScreen extends Fragment {
         content.setText(getString(R.string.deleteFailure));
     }
 
+    // custom dialog
     public void mDialog(int layout) {
         dialogLayout = View.inflate(getActivity(), layout, null);
         failuresDialog = new Dialog(getActivity());
@@ -433,13 +418,14 @@ public class FailuresScreen extends Fragment {
         failuresDialog.show();
     }
 
-    //refresh loading the failures in the adapter
+    // reload page
     public void refreshFailures() {
         Fragment fragment1 = new FailuresScreen();
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.main_content, fragment1).commit();
     }
 
+    // toast in middle of screen
     public void mToast(String s) {
         Toast toast = Toast.makeText(getActivity(), s, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 0);
