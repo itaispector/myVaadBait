@@ -123,7 +123,7 @@ public class GeneralPayments extends Fragment {
                     adminPaymentsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                            CheckBox check =  (CheckBox)view.findViewById(R.id.usersListCB);
+                            CheckBox check = (CheckBox) view.findViewById(R.id.usersListCB);
                             check.setChecked(!check.isChecked());
                         }
                     });
@@ -135,7 +135,6 @@ public class GeneralPayments extends Fragment {
                 }
             }
         });
-
 
 
         addPaymentBtn = (FloatingActionButton) rootView.findViewById(R.id.add_payment_btn);
@@ -167,10 +166,9 @@ public class GeneralPayments extends Fragment {
         sendNotifications.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new MaterialDialog.Builder(getActivity())
-                        .content(R.string.send_notice_dialog_content)
+                MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+                        .customView(R.layout.custom_layout_content, false)
                         .positiveText(R.string.yes)
-                        .contentGravity(GravityEnum.END)
                         .buttonsGravity(GravityEnum.END)
                         .positiveColorRes(R.color.colorPrimary)
                         .negativeColorRes(R.color.colorPrimary)
@@ -187,6 +185,9 @@ public class GeneralPayments extends Fragment {
                             }
                         })
                         .show();
+                View v = dialog.getCustomView();
+                TextView tv = (TextView) v.findViewById(R.id.text);
+                tv.setText(getString(R.string.send_notice_dialog_content));
 
             }
         });
@@ -195,10 +196,9 @@ public class GeneralPayments extends Fragment {
         moveToExpensesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new MaterialDialog.Builder(getActivity())
-                        .content(R.string.move_to_expenses_content)
+                MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+                        .customView(R.layout.custom_layout_content, false)
                         .positiveText(R.string.yes)
-                        .contentGravity(GravityEnum.END)
                         .buttonsGravity(GravityEnum.END)
                         .positiveColorRes(R.color.colorPrimary)
                         .negativeColorRes(R.color.colorPrimary)
@@ -215,6 +215,9 @@ public class GeneralPayments extends Fragment {
                             }
                         })
                         .show();
+                View v = dialog.getCustomView();
+                TextView tv = (TextView) v.findViewById(R.id.text);
+                tv.setText(getString(R.string.move_to_expenses_content));
             }
         });
 
@@ -222,10 +225,9 @@ public class GeneralPayments extends Fragment {
         deletePaymentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new MaterialDialog.Builder(getActivity())
-                        .content(R.string.delete_payment_content)
+                MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+                        .customView(R.layout.custom_layout_content, false)
                         .positiveText(R.string.yes)
-                        .contentGravity(GravityEnum.END)
                         .buttonsGravity(GravityEnum.END)
                         .positiveColorRes(R.color.colorPrimary)
                         .negativeColorRes(R.color.colorPrimary)
@@ -242,6 +244,9 @@ public class GeneralPayments extends Fragment {
                             }
                         })
                         .show();
+                View v = dialog.getCustomView();
+                TextView tv = (TextView) v.findViewById(R.id.text);
+                tv.setText(getString(R.string.delete_payment_content));
             }
         });
 
@@ -251,7 +256,7 @@ public class GeneralPayments extends Fragment {
         return rootView;
     }
 
-    class GoBackPaymentTask extends AsyncTask<Void, Void, Void>{
+    class GoBackPaymentTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {
@@ -264,7 +269,7 @@ public class GeneralPayments extends Fragment {
             for (int i = 0; i < paymentsUserAdapter.getCount(); i++) {
                 // if user didn't pay yet, add him to list of users who didn't pay,
                 // and notify them
-                CheckBox v = (CheckBox)(adminPaymentsList.getChildAt(i)).findViewById(R.id.usersListCB);
+                CheckBox v = (CheckBox) (adminPaymentsList.getChildAt(i)).findViewById(R.id.usersListCB);
                 if (v.isChecked()) {
                     String userObjectId = (paymentsUserAdapter.getItem(i)).getObjectId();
                     usersObjectIds.add(userObjectId);
@@ -558,54 +563,54 @@ public class GeneralPayments extends Fragment {
     }
 
     private void payAllDialog() {
-            // inflate list of all existing payments
-            LinearLayout myView = new LinearLayout(getActivity());
-            myView.setOrientation(LinearLayout.VERTICAL);
-            total = 0.0;
-            for (int i = 0; i < paymentsAdapter.getCount(); i++) {
-                View inflation = View.inflate(getActivity(), R.layout.pay_all_item, null);
-                TextView pName = (TextView) inflation.findViewById(R.id.list_item_paymentName);
-                TextView pAmount = (TextView) inflation.findViewById(R.id.list_item_paymentAmount);
-                pName.setText(((paymentsAdapter.getItem(i)).getString("description")));
-                int numOfHouses = Integer.parseInt(((paymentsAdapter.getItem(i)).getString("houses")));
-                double calc = Math.round((Double.parseDouble((paymentsAdapter.getItem(i)).getString("amount")) / numOfHouses) * 100.0) / 100.0;
-                pAmount.setText(getResources().getString(R.string.shekel) + " " + calc);
-                myView.addView(inflation);
-                total += calc;
-                objectIds.add((paymentsAdapter.getItem(i)).getObjectId());
-            }
-            total = Math.round(total * 100.0) / 100.0;
-            //add total sum line
+        // inflate list of all existing payments
+        LinearLayout myView = new LinearLayout(getActivity());
+        myView.setOrientation(LinearLayout.VERTICAL);
+        total = 0.0;
+        for (int i = 0; i < paymentsAdapter.getCount(); i++) {
             View inflation = View.inflate(getActivity(), R.layout.pay_all_item, null);
             TextView pName = (TextView) inflation.findViewById(R.id.list_item_paymentName);
             TextView pAmount = (TextView) inflation.findViewById(R.id.list_item_paymentAmount);
-            pName.setTypeface(Typeface.DEFAULT_BOLD);
-            pName.setText(getResources().getString(R.string.total));
-            pAmount.setTypeface(Typeface.DEFAULT_BOLD);
-            pAmount.setText(getResources().getString(R.string.shekel) + " " + total);
+            pName.setText(((paymentsAdapter.getItem(i)).getString("description")));
+            int numOfHouses = Integer.parseInt(((paymentsAdapter.getItem(i)).getString("houses")));
+            double calc = Math.round((Double.parseDouble((paymentsAdapter.getItem(i)).getString("amount")) / numOfHouses) * 100.0) / 100.0;
+            pAmount.setText(getResources().getString(R.string.shekel) + " " + calc);
             myView.addView(inflation);
+            total += calc;
+            objectIds.add((paymentsAdapter.getItem(i)).getObjectId());
+        }
+        total = Math.round(total * 100.0) / 100.0;
+        //add total sum line
+        View inflation = View.inflate(getActivity(), R.layout.pay_all_item, null);
+        TextView pName = (TextView) inflation.findViewById(R.id.list_item_paymentName);
+        TextView pAmount = (TextView) inflation.findViewById(R.id.list_item_paymentAmount);
+        pName.setTypeface(Typeface.DEFAULT_BOLD);
+        pName.setText(getResources().getString(R.string.total));
+        pAmount.setTypeface(Typeface.DEFAULT_BOLD);
+        pAmount.setText(getResources().getString(R.string.shekel) + " " + total);
+        myView.addView(inflation);
 
-            new MaterialDialog.Builder(getActivity())
-                    .title(R.string.pay_all)
-                    .titleGravity(GravityEnum.END)
-                    .customView(myView, true)
-                    .positiveText(R.string.yes)
-                    .positiveColorRes(R.color.colorPrimary)
-                    .buttonsGravity(GravityEnum.END)
-                    .negativeText(R.string.no)
-                    .negativeColorRes(R.color.colorPrimary)
-                    .callback(new MaterialDialog.ButtonCallback() {
-                        @Override
-                        public void onPositive(MaterialDialog dialog) {
-                            pay(total, objectIds);
-                        }
+        new MaterialDialog.Builder(getActivity())
+                .title(R.string.pay_all)
+                .titleGravity(GravityEnum.END)
+                .customView(myView, true)
+                .positiveText(R.string.yes)
+                .positiveColorRes(R.color.colorPrimary)
+                .buttonsGravity(GravityEnum.END)
+                .negativeText(R.string.no)
+                .negativeColorRes(R.color.colorPrimary)
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        pay(total, objectIds);
+                    }
 
-                        @Override
-                        public void onNegative(MaterialDialog dialog) {
-                            super.onNegative(dialog);
-                        }
-                    })
-                    .show();
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        super.onNegative(dialog);
+                    }
+                })
+                .show();
     }
 
     public void isExistPaypalAccount(final boolean fabClicked) {
@@ -697,12 +702,12 @@ public class GeneralPayments extends Fragment {
         for (int i = 0; i < paymentsUserAdapter.getCount(); i++) {
             // if user didn't pay yet, add him to list of users who didn't pay,
             // and notify them
-            CheckBox v = (CheckBox)(adminPaymentsList.getChildAt(i)).findViewById(R.id.usersListCB);
+            CheckBox v = (CheckBox) (adminPaymentsList.getChildAt(i)).findViewById(R.id.usersListCB);
             if (!v.isChecked()) {
-            String userObjectId = (paymentsUserAdapter.getItem(i)).getObjectId();
-            String familyName = (paymentsUserAdapter.getItem(i)).getString("familyName");
-            usersObjectIds.add(userObjectId);
-            familyNames.add(familyName);
+                String userObjectId = (paymentsUserAdapter.getItem(i)).getObjectId();
+                String familyName = (paymentsUserAdapter.getItem(i)).getString("familyName");
+                usersObjectIds.add(userObjectId);
+                familyNames.add(familyName);
             }
         }
         params.put("usersObjectIds", usersObjectIds);
