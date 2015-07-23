@@ -520,8 +520,11 @@ public class ParseDB {
         ParseUser currentUser = getcurrentUser();
         currentUser.put("buildingCode", JSONObject.NULL);
         currentUser.put("apartmentNumber", JSONObject.NULL);
-        currentUser.put("isAdmin",false);
+        currentUser.put("isAdmin", false);
         currentUser.saveInBackground();
+        ParseInstallation pp= ParseInstallation.getCurrentInstallation();
+        pp.put("buildingCode", JSONObject.NULL);
+        pp.saveInBackground();
     }
 
     //**********************UPDATED BY DANIEL
