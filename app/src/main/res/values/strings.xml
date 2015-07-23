@@ -1304,4 +1304,6 @@
         <item>תקוע</item>
         <item>תרום</item>
     </string-array>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 </resources>
