@@ -17,14 +17,7 @@ import org.json.JSONObject;
 
 public class ParsePushCustomReceiver extends ParsePushBroadcastReceiver {
 
-    Fragment fragment1 = new FailuresScreen();
-    Fragment fragment2 = new ExpensesScreen();
-    Fragment fragment3 = new PaymentsScreen();
-    Fragment fragment4 = new UsersScreen();
-    FragmentManager fragmentManager;
     protected  static  String pushTitle="";
-
-
 
     @Override
     protected void onPushOpen(Context context, Intent intent) {
