@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -23,6 +24,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.melnykov.fab.FloatingActionButton;
@@ -32,11 +34,13 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.rey.material.widget.ProgressView;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
 import adapters.FailuresAdapter;
 
 public class FailuresScreen extends Fragment {
@@ -282,12 +286,31 @@ public class FailuresScreen extends Fragment {
                 if (title.matches("\\s+") || failureContent.matches("\\s+")) {
                     mToast(getString(R.string.empty_notice));
                 } else {
-                    failuresDialog.dismiss();
-                    db.updateFailureBid(failureContent, title, adapter.getObjectId(position), true); /** need to improve this!! */
-                    refreshFailures();
+                    new UpdateFailureBid().execute();
+                    //failuresDialog.dismiss();
+                    //db.updateFailureBid(failureContent, title, adapter.getObjectId(position), true); /** need to improve this!! */
+                    //refreshFailures();
                 }
             }
         });
+    }
+
+    class UpdateFailureBid extends AsyncTask<Void, Void, Void>{
+        @Override
+        protected void onPreExecute() {
+            bar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            db.updateFailureBid(failureContent, title, adapter.getObjectId(position), true);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            refreshFailures();
+        }
     }
 
     // edit bid price dialog

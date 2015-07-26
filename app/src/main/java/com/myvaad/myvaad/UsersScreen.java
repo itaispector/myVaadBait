@@ -34,7 +34,6 @@ import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 import com.rey.material.widget.ProgressView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -179,8 +178,8 @@ public class UsersScreen extends Fragment {
         myDialog(R.layout.send_message_dialog);
 
         // reference for edit text field and ok button
-        msgEditText = (EditText) dialogLayout.findViewById(R.id.sendMessageDialogName);
-        msgOkBtn = (Button) dialogLayout.findViewById(R.id.sendMessageDialogConfirmBtn);
+        msgEditText = (EditText) dialogLayout.findViewById(R.id.input);
+        msgOkBtn = (Button) dialogLayout.findViewById(R.id.button);
         // add watcher listener for changes in edit text, enables/disables ok button
         msgEditText.addTextChangedListener(textWatcherListener);
         // msgOkBtn listener, when clicked, sends message
