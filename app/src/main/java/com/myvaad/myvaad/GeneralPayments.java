@@ -83,26 +83,15 @@ public class GeneralPayments extends Fragment {
         //parse init
         Parse.initialize(getActivity());
         db = ParseDB.getInstance(getActivity());
-
         //inflate layout
         final View rootView = inflater.inflate(R.layout.payments_general_layout, container, false);
-
         //fix ltr issues
         if (getActivity().getWindow().getDecorView().getLayoutDirection() == View.LAYOUT_DIRECTION_LTR) {
             getActivity().getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
-
-        //view flipper pointer
         viewFlipper = (ViewFlipper) rootView.findViewById(R.id.paymentsGeneralLayoutViewFlipper);
-
-        //loader pointer and starter
         loader = (ProgressView) rootView.findViewById(R.id.my_progress_loader);
-        loader.setVisibility(View.VISIBLE);
-
-        // no payments text
         noPaymentsText = (TextView) rootView.findViewById(R.id.no_payments_text);
-
-        //list view pointer
         generalPaymentsListView = (ListView) rootView.findViewById(R.id.PaymentsFamilyListView);
 
         //instantiating adapter and set it to list view
@@ -335,7 +324,6 @@ public class GeneralPayments extends Fragment {
 
 
     private void listViewQueryInBackground() {
-        noPaymentsText.setVisibility(isVisible() ? View.GONE : View.VISIBLE);
         ParseQuery<ParseObject> query = ParseQuery.getQuery("payments");
         query.whereContains("buildingCode", db.getCurrentUserBuildingCode());
         query.whereContains("paymentType", "extra");
@@ -372,57 +360,6 @@ public class GeneralPayments extends Fragment {
         });
 
     }
-    /*
-    private void loadListViewOfUsers(final String paymentObjectId, String buildingCode) {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
-        query.whereEqualTo("buildingCode", buildingCode);
-        query.whereNotEqualTo("isAdmin", true);
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(final List<ParseObject> users, ParseException e) {
-                if (e == null) {
-                    ParseQuery<ParseObject> queryB = ParseQuery.getQuery("payments");
-                    queryB.getInBackground(paymentObjectId, new GetCallback<ParseObject>() {
-                        @Override
-                        public void done(ParseObject paidBy, ParseException e) {
-                            if (e == null) {
-                                usersList = new ArrayList();
-                                for (ParseObject user : users) {
-                                    List rowUsersList = new ArrayList();
-                                    String familyName = user.getString("familyName");
-                                    String userObjectId = user.getObjectId();
-                                    boolean isPaid = false;
-                                    if (paidBy.getList("paidBy") != null) {
-                                        isPaid = paidBy.getList("paidBy").contains(user.getObjectId());
-                                    }
-                                    rowUsersList.add(familyName);
-                                    rowUsersList.add(userObjectId);
-                                    rowUsersList.add(isPaid);
-                                    usersList.add(rowUsersList);
-
-                                }
-                                paymentsUserAdapter = new PaymentsAdminUsersListAdapter(getActivity(), usersList, null, null);
-                                adminPaymentsList.setAdapter(paymentsUserAdapter);
-                                loaderDialog.dismiss();
-                                vfSetLayout(R.id.paymentsAdminLayout);
-                            } else {
-                                Log.v("***PARSE ERROR***", e.getMessage());
-                                //mToast(e.getMessage());
-                            }
-
-
-                        }
-                    });
-
-                } else {
-                    Log.v("***PARSE ERROR***", e.getMessage());
-                    mToast(e.getMessage());
-                }
-
-            }
-        });
-    }
-    */
 
     private void loadListViewOfUsers(final String paymentObjectId, String buildingCode) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");

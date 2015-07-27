@@ -1,39 +1,44 @@
 package com.myvaad.myvaad;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Locale;
-
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.net.LocalServerSocket;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
-import android.view.*;
-import android.widget.*;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.melnykov.fab.FloatingActionButton;
 import com.parse.FindCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -42,25 +47,33 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.rey.material.widget.ProgressView;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Locale;
+
 import adapters.NoticesAdapter;
 import dialogs.RingProgressDialog;
 
 public class NoticeBoardScreen extends Fragment {
 
-    ImageView ok, cancel;
     FloatingActionButton addNoticeBtn;
     ListView noticeBoardListView;
     NoticesAdapter adapter;
     TextView content, noNoticesText;
-    EditText contentEdit;
+    EditText input;
     ParseDB db;
     Intent i;
     View dialogLayout;
+    Dialog customDialog;
     ProgressView bar;
-    Dialog noticesDialog;
-    Button edit, update, delete, cancelBtn;
+    Button edit, button, delete, cancel;
     String msg = "";
     List noticeBoardList = new ArrayList();
+    InputMethodManager imm;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,6 +82,7 @@ public class NoticeBoardScreen extends Fragment {
         db.saveUserInstallationInBackground();
         View rootView = inflater.inflate(R.layout.notice_board_screen, container, false);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setElevation(0);
+        imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         final SwipeRefreshLayout swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
         bar = (ProgressView) rootView.findViewById(R.id.progress_loader);
         bar.setVisibility(View.VISIBLE);
@@ -157,13 +171,15 @@ public class NoticeBoardScreen extends Fragment {
                         ParseFile userPicture = noticeRow.getParseFile("userPic");
                         String apartmentNumber = noticeRow.getString("apartmentNumber");
                         Bitmap userPic = db.parseFileToBitmap(userPicture);
+                        String userObjectId = noticeRow.getString("user");
 
-                        rowNoticeList.add(ObjectId);
-                        rowNoticeList.add(content);
-                        rowNoticeList.add(noticeTimeStr);
-                        rowNoticeList.add(familyName);
-                        rowNoticeList.add(userPic);
-                        rowNoticeList.add(apartmentNumber);
+                        rowNoticeList.add(ObjectId);        // 0
+                        rowNoticeList.add(content);         // 1
+                        rowNoticeList.add(noticeTimeStr);   // 2
+                        rowNoticeList.add(familyName);      // 3
+                        rowNoticeList.add(userPic);         // 4
+                        rowNoticeList.add(apartmentNumber); // 5
+                        rowNoticeList.add(userObjectId);    // 6
                         noticeBoardList.add(rowNoticeList);
                         adapter = new NoticesAdapter(getActivity(), noticeBoardList);
                         noticeBoardListView.setAdapter(adapter);
@@ -219,51 +235,7 @@ public class NoticeBoardScreen extends Fragment {
         addNoticeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new MaterialDialog.Builder(getActivity())
-                        .titleGravity(GravityEnum.END)
-                        .contentGravity(GravityEnum.END)
-                        .positiveColorRes(R.color.colorPrimary)
-                        .neutralColorRes(R.color.colorPrimary)
-                        .negativeColorRes(R.color.colorPrimary)
-                        .widgetColorRes(R.color.colorPrimary)
-                        .title(R.string.noticesShowDialogTitle)
-                        .inputType(InputType.TYPE_CLASS_TEXT |
-                                InputType.TYPE_TEXT_VARIATION_PERSON_NAME |
-                                InputType.TYPE_TEXT_FLAG_CAP_WORDS)
-                        .positiveText(R.string.add)
-                        .btnStackedGravity(GravityEnum.START)
-                        .forceStacking(true)
-                        .alwaysCallInputCallback() // this forces the callback to be invoked with every input change
-                        .input(R.string.noticesShowDialogData, 0, false, new MaterialDialog.InputCallback() {
-                            @Override
-                            public void onInput(MaterialDialog dialog, CharSequence input) {
-                                dialog.getActionButton(DialogAction.POSITIVE).setEnabled(true);
-                            }
-                        })
-                        .callback(new MaterialDialog.ButtonCallback() {
-                            @Override
-                            public void onPositive(final MaterialDialog dialog) {
-                                final RingProgressDialog loadDialog = new RingProgressDialog(getActivity());
-                                dialog.dismiss();
-                                ParseObject notice = new ParseObject("noticeBoard");
-                                ParseUser currentUser = db.getcurrentUser();
-                                //Get current user from the method getcurrentUser() and put him in a new field
-                                notice.put("user", currentUser);
-                                notice.put("userFamilyName", db.getcurrentUserFamilyName());
-                                notice.put("userPic", currentUser.getParseFile("picture"));
-                                notice.put("content", dialog.getInputEditText().getText().toString());
-                                notice.put("apartmentNumber", currentUser.getString("apartmentNumber"));
-                                //get current user buildingCode and put it in new field
-                                notice.put("buildingCode", currentUser.getString("buildingCode"));
-                                notice.saveInBackground(new SaveCallback() {
-                                    @Override
-                                    public void done(ParseException e) {
-                                        refreshNotices();
-                                        loadDialog.dismiss();
-                                    }
-                                });
-                            }
-                        }).show();
+                addNoticeDialog();
             }
         });
 
@@ -271,62 +243,143 @@ public class NoticeBoardScreen extends Fragment {
 
     }
 
+
+    private void addNoticeDialog() {
+        mDialog(R.layout.send_message_dialog);
+
+        TextView title = (TextView) dialogLayout.findViewById(R.id.title);
+        title.setText(getString(R.string.noticesShowDialogTitle));
+        input = (EditText) dialogLayout.findViewById(R.id.input);
+        input.setHint(getString(R.string.noticesShowDialogData));
+        input.addTextChangedListener(textWatcherListener);
+        button = (Button) dialogLayout.findViewById(R.id.button);
+        button.setText(getString(R.string.add));
+        input.requestFocus();
+        openKeyboard();
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String msg = input.getText().toString();
+                customDialog.dismiss();
+                addNotice(msg);
+            }
+        });
+
+        customDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                closeKeyboard();
+            }
+        });
+    }
+
+    private void addNotice(String msg) {
+        final RingProgressDialog loadDialog = new RingProgressDialog(getActivity());
+        ParseObject notice = new ParseObject("noticeBoard");
+        ParseUser currentUser = db.getcurrentUser();
+        //Get current user from the method getcurrentUser() and put him in a new field
+        notice.put("user", currentUser);
+        notice.put("userFamilyName", db.getcurrentUserFamilyName());
+        notice.put("userPic", currentUser.getParseFile("picture"));
+        notice.put("content", msg);
+        notice.put("apartmentNumber", currentUser.getString("apartmentNumber"));
+        //get current user buildingCode and put it in new field
+        notice.put("buildingCode", currentUser.getString("buildingCode"));
+        notice.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                refreshNotices();
+                loadDialog.dismiss();
+            }
+        });
+    }
+
     public void showNotice(final List notice) {
-        String hint = getResources().getString(R.string.noticesShowDialogData);
-        MaterialDialog.Builder dialogM = new MaterialDialog.Builder(getActivity())
-                .titleGravity(GravityEnum.END)
-                .contentGravity(GravityEnum.END)
-                .positiveColorRes(R.color.colorPrimary)
-                .neutralColorRes(R.color.colorPrimary)
-                .negativeColorRes(R.color.colorPrimary)
-                .widgetColorRes(R.color.colorPrimary)
-                .inputType(InputType.TYPE_CLASS_TEXT |
-                        InputType.TYPE_TEXT_VARIATION_PERSON_NAME |
-                        InputType.TYPE_TEXT_FLAG_CAP_WORDS)
-                .positiveText("סגור")
-                .forceStacking(true)
-                .btnStackedGravity(GravityEnum.START)
-                .alwaysCallInputCallback() // this forces the callback to be invoked with every input change
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        if (("" + notice.get(3)).matches(db.getcurrentUserFamilyName()) || db.isCurrentUserAdmin()) {
-                            db.editNoticeBoard(dialog.getInputEditText().getText().toString(), "" + notice.get(0));
-                            refreshNotices();
-                            dialog.dismiss();
-                        } else {
-                            dialog.dismiss();
-                        }
-                    }
+        String userObjectId = "" + notice.get(6);
+        String currentMsg = "" + notice.get(1);
+        // if not admin or not user who posted notice
+        if (db.isCurrentUserAdmin() || userObjectId.matches(db.getCurrentUserObjectId())) {
+            // show dialog with edit options
+            mDialog(R.layout.notice_dialog);
 
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
-                        db.deleteNotice("" + notice.get(0));
-                        refreshNotices();
-                        dialog.dismiss();
-                    }
-
-                    @Override
-                    public void onNeutral(MaterialDialog dialog) {
-                        dialog.dismiss();
-                    }
-                });
-        if (("" + notice.get(3)).matches(db.getcurrentUserFamilyName()) || db.isCurrentUserAdmin()) {
-            dialogM.input(hint, "" + notice.get(1), false, new MaterialDialog.InputCallback() {
+            customDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
-                public void onInput(MaterialDialog dialog, CharSequence input) {
-                    dialog.getActionButton(DialogAction.POSITIVE).setEnabled(true);
+                public void onDismiss(DialogInterface dialogInterface) {
+                    closeKeyboard();
                 }
             });
-            dialogM.positiveText("עדכן");
-            dialogM.negativeText("מחק");
-            dialogM.neutralText("ביטול");
-            dialogM.forceStacking(false);
+
+            button = (Button) dialogLayout.findViewById(R.id.update);
+            delete = (Button) dialogLayout.findViewById(R.id.delete);
+            cancel = (Button) dialogLayout.findViewById(R.id.cancel);
+            input = (EditText) dialogLayout.findViewById(R.id.input);
+            input.setText(currentMsg);
+            input.requestFocus();
+            openKeyboard();
+            input.addTextChangedListener(textWatcherListener);
+
+
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String editedNotice = input.getText().toString();
+                    db.editNoticeBoard(editedNotice.toString(), "" + notice.get(0));
+                    customDialog.dismiss();
+                    refreshNotices();
+                }
+            });
+
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    db.deleteNotice("" + notice.get(0));
+                    customDialog.dismiss();
+                    refreshNotices();
+                }
+            });
+
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    customDialog.dismiss();
+                }
+            });
         } else {
-            dialogM.content("" + notice.get(1));
+            // show dialog only with msg and close btn
+            MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+                    .customView(R.layout.custom_layout_content, false)
+                    .positiveText(getString(R.string.close))
+                    .positiveColorRes(R.color.colorPrimary)
+                    .btnStackedGravity(GravityEnum.END)
+                    .forceStacking(true)
+                    .show();
+            View v = dialog.getCustomView();
+            TextView tv = (TextView) v.findViewById(R.id.text);
+            tv.setText(currentMsg);
         }
-        dialogM.show();
+
     }
+
+    // listener to watch if fields are empty or not, if empty add button is disabled
+    private TextWatcher textWatcherListener = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            boolean check = false;
+            check = (input.getText().toString().isEmpty());
+            button.setEnabled(!check);
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+
 
     public void refreshNotices() {
         Fragment fragment1 = new NoticeBoardScreen();
@@ -335,17 +388,11 @@ public class NoticeBoardScreen extends Fragment {
     }
 
     public void deleteAllDialog() {
-        new MaterialDialog.Builder(getActivity())
-                .titleGravity(GravityEnum.END)
-                .contentGravity(GravityEnum.END)
+        MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+                .customView(R.layout.custom_layout_content, false)
+                .buttonsGravity(GravityEnum.END)
                 .positiveColorRes(R.color.colorPrimary)
-                .neutralColorRes(R.color.colorPrimary)
                 .negativeColorRes(R.color.colorPrimary)
-                .widgetColorRes(R.color.colorPrimary)
-                .content(R.string.delete_all_notice_dialog_text)
-                .inputType(InputType.TYPE_CLASS_TEXT |
-                        InputType.TYPE_TEXT_VARIATION_PERSON_NAME |
-                        InputType.TYPE_TEXT_FLAG_CAP_WORDS)
                 .positiveText(R.string.yes)
                 .negativeText(R.string.no)
                 .callback(new MaterialDialog.ButtonCallback() {
@@ -361,10 +408,46 @@ public class NoticeBoardScreen extends Fragment {
                         dialog.dismiss();
                     }
                 }).show();
+        View v = dialog.getCustomView();
+        TextView tv = (TextView) v.findViewById(R.id.text);
+        tv.setText(R.string.delete_all_notice_dialog_text);
+    }
+
+    public void mDialog(int layout) {
+        dialogLayout = View.inflate(getActivity(), layout, null);
+        customDialog = new Dialog(getActivity());
+        customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        customDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        customDialog.setContentView(dialogLayout);
+        customDialog.show();
     }
 
     public void myToast(String s) {
         Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
+    }
+
+    public int getLastMonthTotalDays() {
+        //get current month and year
+        Calendar c = Calendar.getInstance();
+        int thisMonth = c.get(Calendar.MONTH);
+        int year = c.get(Calendar.YEAR);
+
+        if (thisMonth == 0) year -= 1; // thisMonth == 0 -->JANUARY
+        // Create a calendar object and set year and month to last month --> thisMonth-1 == last month
+        Calendar mycal = new GregorianCalendar(year, thisMonth - 1, 1);
+
+        // Get the number of days in that month
+        int daysInMonth = mycal.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+        return daysInMonth;
+    }
+
+    private void openKeyboard() {
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+    }
+
+    private void closeKeyboard(){
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 
     @Override
@@ -385,21 +468,7 @@ public class NoticeBoardScreen extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    public int getLastMonthTotalDays() {
-        //get current month and year
-        Calendar c = Calendar.getInstance();
-        int thisMonth = c.get(Calendar.MONTH);
-        int year = c.get(Calendar.YEAR);
 
-        if (thisMonth == 0) year -= 1; // thisMonth == 0 -->JANUARY
-        // Create a calendar object and set year and month to last month --> thisMonth-1 == last month
-        Calendar mycal = new GregorianCalendar(year, thisMonth - 1, 1);
-
-        // Get the number of days in that month
-        int daysInMonth = mycal.getActualMaximum(Calendar.DAY_OF_MONTH);
-
-        return daysInMonth;
-    }
 }
 
 

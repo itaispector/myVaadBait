@@ -1,0 +1,78 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_margin"
+    android:layoutDirection="ltr">
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="20dp"
+        android:hint="@string/noticesShowDialogData"
+        android:singleLine="true"
+        />
+
+    <Button
+        android:id="@+id/update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/input"
+        android:layout_marginLeft="16dp"
+        android:background="@drawable/default_button"
+        android:minHeight="40dp"
+        android:minWidth="60dp"
+        android:text="@string/update"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp"
+        android:enabled="false"/>
+
+    <Button
+        android:id="@+id/delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/update"
+        android:layout_below="@id/input"
+        android:layout_marginLeft="16dp"
+        android:background="@drawable/default_button"
+        android:minHeight="40dp"
+        android:minWidth="60dp"
+        android:text="@string/delete"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp" />
+
+    <View
+        android:layout_width="16dp"
+        android:layout_height="0dp"
+        android:layout_below="@id/input"
+        android:id="@+id/empty_view"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+
+
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/input"
+        android:layout_toLeftOf="@id/empty_view"
+        android:background="@drawable/default_button"
+        android:minHeight="40dp"
+        android:minWidth="60dp"
+        android:text="@string/cancel"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:layout_below="@id/update"
+        android:background="@color/transparent" />
+
+
+</RelativeLayout>
