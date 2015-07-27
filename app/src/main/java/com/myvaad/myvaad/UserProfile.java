@@ -457,7 +457,6 @@ public class UserProfile extends AppCompatActivity {
                 });
             }else{
                 loader.stop();
-                Toast.makeText(this, "ckckckckc", Toast.LENGTH_LONG).show();
             }
         }catch (Exception e){
             loader.stop();
