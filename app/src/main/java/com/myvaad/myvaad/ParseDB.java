@@ -1704,6 +1704,7 @@ protected List getCurrentUserFailuresBoard() {
                     ParseInstallation.getCurrentInstallation().put("userNamePush", object.get("username"));
                     ParseInstallation.getCurrentInstallation().put("userObjectId", object.getObjectId());
                     ParseInstallation.getCurrentInstallation().put("buildingCode", object.get("buildingCode"));
+                    ParseInstallation.getCurrentInstallation().put("active", true);
                     ParseInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
