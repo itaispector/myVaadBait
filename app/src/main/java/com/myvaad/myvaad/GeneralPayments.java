@@ -324,7 +324,6 @@ public class GeneralPayments extends Fragment {
 
 
     private void listViewQueryInBackground() {
-        noPaymentsText.setVisibility(isVisible() ? View.GONE : View.VISIBLE);
         ParseQuery<ParseObject> query = ParseQuery.getQuery("payments");
         query.whereContains("buildingCode", db.getCurrentUserBuildingCode());
         query.whereContains("paymentType", "extra");

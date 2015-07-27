@@ -3,6 +3,7 @@ package com.myvaad.myvaad;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.graphics.Bitmap;
@@ -17,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,6 +60,7 @@ public class FailuresScreen extends Fragment {
     ParseDB db;
     String title, failureContent = "", myList = "", failureObjectId;
     List outputFailuresList = new ArrayList();
+    InputMethodManager imm;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -66,130 +69,15 @@ public class FailuresScreen extends Fragment {
         getActivity().setTitle(R.string.FailuresScreenTitle);
         noFailuresTextView = (TextView) rootView.findViewById(R.id.no_failures_text);
         bar = (ProgressView) rootView.findViewById(R.id.progress_loader);
+        imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        failuresList = (ListView) rootView.findViewById(R.id.FailuresListView);
+        addFailureBtn = (FloatingActionButton) rootView.findViewById(R.id.add_f_btnn);
         bar.setVisibility(View.VISIBLE);
+        loadListViewData();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             getActivity().getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
-
-        // calls the list view and its adapter
-        failuresList = (ListView) rootView.findViewById(R.id.FailuresListView);
-        // load data of list view from query
-        String CurrentUserBuildingCode = db.getCurrentUserBuildingCode();
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("failures");
-        //Query Constraints-->all the failures for current user building
-        query.whereContains("buildingCode", CurrentUserBuildingCode);
-        query.whereEqualTo("state", true);
-        query.orderByDescending("updatedAt");
-        // finding all the failures for current user building
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> failures, ParseException e) {
-                if (e == null) {
-                    outputFailuresList.clear();
-                    SimpleDateFormat postFormatter = new SimpleDateFormat("EEEE  dd " + "ב" + "MMMM  HH:mm", new Locale("he"));
-                    for (ParseObject failuresRow : failures) {
-                        List rowFailureList = new ArrayList();
-                        //get specific data from each row
-                        String title = failuresRow.getString("title");
-                        String content = failuresRow.getString("content");
-                        String bidValue = failuresRow.getString("bid");
-                        String bidPerformedBy = failuresRow.getString("performedBy");
-                        String status = failuresRow.getString("status");
-                        Date updatedAt = failuresRow.getCreatedAt();
-                        String noticeTime = postFormatter.format(updatedAt);
-                        String ObjectId = failuresRow.getObjectId();
-                        String familyName = failuresRow.getString("userFamilyName");
-                        ParseFile userPicture = failuresRow.getParseFile("userPic");
-                        Bitmap userPic = db.parseFileToBitmap(userPicture);
-                        List<String> approvedByList = new ArrayList();
-                        //List of all the users that approved the bid for the repair the malfunction
-                        if (failuresRow.getList("approvedBy") != null) {
-                            approvedByList = failuresRow.getList("approvedBy");
-                        } else approvedByList.add("no one approve");
-                        rowFailureList.add(ObjectId);
-                        rowFailureList.add(title);
-                        rowFailureList.add(content);
-                        rowFailureList.add(bidValue);
-                        rowFailureList.add(bidPerformedBy);
-                        rowFailureList.add(status);
-                        rowFailureList.add(noticeTime);
-                        rowFailureList.add(familyName);
-                        rowFailureList.add(userPic);
-                        rowFailureList.add(approvedByList);
-                        outputFailuresList.add(rowFailureList);
-                        adapter = new FailuresAdapter(getActivity(), outputFailuresList, db.isCurrentUserAdmin(), db.getcurrentUserFamilyName());
-
-                        adapter.setAddBtnListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                // get position of click
-                                position = failuresList.getPositionForView(view);
-                                addBidPrice();
-                            }
-                        });
-
-                        adapter.setEditBtnListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                // get position of click
-                                position = failuresList.getPositionForView(view);
-                                editBidPrice();
-                            }
-                        });
-
-                        adapter.setDeleteBtnListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                // get position of click
-                                position = failuresList.getPositionForView(view);
-                                deleteFailure();
-                            }
-                        });
-
-                        adapter.setApprovalBtnListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                // get position of click
-                                position = failuresList.getPositionForView(view);
-                                showApprovals();
-                            }
-                        });
-
-                        adapter.setApproveOkBtnListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                // get position of click
-                                position = failuresList.getPositionForView(view);
-                                db.updateFailureApprovedByCurrentUser(adapter.getObjectId(position));
-                                refreshFailures();
-                            }
-                        });
-
-                        adapter.setApproveCancelBtnListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                // get position of click
-                                position = failuresList.getPositionForView(view);
-                                db.removeFailureApprovedBy(db.getcurrentUserFamilyName(), adapter.getObjectId(position));
-                                refreshFailures();
-                            }
-                        });
-
-                        failuresList.setAdapter(adapter);
-                        bar.setVisibility(View.GONE);
-                    }
-                    if (outputFailuresList.isEmpty()) {
-                        bar.setVisibility(View.GONE);
-                        noFailuresTextView.setVisibility(View.VISIBLE);
-                    } else {
-                        noFailuresTextView.setVisibility(View.GONE);
-                    }
-                } else {
-                    Log.i("***Parse Exception****", e.getLocalizedMessage());
-                }
-            }
-        });
 
         // adds a listener to item in the listview
         failuresList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -200,8 +88,7 @@ public class FailuresScreen extends Fragment {
             }
         });
 
-        // add failure button pointer and listener
-        addFailureBtn = (FloatingActionButton) rootView.findViewById(R.id.add_f_btnn);
+        // add failure button listener
         addFailureBtn.attachToListView(failuresList);
         addFailureBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -212,11 +99,137 @@ public class FailuresScreen extends Fragment {
         return rootView;
     }
 
+    // loads list view data
+    private void loadListViewData() {
+        // load data of list view from query
+        String CurrentUserBuildingCode = db.getCurrentUserBuildingCode();
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("failures");
+        //Query Constraints-->all the failures for current user building
+        query.whereContains("buildingCode", CurrentUserBuildingCode);
+        query.whereEqualTo("state", true);
+        query.orderByDescending("updatedAt");
+        // finding all the failures for current user building
+        query.findInBackground(new FindCallback<ParseObject>()
+
+                               {
+                                   @Override
+                                   public void done(List<ParseObject> failures, ParseException e) {
+                                       if (e == null) {
+                                           outputFailuresList.clear();
+                                           SimpleDateFormat postFormatter = new SimpleDateFormat("EEEE  dd " + "ב" + "MMMM  HH:mm", new Locale("he"));
+                                           for (ParseObject failuresRow : failures) {
+                                               List rowFailureList = new ArrayList();
+                                               //get specific data from each row
+                                               String title = failuresRow.getString("title");
+                                               String content = failuresRow.getString("content");
+                                               String bidValue = failuresRow.getString("bid");
+                                               String bidPerformedBy = failuresRow.getString("performedBy");
+                                               String status = failuresRow.getString("status");
+                                               Date updatedAt = failuresRow.getCreatedAt();
+                                               String noticeTime = postFormatter.format(updatedAt);
+                                               String ObjectId = failuresRow.getObjectId();
+                                               String familyName = failuresRow.getString("userFamilyName");
+                                               ParseFile userPicture = failuresRow.getParseFile("userPic");
+                                               Bitmap userPic = db.parseFileToBitmap(userPicture);
+                                               List<String> approvedByList = new ArrayList();
+                                               //List of all the users that approved the bid for the repair the malfunction
+                                               if (failuresRow.getList("approvedBy") != null) {
+                                                   approvedByList = failuresRow.getList("approvedBy");
+                                               } else approvedByList.add("no one approve");
+                                               rowFailureList.add(ObjectId);
+                                               rowFailureList.add(title);
+                                               rowFailureList.add(content);
+                                               rowFailureList.add(bidValue);
+                                               rowFailureList.add(bidPerformedBy);
+                                               rowFailureList.add(status);
+                                               rowFailureList.add(noticeTime);
+                                               rowFailureList.add(familyName);
+                                               rowFailureList.add(userPic);
+                                               rowFailureList.add(approvedByList);
+                                               outputFailuresList.add(rowFailureList);
+                                               adapter = new FailuresAdapter(getActivity(), outputFailuresList, db.isCurrentUserAdmin(), db.getcurrentUserFamilyName());
+
+                                               adapter.setAddBtnListener(new View.OnClickListener() {
+                                                   @Override
+                                                   public void onClick(View view) {
+                                                       // get position of click
+                                                       position = failuresList.getPositionForView(view);
+                                                       addBidPrice();
+                                                   }
+                                               });
+
+                                               adapter.setEditBtnListener(new View.OnClickListener() {
+                                                   @Override
+                                                   public void onClick(View view) {
+                                                       // get position of click
+                                                       position = failuresList.getPositionForView(view);
+                                                       editBidPrice();
+                                                   }
+                                               });
+
+                                               adapter.setDeleteBtnListener(new View.OnClickListener() {
+                                                   @Override
+                                                   public void onClick(View view) {
+                                                       // get position of click
+                                                       position = failuresList.getPositionForView(view);
+                                                       deleteFailure();
+                                                   }
+                                               });
+
+                                               adapter.setApprovalBtnListener(new View.OnClickListener() {
+                                                   @Override
+                                                   public void onClick(View view) {
+                                                       // get position of click
+                                                       position = failuresList.getPositionForView(view);
+                                                       showApprovals();
+                                                   }
+                                               });
+
+                                               adapter.setApproveOkBtnListener(new View.OnClickListener() {
+                                                   @Override
+                                                   public void onClick(View view) {
+                                                       // get position of click
+                                                       position = failuresList.getPositionForView(view);
+                                                       db.updateFailureApprovedByCurrentUser(adapter.getObjectId(position));
+                                                       refreshFailures();
+                                                   }
+                                               });
+
+                                               adapter.setApproveCancelBtnListener(new View.OnClickListener() {
+                                                   @Override
+                                                   public void onClick(View view) {
+                                                       // get position of click
+                                                       position = failuresList.getPositionForView(view);
+                                                       db.removeFailureApprovedBy(db.getcurrentUserFamilyName(), adapter.getObjectId(position));
+                                                       refreshFailures();
+                                                   }
+                                               });
+
+                                               failuresList.setAdapter(adapter);
+                                               bar.setVisibility(View.GONE);
+                                           }
+                                           if (outputFailuresList.isEmpty()) {
+                                               bar.setVisibility(View.GONE);
+                                               noFailuresTextView.setVisibility(View.VISIBLE);
+                                           } else {
+                                               noFailuresTextView.setVisibility(View.GONE);
+                                           }
+                                       } else {
+                                           Log.i("***Parse Exception****", e.getLocalizedMessage());
+                                       }
+                                   }
+                               }
+
+        );
+    }
+
     // opens add failure dialog
     public void addFailure() {
         mDialog(R.layout.failures_dialog_layout);
         titleEdit = (EditText) dialogLayout.findViewById(R.id.failuresDialogFailureName);
         titleEdit.addTextChangedListener(textWatcherListener);
+        titleEdit.requestFocus();
+        openKeyboard();
         contentEdit = (EditText) dialogLayout.findViewById(R.id.failuresDialogFailureData);
         contentEdit.addTextChangedListener(textWatcherListener);
         dialogFailureOkBtn = (Button) dialogLayout.findViewById(R.id.failuresDialogFailureOkBtn);
@@ -274,8 +287,11 @@ public class FailuresScreen extends Fragment {
 
         titleEdit = (EditText) failuresDialog.findViewById(R.id.failuresAddDialogBusinessName);
         titleEdit.addTextChangedListener(textWatcherListener);
+        titleEdit.requestFocus();
+        openKeyboard();
         contentEdit = (EditText) failuresDialog.findViewById(R.id.failuresAddDialogPrice);
         contentEdit.addTextChangedListener(textWatcherListener);
+
         dialogFailureOkBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -295,7 +311,7 @@ public class FailuresScreen extends Fragment {
         });
     }
 
-    class UpdateFailureBid extends AsyncTask<Void, Void, Void>{
+    class UpdateFailureBid extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
             bar.setVisibility(View.VISIBLE);
@@ -321,8 +337,11 @@ public class FailuresScreen extends Fragment {
 
         titleEdit = (EditText) failuresDialog.findViewById(R.id.failuresAddDialogBusinessName);
         titleEdit.addTextChangedListener(textWatcherListener);
+        titleEdit.requestFocus();
+        openKeyboard();
         contentEdit = (EditText) failuresDialog.findViewById(R.id.failuresAddDialogPrice);
         contentEdit.addTextChangedListener(textWatcherListener);
+
         titleEdit.setText("" + ((List) adapter.getItem(position)).get(4));
         contentEdit.setText("" + ((List) adapter.getItem(position)).get(3));
 
@@ -370,7 +389,7 @@ public class FailuresScreen extends Fragment {
             moveToPaymentsBtn.setVisibility(View.GONE);
             // set margin of button to 0
             RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) dialogFailureCancelBtn.getLayoutParams();
-            layoutParams.setMargins(0,0,0,0);
+            layoutParams.setMargins(0, 0, 0, 0);
             dialogFailureCancelBtn.setLayoutParams(layoutParams);
             // set width of button to match parent
             ViewGroup.LayoutParams lp = dialogFailureCancelBtn.getLayoutParams();
@@ -439,6 +458,13 @@ public class FailuresScreen extends Fragment {
         failuresDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         failuresDialog.setContentView(dialogLayout);
         failuresDialog.show();
+
+        failuresDialog.setOnDismissListener(new OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                closeKeyboard();
+            }
+        });
     }
 
     // reload page
@@ -446,6 +472,16 @@ public class FailuresScreen extends Fragment {
         Fragment fragment1 = new FailuresScreen();
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.main_content, fragment1).commit();
+    }
+
+    // manually show keyboard
+    private void openKeyboard() {
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+    }
+
+    // manually close keyboard (used to ensure when dialog closes, keyboard closes as well)
+    private void closeKeyboard() {
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 
     // toast in middle of screen

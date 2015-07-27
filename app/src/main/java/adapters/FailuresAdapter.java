@@ -117,7 +117,7 @@ public class FailuresAdapter extends BaseAdapter {
     public class ViewHolder {
         TextView fullname, failure, failureContent, bidText, bidPrice, bidProf, date, status;
         ImageView image;
-        SurfaceView divider, divider2;
+        View divider, divider2;
         Button add, edit, statusBtn, deleteBtn, approveBtn, cancelBtn;
     }
 
@@ -132,11 +132,11 @@ public class FailuresAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.fullname = (TextView) convertView.findViewById(R.id.failuresRowFullName);
             holder.image = (ImageView) convertView.findViewById(R.id.failuresRowUserImage);
-            holder.divider = (SurfaceView) convertView.findViewById(R.id.failuresRowDivider);
+            holder.divider = (View) convertView.findViewById(R.id.failuresRowDivider);
             holder.failure = (TextView) convertView.findViewById(R.id.failuresRowfailureName);
             holder.failureContent = (TextView) convertView.findViewById(R.id.failuresRowFailureContent);
             holder.date = (TextView) convertView.findViewById(R.id.failuresRowDate);
-            holder.divider2 = (SurfaceView) convertView.findViewById(R.id.failuresRowDivider4);
+            holder.divider2 = (View) convertView.findViewById(R.id.failuresRowDivider4);
             holder.bidText = (TextView) convertView.findViewById(R.id.failuresRowfailureBidText);
             holder.bidPrice = (TextView) convertView.findViewById(R.id.failuresRowfailureBidPrice);
             holder.bidProf = (TextView) convertView.findViewById(R.id.failuresRowfailureBidBusinessName);
