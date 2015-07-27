@@ -1444,7 +1444,7 @@ protected List getCurrentUserFailuresBoard() {
                         payment.put("buildingCode", currentBuilding);
                         payment.put("amount", paymentPrice);
                         payment.put("description", paymentName);
-                        payment.put("paymentType", "regular");
+                        payment.put("paymentType", "extra");
                         payment.put("houses", houses);
                         payment.put("paymentApproved", false);
                         payment.saveInBackground();
