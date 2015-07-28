@@ -1,13 +1,8 @@
 package com.myvaad.myvaad;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.widget.Toast;
 
 import com.parse.ParsePushBroadcastReceiver;
 
@@ -32,9 +27,7 @@ public class ParsePushCustomReceiver extends ParsePushBroadcastReceiver {
                 json = new JSONObject(jsonData);
                 pushTitle = json.getString("title");
                 String pushContent = json.getString("alert");
-                //Toast toast = Toast.makeText(context, "push title: "+pushTitle+" push content: "+pushContent , Toast.LENGTH_SHORT);
-                //toast.setGravity(Gravity.CENTER, 0, 150);
-               // toast.show();
+
             }
         } catch (JSONException e) {
 
