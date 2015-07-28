@@ -61,6 +61,7 @@ public class FailuresScreen extends Fragment {
     String title, failureContent = "", myList = "", failureObjectId;
     List outputFailuresList = new ArrayList();
     InputMethodManager imm;
+    boolean firstAdd = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -109,9 +110,7 @@ public class FailuresScreen extends Fragment {
         query.whereEqualTo("state", true);
         query.orderByDescending("updatedAt");
         // finding all the failures for current user building
-        query.findInBackground(new FindCallback<ParseObject>()
-
-                               {
+        query.findInBackground(new FindCallback<ParseObject>() {
                                    @Override
                                    public void done(List<ParseObject> failures, ParseException e) {
                                        if (e == null) {
@@ -272,11 +271,33 @@ public class FailuresScreen extends Fragment {
         if (title.matches("\\s+") || failureContent.matches("\\s+")) {
             mToast(getString(R.string.empty_notice));
         } else {
-            db.updateNewfailure(title, failureContent);
+            new UpdateNewFailureTask().execute();
+            //db.updateNewfailure(title, failureContent);
             refreshFailures();
             failuresDialog.dismiss();
         }
 
+    }
+
+    class UpdateNewFailureTask extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+            bar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            return db.updateNewfailure(title, failureContent);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean isUpdated) {
+            if (isUpdated) {
+                bar.setVisibility(View.GONE);
+                loadListViewData();
+            }
+        }
     }
 
     // add bid price dialog
@@ -302,7 +323,8 @@ public class FailuresScreen extends Fragment {
                 if (title.matches("\\s+") || failureContent.matches("\\s+")) {
                     mToast(getString(R.string.empty_notice));
                 } else {
-                    new UpdateFailureBid().execute();
+                    firstAdd = true;
+                    new UpdateFailureBidTask().execute();
                     //failuresDialog.dismiss();
                     //db.updateFailureBid(failureContent, title, adapter.getObjectId(position), true); /** need to improve this!! */
                     //refreshFailures();
@@ -311,21 +333,23 @@ public class FailuresScreen extends Fragment {
         });
     }
 
-    class UpdateFailureBid extends AsyncTask<Void, Void, Void> {
+    class UpdateFailureBidTask extends AsyncTask<Void, Void, Boolean> {
         @Override
         protected void onPreExecute() {
             bar.setVisibility(View.VISIBLE);
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
-            db.updateFailureBid(failureContent, title, adapter.getObjectId(position), true);
-            return null;
+        protected Boolean doInBackground(Void... voids) {
+            return db.updateFailureBid(failureContent, title, adapter.getObjectId(position), firstAdd);
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            refreshFailures();
+        protected void onPostExecute(Boolean isAdded) {
+            if (isAdded) {
+                bar.setVisibility(View.GONE);
+                loadListViewData();
+            }
         }
     }
 
@@ -365,8 +389,8 @@ public class FailuresScreen extends Fragment {
                     mToast(getString(R.string.empty_notice));
                 } else {
                     failuresDialog.dismiss();
-                    db.updateFailureBid(failureContent, title, adapter.getObjectId(position), false);
-                    refreshFailures();
+                    firstAdd=false;
+                    new UpdateFailureBidTask().execute();
                 }
             }
         });
@@ -375,9 +399,9 @@ public class FailuresScreen extends Fragment {
     // approve families dialog
     public void showApprovals() {
         mDialog(R.layout.failures_approval_dialog_layout);
-
         content = (TextView) failuresDialog.findViewById(R.id.failuresApprovalDialogList);
         String family = getString(R.string.family);
+        // create list for families which approved
         for (int i = 0; i < adapter.getApprovers(position).size(); i++) {
             myList += (" - " + family + " " + adapter.getApprovers(position).get(i) + "\n");
         }
@@ -398,7 +422,7 @@ public class FailuresScreen extends Fragment {
         }
 
 
-        //adds a listener to close button
+        // adds a listener to close button
         dialogFailureCancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -412,10 +436,8 @@ public class FailuresScreen extends Fragment {
             public void onClick(View v) {
                 //close & move to payments db method
                 failureObjectId = adapter.getObjectId(position);
-                db.setFailureInactive(failureObjectId);
-                db.createPaymentFromFailure(failureObjectId);
+                new SetFailureInactiveTask().execute();
                 failuresDialog.dismiss();
-                refreshFailures();
             }
         });
         //add a listener for dismiss (close) this dialog
@@ -426,6 +448,25 @@ public class FailuresScreen extends Fragment {
             }
         });
 
+    }
+
+    class SetFailureInactiveTask extends AsyncTask<Void, Void, Boolean>{
+        @Override
+        protected void onPreExecute() {
+            bar.setVisibility(View.VISIBLE);
+            db.createPaymentFromFailure(failureObjectId);
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            return db.setFailureInactive(failureObjectId);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            bar.setVisibility(View.GONE);
+            loadListViewData();
+        }
     }
 
     // delete failure dialog
@@ -440,14 +481,32 @@ public class FailuresScreen extends Fragment {
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
-                        db.deleteFailure(adapter.getObjectId(position));
-                        refreshFailures();
+                        new DeleteFailureTask().execute();
                     }
                 })
                 .show();
         View cView = dialog.getCustomView();
         TextView content = (TextView) cView.findViewById(R.id.text);
         content.setText(getString(R.string.deleteFailure));
+    }
+
+    class DeleteFailureTask extends AsyncTask<Void, Void, Boolean>{
+
+        @Override
+        protected void onPreExecute() {
+            bar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            return db.deleteFailure(adapter.getObjectId(position));
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            bar.setVisibility(View.GONE);
+            loadListViewData();
+        }
     }
 
     // custom dialog

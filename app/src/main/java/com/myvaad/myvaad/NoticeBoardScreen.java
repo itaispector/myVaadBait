@@ -70,8 +70,7 @@ public class NoticeBoardScreen extends Fragment {
     View dialogLayout;
     Dialog customDialog;
     ProgressView bar;
-    Button edit, button, delete, cancel;
-    String msg = "";
+    Button button, delete, cancel;
     List noticeBoardList = new ArrayList();
     InputMethodManager imm;
 
@@ -243,7 +242,6 @@ public class NoticeBoardScreen extends Fragment {
 
     }
 
-
     private void addNoticeDialog() {
         mDialog(R.layout.send_message_dialog);
 
@@ -379,7 +377,6 @@ public class NoticeBoardScreen extends Fragment {
 
         }
     };
-
 
     public void refreshNotices() {
         Fragment fragment1 = new NoticeBoardScreen();

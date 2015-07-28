@@ -522,7 +522,7 @@ public class ParseDB {
         currentUser.put("apartmentNumber", JSONObject.NULL);
         currentUser.put("isAdmin", false);
         currentUser.saveInBackground();
-        ParseInstallation pp= ParseInstallation.getCurrentInstallation();
+        ParseInstallation pp = ParseInstallation.getCurrentInstallation();
         pp.put("buildingCode", JSONObject.NULL);
         pp.saveInBackground();
     }
@@ -537,7 +537,7 @@ public class ParseDB {
 
     //This method sign up new building in class(table)buildings-->created by building Admin
 
-    protected void signUpBuilding(String buildingCode, String address, String paypalEmail, String numberOfHouses,Context context) {
+    protected void signUpBuilding(String buildingCode, String address, String paypalEmail, String numberOfHouses, Context context) {
         final RingProgressDialog dialog = new RingProgressDialog(context);
         //The user that sign Up the Building is the admin
         ParseUser currentUser = getcurrentUser();
@@ -558,7 +558,7 @@ public class ParseDB {
     }
 
     //This method sign up new building in class(table)buildings without paypal account
-    protected void signUpBuildingWithoutPaypal(String buildingCode, String address, String numberOfHouses,Context context) {
+    protected void signUpBuildingWithoutPaypal(String buildingCode, String address, String numberOfHouses, Context context) {
         final RingProgressDialog dialog = new RingProgressDialog(context);
         //The user that sign Up the Building is the admin
         ParseUser currentUser = getcurrentUser();
@@ -909,7 +909,8 @@ protected List getCurrentUserFailuresBoard() {
 */
     //This method updating new failure in class(table) failures-->will contain all failures
     // of all buildings
-    protected void updateNewfailure(String failureTitle, String failureContent) {
+    protected Boolean updateNewfailure(String failureTitle, String failureContent) {
+        boolean isUpdated = false;
         //The bid field will updated when admin will update it-->default is o
         //The approvedBy field will updated when users will approve the failure bid
         //The status field will update when bit will update,and when failure will closed
@@ -925,13 +926,20 @@ protected List getCurrentUserFailuresBoard() {
         failure.put("performedBy", "");
         failure.put("status", context.getString(R.string.notTreated));
         failure.put("state", true);
-        failure.saveInBackground();
+        try {
+            failure.save();
+            isUpdated = true;
+        } catch (ParseException e) {
+            myLog(e.getMessage());
+        }
+        return isUpdated;
     }
 
     //****************UPDATED BY ITAI 20/4***************
     //This method updating new Failure Bid by getting newBid and failureObjectId
     //updating status to "·ËÈÙÂÏ" from string.xml name=treating
-    protected void updateFailureBid(String newBid, String performedBy, String failureObjectId, boolean firstAdd) {
+    protected Boolean updateFailureBid(String newBid, String performedBy, String failureObjectId, boolean firstAdd) {
+       boolean isAdded = false;
         ParseQuery<ParseObject> query = ParseQuery.getQuery("failures");
         ParseObject failure;
         try {
@@ -941,11 +949,13 @@ protected List getCurrentUserFailuresBoard() {
             failure.put("status", context.getString(R.string.treating));
             if (firstAdd)
                 updateFailureApprovedByCurrentUser(failureObjectId);
-            failure.saveInBackground();
+            failure.save();
+            isAdded=true;
         } catch (ParseException e) {
             Log.i("***Parse Exception****", e.getLocalizedMessage());
             e.printStackTrace();
         }
+        return isAdded;
     }
 
     //This method updating the current user approve ,for admin bid to open failure.
@@ -981,18 +991,21 @@ protected List getCurrentUserFailuresBoard() {
 
     //*************ITAI NEW 20/4
     //delete a failure
-    protected void deleteFailure(String objectId) {
+    protected boolean deleteFailure(String objectId) {
+        boolean isDeleted = false;
         ParseQuery<ParseObject> query = ParseQuery.getQuery("failures");
         try {
             //Getting notice object(table row)
             ParseObject failure = query.get(objectId);
             if (failure != null) {
-                failure.deleteInBackground();
+                failure.delete();
+                isDeleted=true;
             } else Log.i("***Parse Exception****", "incorrect ObjectId entered");
         } catch (ParseException e) {
             Log.i("***Parse Exception****", e.getLocalizedMessage());
             e.printStackTrace();
         }
+        return isDeleted;
 
     }
 
@@ -1393,7 +1406,8 @@ protected List getCurrentUserFailuresBoard() {
 
     //*********************Itai new 17/6/15
     //set failure to inactive
-    protected void setFailureInactive(String failureObjectId) {
+    protected boolean setFailureInactive(String failureObjectId) {
+        boolean isFinished = false;
         String currentBuilding = getCurrentUserBuildingCode();
         String objectId = failureObjectId;
         ParseQuery<ParseObject> query = ParseQuery.getQuery("failures");
@@ -1401,12 +1415,13 @@ protected List getCurrentUserFailuresBoard() {
         try {
             ParseObject failure = query.get(objectId);
             failure.put("state", false);
-            failure.saveInBackground();
+            failure.save();
+            isFinished = true;
         } catch (ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        ;
+        return isFinished;
     }
 
     //*********************Itai new 17/6/15
@@ -1830,6 +1845,10 @@ protected List getCurrentUserFailuresBoard() {
 
     private void mToast(String s) {
         Toast.makeText(context, s, Toast.LENGTH_LONG).show();
+    }
+
+    private void myLog(String s) {
+        Log.i("***Parse Exception***", s);
     }
 
 }
