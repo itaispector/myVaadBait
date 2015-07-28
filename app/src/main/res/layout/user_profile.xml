@@ -76,6 +76,12 @@
                         android:text="מחק תמונה"
                         android:layout_marginRight="65dp"
                         android:textColor="#fff"
+                        android:gravity="center"
+                        android:background="@drawable/default_button"
+                        android:paddingTop="10dp"
+                        android:paddingRight="8dp"
+                        android:paddingLeft="8dp"
+                        android:paddingBottom="10dp"
                         android:clickable="true"
                         android:onClick="deleteImage"/>
 
@@ -83,6 +89,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="שנה תמונה"
+                        android:paddingTop="10dp"
+                        android:paddingRight="8dp"
+                        android:paddingLeft="8dp"
+                        android:paddingBottom="10dp"
+                        android:background="@drawable/default_button"
+                        android:gravity="center"
                         android:textColor="#fff"
                         android:clickable="true"
                         android:onClick="changeImage"/>
